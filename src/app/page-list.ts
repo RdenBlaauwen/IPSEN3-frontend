@@ -1,7 +1,7 @@
 import { Page } from './page';
 
 export const BASE_PAGES: Page[] = [
-    { id: 1, name: 'login', displayName: 'Inloggen'},
+    { id: 1, name: 'login', displayName: 'Uitloggen'},
     { id: 2, name: 'dashboard', displayName: 'Dashboard'},
     { id: 3, name: 'account-self', displayName: 'Account gegevens'},
     { id: 4, name: 'manual', displayName: 'Handleiding'}

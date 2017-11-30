@@ -1,4 +1,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+a{
+    text-decoration: none;
+}
 .all{
     height: 100vh;
 }
@@ -10,15 +13,33 @@ header{
 }
 nav{
     background-color: rgb(150,150,150);
+    padding-left: 30px;
 }
     nav ul{
+        list-style-type: none;
         padding:0;
+        width: 100%;
     }
     nav ul>li{
+        background-color: rgb(180,180,180);
         padding: 0;
+        margin: 3px 0px 3px 0px;
+        width: 90%;
     }
+        nav ul>li:hover{
+            background-color: rgb(210,210,210);
+        }
+        nav ul>li>a{
+            padding: 10px;
+        }
+        nav ul>li.selected{
+            background-color: rgb(250,250,250);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            width: 100%;
+        }
 main{
-    background-color: rgb(250,250,250)
+    background-color: rgb(250,250,250);
 }
 .cnt{
     display: block;
@@ -78,3 +99,9 @@ main{
             font-size: 0.9rem;
           }
       }
+
+/*sub pages*/
+.content{
+    height: 100%;
+    background-color: red;
+}
