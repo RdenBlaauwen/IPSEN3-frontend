@@ -147,7 +147,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 exports.i(__webpack_require__("../../../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../../../postcss-loader/lib/index.js?{\"ident\":\"postcss\",\"plugins\":[null,null,null]}!../../../material/prebuilt-themes/indigo-pink.css"), "");
 
 // module
-exports.push([module.i, ".all{\n    height: 100vh;\n}\n    .nav-content{\n        height: 96.7%;\n    }\nheader{\n    background-color: rgb(100,100,100);\n}\nnav{\n    background-color: rgb(150,150,150);\n}\n    nav ul{\n        padding:0;\n    }\n    nav ul>li{\n        padding: 0;\n    }\nmain{\n    background-color: rgb(250,250,250)\n}\n.cnt{\n    display: block;\n    font-size: 1rem;\n    max-width: 100%;\n    overflow: auto;\n  }\n    .cnt-nt{\n        display: block;\n        max-width: 100%;\n        overflow: auto;\n    }\n    img.cnt, button.cnt{\n        width: 100%;\n    }\n\n\n    .container,.container-fluid{\n        font-size: 0.7rem;\n    }\n    .cnt{\n        font-size: 0.7rem;\n      }\n    \n    @media (min-width: 576px) {\n        .container,.container-fluid{\n            font-size: 0.75rem;\n        }\n        .cnt{\n            font-size: 0.75rem;\n          }\n      }\n      \n      @media (min-width: 768px) {\n        .container,.container-fluid{\n            font-size: 0.8rem;\n        }\n        .cnt{\n            font-size: 0.8rem;\n          }\n      }\n      \n      @media (min-width: 992px) {\n        .container,.container-fluid{\n            font-size: 0.85rem;\n        }\n        .cnt{\n            font-size: 0.85rem;\n          }\n      }\n      \n      @media (min-width: 1200px) {\n        .container,.container-fluid{\n            font-size: 0.9rem;\n        }\n        .cnt{\n            font-size: 0.9rem;\n          }\n      }", ""]);
+exports.push([module.i, "a{\n    text-decoration: none;\n}\n.all{\n    height: 100vh;\n}\n    .nav-content{\n        height: 96.7%;\n    }\nheader{\n    background-color: rgb(100,100,100);\n}\nnav{\n    background-color: rgb(150,150,150);\n    padding-left: 30px;\n}\n    nav ul{\n        list-style-type: none;\n        padding:0;\n        width: 100%;\n    }\n    nav ul>li{\n        background-color: rgb(180,180,180);\n        padding: 0;\n        margin: 3px 0px 3px 0px;\n        width: 90%;\n    }\n        nav ul>li:hover{\n            background-color: rgb(210,210,210);\n        }\n        nav ul>li>a{\n            padding: 10px;\n        }\n        nav ul>li.selected{\n            background-color: rgb(250,250,250);\n            border-top-right-radius: 0;\n            border-bottom-right-radius: 0;\n            width: 100%;\n        }\nmain{\n    background-color: rgb(250,250,250);\n}\n.cnt{\n    display: block;\n    font-size: 1rem;\n    max-width: 100%;\n    overflow: auto;\n  }\n    .cnt-nt{\n        display: block;\n        max-width: 100%;\n        overflow: auto;\n    }\n    img.cnt, button.cnt{\n        width: 100%;\n    }\n\n\n    .container,.container-fluid{\n        font-size: 0.7rem;\n    }\n    .cnt{\n        font-size: 0.7rem;\n      }\n    \n    @media (min-width: 576px) {\n        .container,.container-fluid{\n            font-size: 0.75rem;\n        }\n        .cnt{\n            font-size: 0.75rem;\n          }\n      }\n      \n      @media (min-width: 768px) {\n        .container,.container-fluid{\n            font-size: 0.8rem;\n        }\n        .cnt{\n            font-size: 0.8rem;\n          }\n      }\n      \n      @media (min-width: 992px) {\n        .container,.container-fluid{\n            font-size: 0.85rem;\n        }\n        .cnt{\n            font-size: 0.85rem;\n          }\n      }\n      \n      @media (min-width: 1200px) {\n        .container,.container-fluid{\n            font-size: 0.9rem;\n        }\n        .cnt{\n            font-size: 0.9rem;\n          }\n      }\n\n/*sub pages*/\n.content{\n    height: 100%;\n    background-color: red;\n}", ""]);
 
 // exports
 
@@ -160,7 +160,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid all\">\n    <header class=\"row\">\n      <div class=\"col-sm-12\">\n        <div class=\"cnt\">\n            test\n        </div>\n      </div>\n    </header>\n    <div class=\"row nav-content\">\n      <nav class=\"col-sm-2\">\n        <div class=\"cnt\">\n            <ul>\n                <li *ngFor=\"let link of links\" class=\"col-sm-12\">\n                    <a routerLink=\"/{{link.name}}\" class=\"cnt pagelink\">\n                            {{link.displayName}}\n                    </a>\n                </li>\n            </ul>\n        </div>\n      </nav>\n      <main class=\"col-sm-10\">\n          <router-outlet></router-outlet>\n      </main>\n    </div>\n</div>"
+module.exports = "<div class=\"container-fluid all\">\n    <header class=\"row\">\n      <div class=\"col-sm-12\">\n        <div class=\"row align-items-center justify-content-end\">\n            <div class=\"col-lg-3 col-xl-4\"><h2>Hello Anon</h2></div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[3].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[2].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row nav-content\">\n      <nav class=\"col-sm-2\">\n        <div class=\"row\">\n            <ul>\n                <li *ngFor=\"let link of links\" [class.selected]=\"link === selectedLink\"\n                (click)=\"onLink(link)\" class=\"col-sm-12\">\n                    <a routerLink=\"/{{link.name}}\" class=\"cnt pagelink mat-button\">\n                            {{link.displayName}}\n                    </a>\n                </li>\n                <button class=\"mat-button\" mat-button=\"\"><span class=\"mat-button-wrapper\">Click me!</span><div class=\"mat-button-ripple mat-ripple\" matripple=\"\"></div><div class=\"mat-button-focus-overlay\"></div></button>\n            </ul>\n        </div>\n        <div class=\"row\">\n            <ul>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[3].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[2].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </li>\n            </ul>\n        </div>\n      </nav>\n      <main class=\"col-sm-10\">\n          <app-login></app-login>\n          <router-outlet></router-outlet>\n      </main>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -183,8 +183,12 @@ var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Webedu-mockup';
         this.links = __WEBPACK_IMPORTED_MODULE_1__page_list__["a" /* ADMIN_PAGES */];
+        this.baseLinks = __WEBPACK_IMPORTED_MODULE_1__page_list__["b" /* BASE_PAGES */];
     }
     AppComponent.prototype.ngOnInit = function () {
+    };
+    AppComponent.prototype.onLink = function (link) {
+        this.selectedLink = link;
     };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -418,7 +422,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/hours/hours.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  hours works!\n</p>\n"
+module.exports = "  <article class=\"row\">\n    <div class=\"col-sm-12\">\n      <p>Hours Works!</p>\n    </div>\n  </article>\n"
 
 /***/ }),
 
@@ -479,7 +483,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  login works!\n</p>\n"
+module.exports = "<p>\n  login\n</p>\n<form>\n  <input type=\"email\">\n  <input type=\"password\">\n  <input type=\"submit\" value=\"Login\">\n</form>"
 
 /***/ }),
 
@@ -589,7 +593,7 @@ var ManualComponent = (function () {
 /* unused harmony export MANAGEMENT_PAGES */
 /* unused harmony export USER_PAGES */
 var BASE_PAGES = [
-    { id: 1, name: 'login', displayName: 'Inloggen' },
+    { id: 1, name: 'login', displayName: 'Uitloggen' },
     { id: 2, name: 'dashboard', displayName: 'Dashboard' },
     { id: 3, name: 'account-self', displayName: 'Account gegevens' },
     { id: 4, name: 'manual', displayName: 'Handleiding' }
