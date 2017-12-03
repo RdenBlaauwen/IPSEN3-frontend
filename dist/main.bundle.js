@@ -211,19 +211,21 @@ var AppComponent = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__routing_routing_module__ = __webpack_require__("../../../../../src/app/routing/routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hours_hours_component__ = __webpack_require__("../../../../../src/app/hours/hours.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__projects_projects_component__ = __webpack_require__("../../../../../src/app/projects/projects.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__sprints_sprints_component__ = __webpack_require__("../../../../../src/app/sprints/sprints.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__userstories_userstories_component__ = __webpack_require__("../../../../../src/app/userstories/userstories.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__accounts_accounts_component__ = __webpack_require__("../../../../../src/app/accounts/accounts.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__customers_customers_component__ = __webpack_require__("../../../../../src/app/customers/customers.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__data_data_component__ = __webpack_require__("../../../../../src/app/data/data.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__manual_manual_component__ = __webpack_require__("../../../../../src/app/manual/manual.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__account_self_account_self_component__ = __webpack_require__("../../../../../src/app/account-self/account-self.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__routing_routing_module__ = __webpack_require__("../../../../../src/app/routing/routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__hours_hours_component__ = __webpack_require__("../../../../../src/app/hours/hours.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__projects_projects_component__ = __webpack_require__("../../../../../src/app/projects/projects.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__sprints_sprints_component__ = __webpack_require__("../../../../../src/app/sprints/sprints.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__userstories_userstories_component__ = __webpack_require__("../../../../../src/app/userstories/userstories.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__accounts_accounts_component__ = __webpack_require__("../../../../../src/app/accounts/accounts.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__customers_customers_component__ = __webpack_require__("../../../../../src/app/customers/customers.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__data_data_component__ = __webpack_require__("../../../../../src/app/data/data.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__manual_manual_component__ = __webpack_require__("../../../../../src/app/manual/manual.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__account_self_account_self_component__ = __webpack_require__("../../../../../src/app/account-self/account-self.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -245,31 +247,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__hours_hours_component__["a" /* HoursComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__projects_projects_component__["a" /* ProjectsComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__sprints_sprints_component__["a" /* SprintsComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__userstories_userstories_component__["a" /* UserstoriesComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__accounts_accounts_component__["a" /* AccountsComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__customers_customers_component__["a" /* CustomersComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__data_data_component__["a" /* DataComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__manual_manual_component__["a" /* ManualComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__account_self_account_self_component__["a" /* AccountSelfComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__login_login_component__["a" /* LoginComponent */]
+                __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_7__hours_hours_component__["a" /* HoursComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__projects_projects_component__["a" /* ProjectsComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__sprints_sprints_component__["a" /* SprintsComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__userstories_userstories_component__["a" /* UserstoriesComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__accounts_accounts_component__["a" /* AccountsComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__customers_customers_component__["a" /* CustomersComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__data_data_component__["a" /* DataComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__manual_manual_component__["a" /* ManualComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__account_self_account_self_component__["a" /* AccountSelfComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__login_login_component__["a" /* LoginComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__routing_routing_module__["a" /* RoutingModule */]
+                __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+                __WEBPACK_IMPORTED_MODULE_6__routing_routing_module__["a" /* RoutingModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClientModule */]
             ],
             providers: [],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -483,7 +489,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  login\n</p>\n<form>\n  <input type=\"email\">\n  <input type=\"password\">\n  <input type=\"submit\" value=\"Login\">\n</form>"
+module.exports = "<!-- <p>\n  login\n</p>\n<form>\n  <input type=\"email\">\n  <input type=\"password\">\n  <input type=\"submit\" value=\"Login\">\n</form> -->"
 
 /***/ }),
 
@@ -647,7 +653,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/projects/projects.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  projects works!\n</p>\n"
+module.exports = "<p>\n  projects works!\n</p>\n\n<ul class=\"list-group\">\n  <li\n  *ngFor=\"let project of projecten\" class=\"list-group-item\">\n    project.projectName }}\n  </li>\n</ul>\n"
 
 /***/ }),
 
@@ -657,6 +663,9 @@ module.exports = "<p>\n  projects works!\n</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -667,18 +676,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var ProjectsComponent = (function () {
-    function ProjectsComponent() {
+    function ProjectsComponent(http) {
+        var _this = this;
+        this.http = http;
+        this.http.get("/api/projects/").subscribe(function (res) {
+            _this.projecten = res.json();
+        });
     }
-    ProjectsComponent.prototype.ngOnInit = function () {
-    };
     ProjectsComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-projects',
             template: __webpack_require__("../../../../../src/app/projects/projects.component.html"),
             styles: [__webpack_require__("../../../../../src/app/projects/projects.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
     ], ProjectsComponent);
     return ProjectsComponent;
 }());
