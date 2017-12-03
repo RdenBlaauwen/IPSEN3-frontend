@@ -653,7 +653,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/projects/projects.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  projects works!\n</p>\n\n<ul class=\"list-group\">\n  <li\n  *ngFor=\"let project of projecten\" class=\"list-group-item\">\n    project.projectName }}\n  </li>\n</ul>\n"
+module.exports = "<p>\n  projects works!\n</p>\n\n<ul class=\"list-group\">\n  <li\n  *ngFor=\"let project of projecten\" class=\"list-group-item\">\n   {{ project.projectName }}\n  </li>\n</ul>\n"
 
 /***/ }),
 
