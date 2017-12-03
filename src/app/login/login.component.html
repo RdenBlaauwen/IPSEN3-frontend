@@ -1,8 +1,15 @@
-<!-- <p>
+<p>
   login
 </p>
-<form>
-  <input type="email">
-  <input type="password">
-  <input type="submit" value="Login">
-</form> -->
+
+<input type="text" #ref>
+<input type="text" #pas>
+<button (click)="checkLogin(ref.value, pas.value)">Search</button>
+
+
+
+  <div *ngIf="currentEmployee" >
+    <div>
+      <h1>Welcome {{ currentEmployee }}</h1>
+    </div>
+  </div>

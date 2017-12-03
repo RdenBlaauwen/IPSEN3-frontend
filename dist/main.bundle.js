@@ -489,7 +489,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <p>\n  login\n</p>\n<form>\n  <input type=\"email\">\n  <input type=\"password\">\n  <input type=\"submit\" value=\"Login\">\n</form> -->"
+module.exports = "<p>\n  login\n</p>\n\n<input type=\"text\" #ref>\n<input type=\"text\" #pas>\n<button (click)=\"checkLogin(ref.value, pas.value)\">Search</button>\n\n\n\n  <div *ngIf=\"currentEmployee\" >\n    <div>\n      <h1>Welcome {{ currentEmployee }}</h1>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -499,6 +499,7 @@ module.exports = "<!-- <p>\n  login\n</p>\n<form>\n  <input type=\"email\">\n  <
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -509,10 +510,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(http) {
+        this.http = http;
     }
-    LoginComponent.prototype.ngOnInit = function () {
+    LoginComponent.prototype.checkLogin = function (email, password) {
+        var _this = this;
+        this.http.get("/api/login/").subscribe(function (res) {
+            _this.employees = res.json();
+            console.log(_this.employees);
+            _this.email = email;
+            for (var _i = 0, _a = res.json(); _i < _a.length; _i++) {
+                var employee = _a[_i];
+                if (employee.email == email && employee.password == password) {
+                    _this.currentEmployee = employee.userFirstName;
+                    break;
+                }
+                else {
+                    _this.currentEmployee = null;
+                }
+            }
+        });
+    };
+    LoginComponent.prototype.validUser = function () {
     };
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -520,7 +541,7 @@ var LoginComponent = (function () {
             template: __webpack_require__("../../../../../src/app/login/login.component.html"),
             styles: [__webpack_require__("../../../../../src/app/login/login.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
     ], LoginComponent);
     return LoginComponent;
 }());
