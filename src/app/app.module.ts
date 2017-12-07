@@ -18,7 +18,8 @@ import { DataComponent } from './data/data.component';
 import { ManualComponent } from './manual/manual.component';
 import { AccountSelfComponent } from './account-self/account-self.component';
 import { LoginComponent } from './login/login.component';
-
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,11 @@ import { LoginComponent } from './login/login.component';
     BrowserAnimationsModule,
     RoutingModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,30 @@
-<p>
-  projects works!
-</p>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
 
-<ul class="list-group">
-  <li
-  *ngFor="let project of projecten" class="list-group-item">
-   {{ project.projectName }}
-  </li>
-</ul>
+    <!-- project_name Column -->  
+    <ng-container matColumnDef="project_name">
+      <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.project_name}} </mat-cell>
+    </ng-container>
+    
+    <!-- project_description Column -->
+    <ng-container matColumnDef="project_description">
+      <mat-header-cell *matHeaderCellDef> Projectbeschrijving </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.project_description}} </mat-cell>
+    </ng-container>
+    
+    <!-- customer_name Column -->
+    <ng-container matColumnDef="customer_name">
+      <mat-header-cell *matHeaderCellDef> Klant </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.customer_name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

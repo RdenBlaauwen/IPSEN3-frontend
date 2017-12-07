@@ -1,5 +1,49 @@
-  <article class="row">
-    <div class="col-sm-12">
-      <p>Hours Works!</p>
-    </div>
-  </article>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- project_name Column -->  
+    <ng-container matColumnDef="project_name">
+      <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.project_name}} </mat-cell>
+    </ng-container>
+    
+    <!-- sprint_name Column -->
+    <ng-container matColumnDef="sprint_name">
+      <mat-header-cell *matHeaderCellDef> Sprint </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sprint_name}} </mat-cell>
+    </ng-container>
+    
+    <!-- userstory Column -->
+    <ng-container matColumnDef="userstory">
+      <mat-header-cell *matHeaderCellDef> Userstory </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userstory}} </mat-cell>
+    </ng-container>
+
+    <!-- starttime Column -->
+    <ng-container matColumnDef="starttime">
+      <mat-header-cell *matHeaderCellDef> Starttijd </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.starttime}} </mat-cell>
+    </ng-container>
+
+    <!-- endtime Column -->
+    <ng-container matColumnDef="endtime">
+      <mat-header-cell *matHeaderCellDef> Eindtijd </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.endtime}} </mat-cell>
+    </ng-container>
+
+    <!-- exception Column -->
+    <ng-container matColumnDef="exception">
+      <mat-header-cell *matHeaderCellDef> Uitzondering </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.exception}} </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

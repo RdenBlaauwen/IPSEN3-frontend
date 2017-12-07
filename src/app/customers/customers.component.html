@@ -1,3 +1,24 @@
-<p>
-  customers works!
-</p>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- customer_name Column -->  
+    <ng-container matColumnDef="customer_name">
+      <mat-header-cell *matHeaderCellDef> Klant </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.customer_name}} </mat-cell>
+    </ng-container>
+    
+    <!-- customer_description Column -->
+    <ng-container matColumnDef="customer_description">
+      <mat-header-cell *matHeaderCellDef> Klantomschrijving </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.customer_description}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

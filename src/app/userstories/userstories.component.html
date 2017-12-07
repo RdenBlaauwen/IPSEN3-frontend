@@ -1,3 +1,36 @@
-<p>
-  userstories works!
-</p>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Userstory_number Column -->  
+    <ng-container matColumnDef="userstory_number">
+      <mat-header-cell *matHeaderCellDef> Userstory nummer </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userstory_number}} </mat-cell>
+    </ng-container>
+    
+    <!-- userstory_description Column -->
+    <ng-container matColumnDef="userstory_description">
+      <mat-header-cell *matHeaderCellDef> Userstory beschrijving </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userstory_description}} </mat-cell>
+    </ng-container>
+    
+    <!-- sprint_name Column -->
+    <ng-container matColumnDef="sprint_name">
+      <mat-header-cell *matHeaderCellDef> Sprint </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sprint_name}} </mat-cell>
+    </ng-container>
+
+    <!-- project_name Column -->
+    <ng-container matColumnDef="project_name">
+      <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.project_name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
