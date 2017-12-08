@@ -1,15 +1,23 @@
-<p>
-  login
-</p>
 
-<input type="text" #ref>
-<input type="text" #pas>
-<button (click)="checkLogin(ref.value, pas.value)">Search</button>
+ <img src="assets/images/web.png" style = "display: block; margin-left:auto; margin-right:auto;"/>
 
+<main class="form">
 
+    <form >
+  <p class="h5 text-center mb-4">Login</p>
 
-  <div *ngIf="currentEmployee" >
-    <div>
-      <h1>Welcome {{ currentEmployee }}</h1>
-    </div>
+  <div class="md-form">
+      <i class="fa fa-envelope prefix grey-text"></i>
+      <input type="text" id="defaultForm-email" class="form-control" mdbActive placeholder="Email" #email>
   </div>
+
+  <div class="md-form">
+      <i class="fa fa-lock prefix grey-text"></i>
+      <input type="password" id="defaultForm-pass" class="form-control" mdbActive placeholder="Password" #password>
+  </div>
+
+  <div class="text-center">
+      <button class="btn btn-default waves-light" mdbRippleRadius (click)="checkLogin(email.value, password.value)">Login</button>
+  </div>
+</form>
+</main>
