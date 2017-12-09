@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
@@ -20,6 +20,8 @@ import { AccountSelfComponent } from './account-self/account-self.component';
 import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
+import {ProjectService} from "./services/project.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,12 +42,13 @@ import { MatInputModule } from '@angular/material';
     RoutingModule,
     HttpModule,
     HttpClientModule,
+    HttpClientModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule
-    
+
   ],
-  providers: [],
+  providers: [ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,37 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { DataSource } from "@angular/cdk/table";
+import { ProjectService } from "../services/project.service";
+import { Project } from "../models/ProjectModel";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/shareReplay';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent implements OnInit {
-  displayedColumns: any[];
-  dataSource;
-  projectData: Project[];
-  constructor() {
-    this.displayedColumns = ['project_name','project_description', 'customer_name'];
-    this.projectData  = [
-      {project_name: 'Zed', project_description: "Dit project bestaat zodat mensen zonder skill kunnen spelen.", customer_name: 'Meowmel'},
-      {project_name: 'Zoe', project_description: "Nieuwe release, moet monitoren.", customer_name: 'Terratomere'},
-      {project_name: 'Kittan', project_description: "Perfectly balanced.", customer_name: 'Bob'}
-      
-    ];
-    this.dataSource = new MatTableDataSource(this.projectData);
 
-   }
-    applyFilter(filterValue: string) {
-     filterValue = filterValue.trim(); // Remove whitespace
-     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-     this.dataSource.filter = filterValue;
-   }
-  ngOnInit() {
+export class ProjectsComponent implements OnInit {
+
+  private dataSource: ProjectDataSource | null;
+  displayedColumns = ['project_name','project_description', 'project_status'];
+
+  applyFilter(filterValue: string) {
+    console.log(filterValue);
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+    console.log(this.dataSource.ProjectSubject.getValue());
   }
 
+  constructor(private projectService: ProjectService) {
+    this.dataSource = new ProjectDataSource(this.projectService);
+    console.log(this.dataSource.ProjectSubject.getValue());
+  }
+
+  ngOnInit() {
+    this.dataSource = new ProjectDataSource(this.projectService);
+    console.log(this.dataSource.ProjectSubject.getValue());
+  }
 }
-export interface Project {
-  project_name: string;
-  project_description: string;
-  customer_name: string;
+
+export class ProjectDataSource extends MatTableDataSource<any>{
+  ProjectObservable = this.projectService.getAllProjects();
+  ProjectSubject = new BehaviorSubject<Project[]>([]);
+
+  constructor(private projectService: ProjectService){
+    super();
+    this.ProjectObservable
+      .subscribe(projects => this.ProjectSubject.next(projects));
+    console.log(this.ProjectSubject.getValue());
+  }
+
+  connect(): BehaviorSubject<Project[]>{
+    return this.ProjectSubject;
+  }
+
+  disconnect(){ }
 }

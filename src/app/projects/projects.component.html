@@ -6,22 +6,22 @@
   </div>
   <mat-table #table [dataSource]="dataSource">
 
-    <!-- project_name Column -->  
+    <!-- project_name Column -->
     <ng-container matColumnDef="project_name">
       <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.project_name}} </mat-cell>
+      <mat-cell *matCellDef="let project"> {{project.projectName}} </mat-cell>
     </ng-container>
-    
+
     <!-- project_description Column -->
     <ng-container matColumnDef="project_description">
-      <mat-header-cell *matHeaderCellDef> Projectbeschrijving </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.project_description}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef> Project Description </mat-header-cell>
+      <mat-cell *matCellDef="let project"> {{project.projectDescription}} </mat-cell>
     </ng-container>
-    
+
     <!-- customer_name Column -->
-    <ng-container matColumnDef="customer_name">
-      <mat-header-cell *matHeaderCellDef> Klant </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.customer_name}} </mat-cell>
+    <ng-container matColumnDef="project_status">
+      <mat-header-cell *matHeaderCellDef> Project Status </mat-header-cell>
+      <mat-cell *matCellDef="let project"> {{project.projectIsDeleted}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
