@@ -12,7 +12,7 @@ import { SprintsComponent } from '../sprints/sprints.component';
 import {UserstoriesComponent} from '../userstories/userstories.component';
 
 import{Page}from '../page';
-import {BASE_PAGES,ADMIN_PAGES} from '../page-list';
+import {BASE_PAGES, ADMIN_PAGES} from '../page-list';
 
 const routes: Routes = [
   { path: BASE_PAGES[0].name, component: LoginComponent },
