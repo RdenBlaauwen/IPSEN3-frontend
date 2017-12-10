@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import{ Http, Response } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import{ Http, Response, RequestOptions, Headers } from '@angular/http';
+import {  HttpClient, HttpHeaders } from '@angular/common/http';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { EmployeeService } from '../services/employee.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,29 +15,11 @@ export class LoginComponent  {
   employees: string[];
   email: string;
   currentEmployee: string;
-  constructor(private http: Http) {}
-checkLogin(email: string, password: string)
-{
-  this.http.get("/api/login/").subscribe(
-    
-    (res: Response) => {
-    this.employees = res.json();
-    console.log(this.employees);
-    this.email = email;
-    for(let employee of res.json())
-    {
-      if(employee.email == email && employee.password == password)
-      {
-        this.currentEmployee = employee.userFirstName;
-        break;
-      }
-      else
-      {
-        this.currentEmployee = null;
-      }
-    }
-  }
-  )
+  constructor(private router: Router, private auth: AuthService,
+  private employeeService: EmployeeService) {}
+  checkLogin(email: string, password: string)
+  {
+    this.currentEmployee = this.employeeService.login(email, password);
  }
  validUser()
 {

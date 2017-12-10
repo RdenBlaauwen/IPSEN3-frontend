@@ -21,6 +21,8 @@ import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { ProjectService } from './services/project.service';
+import { EmployeeService } from './services/employee.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ProjectService } from './services/project.service';
     MatInputModule
 
   ],
-  providers: [ProjectService],
+  providers: [ProjectService,
+    AuthService, 
+    EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
