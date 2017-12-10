@@ -1,10 +1,22 @@
 
- <img src="assets/images/web.png" style = "display: block; margin-left:auto; margin-right:auto;"/>
+   
+  <!-- <input type="text" #ref>
+  <input type="text" #pas>
+  <button (click)="checkLogin(ref.value, pas.value)">Search</button> -->
+  
+   
+  <main class="form">
+    <img src="assets/images/web.png" style = "display: block; margin-left:auto; margin-right:auto;"/>
 
+        <h1>Welcome {{ currentEmployee }}</h1>
 
-    <form >
-      <p class="h5 text-center mb-4">Login</p>
-      <input type="text"class="form-control" mdbActive placeholder="Email" #email>
-      <input type="password" class="form-control" mdbActive placeholder="Password" #password>
-      <button class="btn btn-default waves-light" mdbRippleRadius (click)="checkLogin(email.value, password.value)">Login</button>
-</form>
+       <i class="fa fa-envelope prefix grey-text"></i>
+       <input type="text" id="defaultForm-email" class="form-control" mdbActive placeholder="Email" #email>
+  
+       <i class="fa fa-lock prefix grey-text"></i>
+       <input type="password" id="defaultForm-pass" class="form-control" mdbActive placeholder="Password" #password>
+  
+       <button class="btn btn-default waves-light" (click)="checkLogin(email.value, password.value)">Login</button>
+
+  </main>
+  

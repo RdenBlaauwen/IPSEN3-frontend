@@ -1,0 +1,107 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+a{
+    text-decoration: none;
+}
+.all{
+    height: 100vh;
+}
+    .nav-content{
+        height: 96.7%;
+    }
+header{
+    background-color: rgb(100,100,100);
+}
+nav{
+    background-color: rgb(150,150,150);
+    padding-left: 30px;
+}
+    nav ul{
+        list-style-type: none;
+        padding:0;
+        width: 100%;
+    }
+    nav ul>li{
+        background-color: rgb(180,180,180);
+        padding: 0;
+        margin: 3px 0px 3px 0px;
+        width: 90%;
+    }
+        nav ul>li:hover{
+            background-color: rgb(210,210,210);
+        }
+        nav ul>li>a{
+            padding: 10px;
+        }
+        nav ul>li.selected{
+            background-color: rgb(250,250,250);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            width: 100%;
+        }
+main{
+    background-color: rgb(250,250,250);
+}
+.cnt{
+    display: block;
+    font-size: 1rem;
+    max-width: 100%;
+    overflow: auto;
+  }
+    .cnt-nt{
+        display: block;
+        max-width: 100%;
+        overflow: auto;
+    }
+    img.cnt, button.cnt{
+        width: 100%;
+    }
+
+
+    .container,.container-fluid{
+        font-size: 0.7rem;
+    }
+    .cnt{
+        font-size: 0.7rem;
+      }
+    
+    @media (min-width: 576px) {
+        .container,.container-fluid{
+            font-size: 0.75rem;
+        }
+        .cnt{
+            font-size: 0.75rem;
+          }
+      }
+      
+      @media (min-width: 768px) {
+        .container,.container-fluid{
+            font-size: 0.8rem;
+        }
+        .cnt{
+            font-size: 0.8rem;
+          }
+      }
+      
+      @media (min-width: 992px) {
+        .container,.container-fluid{
+            font-size: 0.85rem;
+        }
+        .cnt{
+            font-size: 0.85rem;
+          }
+      }
+      
+      @media (min-width: 1200px) {
+        .container,.container-fluid{
+            font-size: 0.9rem;
+        }
+        .cnt{
+            font-size: 0.9rem;
+          }
+      }
+
+/*sub pages*/
+.content{
+    height: 100%;
+    background-color: red;
+}

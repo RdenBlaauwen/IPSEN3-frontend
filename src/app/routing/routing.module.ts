@@ -12,10 +12,12 @@ import { SprintsComponent } from '../sprints/sprints.component';
 import {UserstoriesComponent} from '../userstories/userstories.component';
 
 import{Page}from '../page';
-import {BASE_PAGES, ADMIN_PAGES} from '../page-list';
+import {BASE_PAGES,ADMIN_PAGES} from '../page-list';
+import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [
-  { path: BASE_PAGES[0].name, component: LoginComponent },
+  { path: '', component: LoginComponent},
+  { path: BASE_PAGES[1].name, component: HomeComponent},
   { path: BASE_PAGES[2].name, component: AccountSelfComponent },
   { path: BASE_PAGES[3].name, component: ManualComponent },
   { path: ADMIN_PAGES[0].name, component: HoursComponent },

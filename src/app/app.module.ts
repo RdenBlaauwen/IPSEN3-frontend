@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material';
 import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthService } from './services/auth.service';
     DataComponent,
     ManualComponent,
     AccountSelfComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
