@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { HttpModule, Http } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -24,6 +23,9 @@ import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './home/home.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatCardContent} from '@angular/material/card';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { HomeComponent } from './home/home.component';
     ManualComponent,
     AccountSelfComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,9 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule,
+    FormsModule
 
   ],
   providers: [ProjectService,
