@@ -1,4 +1,4 @@
-<div class="container-fluid all">
+<div *ngIf="validated" class="container-fluid all">
     <header class="row">
       <div class="col-sm-12">
         <div class="row align-items-center justify-content-end">
@@ -59,3 +59,8 @@
       </main>
     </div>
 </div>
+
+<!-- <div *ngIf="!validated;then redirect()">
+    <b>U moet eerst inloggen</b>
+    <app-login></app-login>
+</div> -->

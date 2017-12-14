@@ -18,8 +18,8 @@ import {AddProjectComponent} from "../projects/add-project/add-project.component
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
+  { path: 'home', component: HomeComponent},
   { path: 'add_project', component: AddProjectComponent },
-  { path: BASE_PAGES[1].name, component: HomeComponent},
   { path: BASE_PAGES[2].name, component: AccountSelfComponent },
   { path: BASE_PAGES[3].name, component: ManualComponent },
   { path: ADMIN_PAGES[0].name, component: HoursComponent },

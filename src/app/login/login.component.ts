@@ -14,17 +14,24 @@ export class LoginComponent  {
 
   employees: string[];
   email: string;
-  currentEmployee: string;
+  currentEmployee: string = null;
   constructor(private router: Router,
-  private employeeService: EmployeeService, private auth: AuthService) {}
+  private employeeService: EmployeeService, private auth: AuthService) {
+    this.auth.getAuthorization();
+
+    //is de gebruiker al ingelogd?
+    //dan wordt die doorverwezen naar homepagina
+    if(this.auth.isAuthorized())
+    {
+      this.router.navigate(['home']);
+    }
+  }
   checkLogin(email: string, password: string)
   {
-    this.currentEmployee  = this.employeeService.login(email, password);
-    console.log(this.auth.getAuthorization());
-    this.router.navigate(['']);
- }
- validUser()
-{
-}
+    this.employeeService.login(email, password);
+  }
+
+
+
 
 }

@@ -3,6 +3,7 @@ import { ADMIN_PAGES, BASE_PAGES } from '../page-list';
 import { Page } from '../page';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: Http, private router: Router) { }
+  validated: boolean;
+
+  constructor(private http: Http, private router: Router, private auth: AuthService) { 
+    //Checkt of de authorizatie al bestaat in de localStorage
+    auth.getAuthorization();
+    this.validated = auth.isAuthorized();
+  }
 
   title = 'Webedu-mockup';
   
@@ -23,6 +30,10 @@ export class HomeComponent implements OnInit {
   
     onLink(link: Page){
       this.selectedLink=link;
+    }
+    redirect()
+    {
+      this.router.navigate(['login']);
     }
 
 }

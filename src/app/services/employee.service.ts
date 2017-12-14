@@ -1,17 +1,20 @@
 import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
-import { Http, Response, Headers } from "@angular/http/";
-import { Router } from "@angular/router/";
-import { BASE_PAGES } from "../page-list";
+import { Http, Response, Headers } from "@angular/http";
+import { Router } from "@angular/router";
 
 
 @Injectable()
 export class EmployeeService
 {
-  naam : string;
+  naam : string = null;
     constructor(private auth: AuthService, private router: Router, private http: Http)
     {
 
+    }
+    private goHome()
+    {
+        this.router.navigate(['home']);
     }
     public login(email: string, password: string)
     {
@@ -20,7 +23,6 @@ export class EmployeeService
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Basic ' + loginEncoded);
-       //  const options = new RequestOptions();
          this.http.get(`/api/login/`,{headers:headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
@@ -34,15 +36,15 @@ export class EmployeeService
                email,
                password
              }
+             this.goHome();
              let auth = JSON.stringify(authorization);
              let storage = false ? localStorage : sessionStorage;
              storage.setItem('authorization', auth);
              this.naam= employee.employeeFirstname;
-             this.router.navigate([BASE_PAGES[1].name]);
+             
            }
          }
-       }
-       )
-       return "Niet gelukt";
+       })
+       
     }
 }
