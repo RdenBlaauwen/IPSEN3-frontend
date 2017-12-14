@@ -230,7 +230,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__routing_routing_module__ = __webpack_require__("../../../../../src/app/routing/routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__hours_hours_component__ = __webpack_require__("../../../../../src/app/hours/hours.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__projects_projects_component__ = __webpack_require__("../../../../../src/app/projects/projects.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__sprints_sprints_component__ = __webpack_require__("../../../../../src/app/sprints/sprints.component.ts");
@@ -245,12 +245,16 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_employee_service__ = __webpack_require__("../../../../../src/app/services/employee.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__angular_material_card__ = __webpack_require__("../../../material/esm5/card.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -292,18 +296,23 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_15__manual_manual_component__["a" /* ManualComponent */],
                 __WEBPACK_IMPORTED_MODULE_16__account_self_account_self_component__["a" /* AccountSelfComponent */],
                 __WEBPACK_IMPORTED_MODULE_17__login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_21__home_home_component__["a" /* HomeComponent */]
+                __WEBPACK_IMPORTED_MODULE_21__home_home_component__["a" /* HomeComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_7__routing_routing_module__["a" /* RoutingModule */],
+                __WEBPACK_IMPORTED_MODULE_7__angular_router__["b" /* RouterModule */].forRoot([
+                    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_17__login_login_component__["a" /* LoginComponent */] },
+                    { path: '', component: __WEBPACK_IMPORTED_MODULE_21__home_home_component__["a" /* HomeComponent */] }
+                ]),
                 __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_material__["d" /* MatTableModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_material__["a" /* MatFormFieldModule */],
-                __WEBPACK_IMPORTED_MODULE_6__angular_material__["b" /* MatInputModule */]
+                __WEBPACK_IMPORTED_MODULE_6__angular_material__["b" /* MatInputModule */],
+                __WEBPACK_IMPORTED_MODULE_22__angular_material_card__["a" /* MatCardModule */],
+                __WEBPACK_IMPORTED_MODULE_23__angular_forms__["c" /* FormsModule */]
             ],
             providers: [__WEBPACK_IMPORTED_MODULE_18__services_project_service__["a" /* ProjectService */],
                 __WEBPACK_IMPORTED_MODULE_20__services_auth_service__["a" /* AuthService */],
@@ -475,7 +484,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid all\">\n    <header class=\"row\">\n      <div class=\"col-sm-12\">\n        <div class=\"row align-items-center justify-content-end\">\n            <div class=\"col-lg-3 col-xl-4\"><h2>Hello Anon</h2></div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[3].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[2].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row nav-content\">\n      <nav class=\"col-sm-2\">\n        <div class=\"row\">\n            <ul>\n                <li *ngFor=\"let link of links\" [class.selected]=\"link === selectedLink\"\n                (click)=\"onLink(link)\" class=\"col-sm-12\">\n                    <a routerLink=\"/{{link.name}}\" class=\"cnt pagelink mat-button\">\n                            {{link.displayName}}\n                    </a>\n                </li>\n                <button class=\"mat-button\" mat-button=\"\"><span class=\"mat-button-wrapper\">Click me!</span><div class=\"mat-button-ripple mat-ripple\" matripple=\"\"></div><div class=\"mat-button-focus-overlay\"></div></button>\n            </ul>\n        </div>\n        <div class=\"row\">\n            <ul>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[3].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[2].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </li>\n            </ul>\n        </div>\n      </nav>\n      <main class=\"col-sm-10\">\n          <router-outlet></router-outlet>\n      </main>\n    </div>\n</div>"
+module.exports = "<div *ngIf=\"validUser()\" class=\"container-fluid all\">\n    <header class=\"row\">\n      <div class=\"col-sm-12\">\n        <div class=\"row align-items-center justify-content-end\">\n            <div class=\"col-lg-3 col-xl-4\"><h2>Hello Anon</h2></div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[3].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                    {{baseLinks[2].displayName}}\n                </a>\n            </div>\n            <div class=\"col-md-3 col-xl-2\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt btn btn-info\" role=\"button\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row nav-content\">\n      <nav class=\"col-sm-2\">\n        <div class=\"row\">\n            <ul>\n                <li *ngFor=\"let link of links\" [class.selected]=\"link === selectedLink\"\n                (click)=\"onLink(link)\" class=\"col-sm-12\">\n                    <a routerLink=\"/{{link.name}}\" class=\"cnt pagelink mat-button\">\n                            {{link.displayName}}\n                    </a>\n                </li>\n                <button class=\"mat-button\" mat-button=\"\"><span class=\"mat-button-wrapper\">Click me!</span><div class=\"mat-button-ripple mat-ripple\" matripple=\"\"></div><div class=\"mat-button-focus-overlay\"></div></button>\n            </ul>\n        </div>\n        <div class=\"row\">\n            <ul>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[3].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[3].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[2].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[2].displayName}}\n                    </a>\n                </li>\n                <li class=\"col-sm-12 btn\">\n                    <a routerLink=\"/{{baseLinks[0].name}}\" class=\"cnt pagelink\">\n                        {{baseLinks[0].displayName}}\n                    </a>\n                </li>\n            </ul>\n        </div>\n      </nav>\n      <main class=\"col-sm-10\">\n          <router-outlet></router-outlet>\n      </main>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -488,6 +497,7 @@ module.exports = "<div class=\"container-fluid all\">\n    <header class=\"row\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_list__ = __webpack_require__("../../../../../src/app/page-list.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -501,10 +511,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomeComponent = (function () {
-    function HomeComponent(http, router) {
+    function HomeComponent(http, router, auth) {
         this.http = http;
         this.router = router;
+        this.auth = auth;
         this.title = 'Webedu-mockup';
         this.links = __WEBPACK_IMPORTED_MODULE_1__page_list__["a" /* ADMIN_PAGES */];
         this.baseLinks = __WEBPACK_IMPORTED_MODULE_1__page_list__["b" /* BASE_PAGES */];
@@ -514,13 +526,24 @@ var HomeComponent = (function () {
     HomeComponent.prototype.onLink = function (link) {
         this.selectedLink = link;
     };
+    HomeComponent.prototype.validUser = function () {
+        if (this.auth.isAuthorized()) {
+            return true;
+        }
+        else {
+            this.router.navigate(['login']);
+            return false;
+        }
+    };
+    HomeComponent.prototype.redirect = function () {
+    };
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-home',
             template: __webpack_require__("../../../../../src/app/home/home.component.html"),
             styles: [__webpack_require__("../../../../../src/app/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* Router */], __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -625,7 +648,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n   \n  <!-- <input type=\"text\" #ref>\n  <input type=\"text\" #pas>\n  <button (click)=\"checkLogin(ref.value, pas.value)\">Search</button> -->\n  \n   \n  <main class=\"form\">\n    <img src=\"assets/images/web.png\" style = \"display: block; margin-left:auto; margin-right:auto;\"/>\n\n        <h1>Welcome {{ currentEmployee }}</h1>\n\n       <i class=\"fa fa-envelope prefix grey-text\"></i>\n       <input type=\"text\" id=\"defaultForm-email\" class=\"form-control\" mdbActive placeholder=\"Email\" #email>\n  \n       <i class=\"fa fa-lock prefix grey-text\"></i>\n       <input type=\"password\" id=\"defaultForm-pass\" class=\"form-control\" mdbActive placeholder=\"Password\" #password>\n  \n       <button class=\"btn btn-default waves-light\" (click)=\"checkLogin(email.value, password.value)\">Login</button>\n\n  </main>\n  "
+module.exports = "\n   \n  <!-- <input type=\"text\" #ref>\n  <input type=\"text\" #pas>\n  <button (click)=\"checkLogin(ref.value, pas.value)\">Search</button> -->\n  \n   \n  <main class=\"form\">\n    \n    <img src=\"assets/images/web.png\" style = \"display: block; margin-left:auto; margin-right:auto;\"/>\n\n        <h1>Welcome {{ currentEmployee }}</h1>\n\n       <i class=\"fa fa-envelope prefix grey-text\"></i>\n       <input type=\"text\" id=\"defaultForm-email\" class=\"form-control\" mdbActive placeholder=\"Email\" #email>\n  \n       <i class=\"fa fa-lock prefix grey-text\"></i>\n       <input type=\"password\" id=\"defaultForm-pass\" class=\"form-control\" mdbActive placeholder=\"Password\" #password>\n  \n       <button class=\"btn btn-default waves-light\" (click)=\"checkLogin(email.value, password.value)\">Login</button>\n\n  </main>\n  "
 
 /***/ }),
 
@@ -656,13 +679,10 @@ var LoginComponent = (function () {
         this.router = router;
         this.employeeService = employeeService;
         this.auth = auth;
+        this.currentEmployee = null;
     }
     LoginComponent.prototype.checkLogin = function (email, password) {
-        this.currentEmployee = this.employeeService.login(email, password);
-        console.log(this.auth.getAuthorization());
-        this.router.navigate(['']);
-    };
-    LoginComponent.prototype.validUser = function () {
+        this.employeeService.login(email, password);
     };
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -941,80 +961,13 @@ var ProjectsComponent = (function () {
 
 /***/ }),
 
-/***/ "../../../../../src/app/routing/routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__account_self_account_self_component__ = __webpack_require__("../../../../../src/app/account-self/account-self.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__accounts_accounts_component__ = __webpack_require__("../../../../../src/app/accounts/accounts.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__customers_customers_component__ = __webpack_require__("../../../../../src/app/customers/customers.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_data_component__ = __webpack_require__("../../../../../src/app/data/data.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hours_hours_component__ = __webpack_require__("../../../../../src/app/hours/hours.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__manual_manual_component__ = __webpack_require__("../../../../../src/app/manual/manual.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__projects_projects_component__ = __webpack_require__("../../../../../src/app/projects/projects.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__sprints_sprints_component__ = __webpack_require__("../../../../../src/app/sprints/sprints.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__userstories_userstories_component__ = __webpack_require__("../../../../../src/app/userstories/userstories.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__page_list__ = __webpack_require__("../../../../../src/app/page-list.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var routes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_7__login_login_component__["a" /* LoginComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["b" /* BASE_PAGES */][1].name, component: __WEBPACK_IMPORTED_MODULE_13__home_home_component__["a" /* HomeComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["b" /* BASE_PAGES */][2].name, component: __WEBPACK_IMPORTED_MODULE_2__account_self_account_self_component__["a" /* AccountSelfComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["b" /* BASE_PAGES */][3].name, component: __WEBPACK_IMPORTED_MODULE_8__manual_manual_component__["a" /* ManualComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][0].name, component: __WEBPACK_IMPORTED_MODULE_6__hours_hours_component__["a" /* HoursComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][1].name, component: __WEBPACK_IMPORTED_MODULE_9__projects_projects_component__["a" /* ProjectsComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][2].name, component: __WEBPACK_IMPORTED_MODULE_10__sprints_sprints_component__["a" /* SprintsComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][3].name, component: __WEBPACK_IMPORTED_MODULE_11__userstories_userstories_component__["a" /* UserstoriesComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][4].name, component: __WEBPACK_IMPORTED_MODULE_3__accounts_accounts_component__["a" /* AccountsComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][5].name, component: __WEBPACK_IMPORTED_MODULE_4__customers_customers_component__["a" /* CustomersComponent */] },
-    { path: __WEBPACK_IMPORTED_MODULE_12__page_list__["a" /* ADMIN_PAGES */][6].name, component: __WEBPACK_IMPORTED_MODULE_5__data_data_component__["a" /* DataComponent */] }
-];
-var RoutingModule = (function () {
-    function RoutingModule() {
-    }
-    RoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */].forRoot(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */]]
-        })
-    ], RoutingModule);
-    return RoutingModule;
-}());
-
-
-
-/***/ }),
-
 /***/ "../../../../../src/app/services/auth.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1025,25 +978,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AuthService = (function () {
     function AuthService() {
+        this.password = null;
+        this.emailAddress = null;
+        this.getAuthorization();
     }
+    AuthService.prototype.createAuthHeader = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic ' + this.emailAddress + ':' + this.password);
+        return headers;
+    };
     AuthService.prototype.setAuth = function (email, password) {
         this.emailAddress = email;
         this.password = password;
     };
+    AuthService.prototype.isAuthorized = function () {
+        console.log(this.emailAddress != null && this.password != null);
+        return this.emailAddress != null && this.password != null;
+        //console.log(this.emailAddress);
+    };
+    AuthService.prototype.storeAuthorization = function (local) {
+        var authorization = {
+            emailAddress: this.emailAddress,
+            password: this.password
+        };
+        var authorizationString = JSON.stringify(authorization);
+        var storage = local ? localStorage : sessionStorage;
+        storage.setItem('authorization', authorizationString);
+        console.log(authorizationString);
+    };
     AuthService.prototype.getAuthorization = function () {
         var authorizationString = sessionStorage.getItem('authorization');
         console.log(authorizationString);
-        if (authorizationString === null) {
+        if (authorizationString == null) {
             authorizationString = localStorage.getItem('authorization');
         }
-        if (authorizationString !== null) {
+        if (authorizationString != null) {
             var authorization = JSON.parse(authorizationString);
-            this.emailAddress = authorization['emailAddress'];
+            this.emailAddress = authorization['email'];
             this.password = authorization['password'];
         }
-        return authorizationString;
     };
     AuthService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
@@ -1065,7 +1042,6 @@ var AuthService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http___ = __webpack_require__("../../../http/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router___ = __webpack_require__("../../../router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__page_list__ = __webpack_require__("../../../../../src/app/page-list.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1079,12 +1055,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var EmployeeService = (function () {
     function EmployeeService(auth, router, http) {
         this.auth = auth;
         this.router = router;
         this.http = http;
+        this.naam = null;
     }
     EmployeeService.prototype.login = function (email, password) {
         var _this = this;
@@ -1093,7 +1069,6 @@ var EmployeeService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_2__angular_http___["a" /* Headers */]();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Basic ' + loginEncoded);
-        //  const options = new RequestOptions();
         this.http.get("/api/login/", { headers: headers }).subscribe(function (res) {
             console.log(res.json());
             for (var _i = 0, _a = res.json(); _i < _a.length; _i++) {
@@ -1107,11 +1082,11 @@ var EmployeeService = (function () {
                     var storage = false ? localStorage : sessionStorage;
                     storage.setItem('authorization', auth);
                     _this.naam = employee.employeeFirstname;
-                    _this.router.navigate([__WEBPACK_IMPORTED_MODULE_4__page_list__["b" /* BASE_PAGES */][1].name]);
                 }
             }
         });
-        return "Niet gelukt";
+        this.router.navigate(['']);
+        //return "Niet gelukt";
     };
     EmployeeService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),

@@ -3,6 +3,7 @@ import { ADMIN_PAGES, BASE_PAGES } from '../page-list';
 import { Page } from '../page';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: Http, private router: Router) { }
+  constructor(private http: Http, private router: Router, private auth: AuthService) { }
 
   title = 'Webedu-mockup';
   
@@ -24,5 +25,19 @@ export class HomeComponent implements OnInit {
     onLink(link: Page){
       this.selectedLink=link;
     }
-
+    validUser():boolean
+    {
+      if(this.auth.isAuthorized())
+      {
+        return true;
+      }
+      else{
+        this.router.navigate(['login']);
+        return false;
+      }
+    }
+    redirect()
+    {
+        
+    }
 }

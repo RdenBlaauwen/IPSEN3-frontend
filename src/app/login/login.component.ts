@@ -14,17 +14,15 @@ export class LoginComponent  {
 
   employees: string[];
   email: string;
-  currentEmployee: string;
+  currentEmployee: string = null;
   constructor(private router: Router,
   private employeeService: EmployeeService, private auth: AuthService) {}
   checkLogin(email: string, password: string)
   {
-    this.currentEmployee  = this.employeeService.login(email, password);
-    console.log(this.auth.getAuthorization());
-    this.router.navigate(['']);
- }
- validUser()
-{
-}
+    this.employeeService.login(email, password);
+  }
+
+
+
 
 }

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import { RoutingModule } from './routing/routing.module';
+import { RouterModule } from '@angular/router';
 import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { SprintsComponent } from './sprints/sprints.component';
@@ -46,7 +46,10 @@ import { FormsModule }   from '@angular/forms';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RoutingModule,
+    RouterModule.forRoot([
+      { path: 'login', component: LoginComponent},
+      { path: '', component: HomeComponent}
+    ]),
     HttpModule,
     HttpClientModule,
     HttpClientModule,
