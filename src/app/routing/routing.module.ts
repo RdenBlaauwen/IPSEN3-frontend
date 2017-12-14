@@ -14,9 +14,11 @@ import {UserstoriesComponent} from '../userstories/userstories.component';
 import{Page}from '../page';
 import {BASE_PAGES,ADMIN_PAGES} from '../page-list';
 import { HomeComponent } from '../home/home.component';
+import {AddProjectComponent} from "../projects/add-project/add-project.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
+  { path: 'add_project', component: AddProjectComponent },
   { path: BASE_PAGES[1].name, component: HomeComponent},
   { path: BASE_PAGES[2].name, component: AccountSelfComponent },
   { path: BASE_PAGES[3].name, component: ManualComponent },

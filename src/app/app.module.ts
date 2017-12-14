@@ -5,7 +5,9 @@ import { HttpModule, Http } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
@@ -19,11 +21,11 @@ import { ManualComponent } from './manual/manual.component';
 import { AccountSelfComponent } from './account-self/account-self.component';
 import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material';
-import { MatInputModule } from '@angular/material';
 import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './home/home.component';
+import { AddProjectComponent } from './projects/add-project/add-project.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { HomeComponent } from './home/home.component';
     ManualComponent,
     AccountSelfComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AddProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -49,11 +52,11 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
-
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [ProjectService,
-    AuthService, 
+    AuthService,
     EmployeeService],
   bootstrap: [AppComponent]
 })
