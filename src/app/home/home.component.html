@@ -1,8 +1,9 @@
+<div id= "fullPage">
 <div *ngIf="validated" class="container-fluid all">
     <header class="row">
       <div class="col-sm-12">
         <div class="row align-items-center justify-content-end">
-            <div class="col-lg-3 col-xl-4"><h2>Hello Anon</h2></div>
+            <div class="col-lg-3 col-xl-4"><h2>Hello {{name}}</h2></div>
             <div class="col-md-3 col-xl-2">
                 <a routerLink="/{{baseLinks[3].name}}" class="cnt btn btn-info" role="button">
                     {{baseLinks[3].displayName}}
@@ -59,7 +60,7 @@
       </main>
     </div>
 </div>
-
+</div>
 <!-- <div *ngIf="!validated;then redirect()">
     <b>U moet eerst inloggen</b>
     <app-login></app-login>

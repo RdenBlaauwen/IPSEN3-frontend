@@ -1,17 +1,18 @@
 import { Injectable } from "@angular/core";
-import { Headers } from "@angular/http";
-
+import { Http, Response, Headers } from "@angular/http";
 @Injectable()
 export class AuthService
 {
     password: string = null;
     emailAddress: string = null;
+    name: string = null;
     constructor(){}
-    public createAuthHeader(email: string, password: string): Headers
+    public createAuthHeader(email: string, password: string)
     {
+        let loginEncoded =  btoa(email+":"+password);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic ' + email + ':' + password);
+        headers.append('Authorization', 'Basic ' + loginEncoded);
         return headers;
     }
 
@@ -50,6 +51,11 @@ export class AuthService
             let authorization = JSON.parse(authorizationString);
             this.emailAddress = authorization['email'];
             this.password = authorization['password'];
+            this.name = authorization['name'];
         }
+    }
+    public getEmployeeName()
+    {
+        return this.name;
     }
 }

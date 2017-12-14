@@ -13,11 +13,13 @@ import { AuthService } from '../services/auth.service';
 export class HomeComponent implements OnInit {
 
   validated: boolean;
+  name: string;
 
   constructor(private http: Http, private router: Router, private auth: AuthService) { 
     //Checkt of de authorizatie al bestaat in de localStorage
     auth.getAuthorization();
     this.validated = auth.isAuthorized();
+    this.name = auth.getEmployeeName();
   }
 
   title = 'Webedu-mockup';

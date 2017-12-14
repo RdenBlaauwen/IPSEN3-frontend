@@ -18,11 +18,7 @@ export class EmployeeService
     }
     public login(email: string, password: string)
     {
-        let activeEmployee = "";
-        let loginEncoded =  btoa(email+":"+password);
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic ' + loginEncoded);
+        let headers = this.auth.createAuthHeader(email, password);
          this.http.get(`/api/login/`,{headers:headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
@@ -34,13 +30,13 @@ export class EmployeeService
              let authorization = 
              {
                email,
-               password
+               password,
+               name: employee.employeeFirstname
              }
              this.goHome();
              let auth = JSON.stringify(authorization);
              let storage = false ? localStorage : sessionStorage;
              storage.setItem('authorization', auth);
-             this.naam= employee.employeeFirstname;
              
            }
          }

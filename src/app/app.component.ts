@@ -7,16 +7,6 @@ import { ADMIN_PAGES, BASE_PAGES } from './page-list';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  title = 'Webedu-mockup';
+export class AppComponent{
 
-  links = ADMIN_PAGES;
-  baseLinks = BASE_PAGES;
-  selectedLink: Page;
-  ngOnInit() {
-  }
-
-  onLink(link: Page){
-    this.selectedLink=link;
-  }
 }
