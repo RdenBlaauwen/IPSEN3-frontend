@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
@@ -26,6 +27,7 @@ import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
+import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
     AccountSelfComponent,
     LoginComponent,
     HomeComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,10 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [ProjectService,
     AuthService,
