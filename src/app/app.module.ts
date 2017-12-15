@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +30,8 @@ import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
 import { HoursService } from './services/hours.service';
+import { CreateSprintComponent } from './sprints/create-sprint/create-sprint.component';
+import { SprintService } from './services/sprint.service';
 
 
 
@@ -48,7 +50,8 @@ import { HoursService } from './services/hours.service';
     LoginComponent,
     HomeComponent,
     AddProjectComponent,
-    EditProjectComponent
+    EditProjectComponent,
+    CreateSprintComponent
   ],
   imports: [
     BrowserModule,
@@ -63,12 +66,18 @@ import { HoursService } from './services/hours.service';
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   providers: [ProjectService,
     AuthService,
     EmployeeService,
-    HoursService],
+    HoursService, SprintService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
