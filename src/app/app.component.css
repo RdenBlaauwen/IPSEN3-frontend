@@ -55,15 +55,16 @@ main{
     img.cnt, button.cnt{
         width: 100%;
     }
-
-
     .container,.container-fluid{
         font-size: 0.7rem;
     }
     .cnt{
         font-size: 0.7rem;
       }
-    
+.cud-bar{
+    background-color: rgb(150,150,150);
+    height: 96%;
+}
     @media (min-width: 576px) {
         .container,.container-fluid{
             font-size: 0.75rem;

@@ -1,17 +1,20 @@
-
-<main class="form">
-    
-    <img src="assets/images/web.png" style = "display: block; margin-left:auto; margin-right:auto;"/>
-
-        <h1>Welcome {{ currentEmployee }}</h1>
-
-       <i class="fa fa-envelope prefix grey-text"></i>
-       <input type="text" id="defaultForm-email" class="form-control" mdbActive placeholder="Email" #email>
-  
-       <i class="fa fa-lock prefix grey-text"></i>
-       <input type="password" id="defaultForm-pass" class="form-control" mdbActive placeholder="Password" #password>
-  
-       <button class="btn btn-default waves-light" (click)="checkLogin(email.value, password.value)">Login</button>
-
-  </main>
+<img src='../assets/images/web.png' alt='logo'>
+<div class="container">
+    <div class="col-sm-6">
+        <h3 class="display-3"><i class="fa fa-user-circle-o" aria-hidden="true"></i></h3>
+        <br>
+        <div class="form-group">
+            <mat-form-field>
+            <input matInput #email placeholder="Enter your email" [formControl]="email_input" required>
+            <mat-error *ngIf="email_input.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+        <mat-form-field>
+            <input matInput #password placeholder="Enter your password" [type]="hide ? 'text' : 'password'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+    </div>
+    <button type="button" (click)="checkLogin(email.value, password.value)" class="btn btn-success">Login</button>
+</div>
   
