@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-form-field class="" style="margin-top: 20px">
+    <input matInput #project_name placeholder="Project Name">
+  </mat-form-field><br>
+  <mat-form-field class="">
+    <input matInput #project_description placeholder="Project Description">
+  </mat-form-field><br>
+  <mat-form-field class="">
+    <input matInput #customer_fk placeholder="Customer ID">
+  </mat-form-field><br>
+    <button (click)="insertNewProject(project_name.value, project_description.value, customer_fk.value); openSnackBar()" class="primary">Submit</button>
+</div>
