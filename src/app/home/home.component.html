@@ -15,6 +15,11 @@
                 </a>
             </div>
             <div class="col-md-3 col-xl-2">
+                <a routerLink="/create_sprint" class="cnt btn btn-info" role="button">
+                    Createsprint
+                </a>
+            </div>
+            <div class="col-md-3 col-xl-2">
                     <a routerLink="/{{baseLinks[0].name}}" class="cnt btn btn-info" role="button">
                         {{baseLinks[0].displayName}}
                     </a>
@@ -55,13 +60,12 @@
             </ul>
         </div>
       </nav>
-      <main class="col-sm-10">
-          <router-outlet></router-outlet>
-      </main>
     </div>
 </div>
+    
 </div>
-<!-- <div *ngIf="!validated;then redirect()">
+
+<div *ngIf="!validated">
     <b>Bitch you gotta login!</b>
-    <app-login></app-login>
-</div> -->
+    <a routerLink="" class="cnt pagelink">Login</a>
+</div>

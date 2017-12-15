@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatNativeDateModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +28,10 @@ import { AuthService } from './services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
-
+import { CreateSprintComponent } from './sprints/create-sprint/create-sprint.component';
+import {MatToolbarModule,MatCardModule, MatOptionModule, MatSelectModule} from '@angular/material';
+import { SprintService } from './services/sprint.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +47,8 @@ import { EditProjectComponent } from './projects/edit-project/edit-project.compo
     LoginComponent,
     HomeComponent,
     AddProjectComponent,
-    EditProjectComponent
+    EditProjectComponent,
+    CreateSprintComponent
   ],
   imports: [
     BrowserModule,
@@ -59,11 +63,18 @@ import { EditProjectComponent } from './projects/edit-project/edit-project.compo
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatSelectModule
+
   ],
   providers: [ProjectService,
     AuthService,
-    EmployeeService],
+    EmployeeService, SprintService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

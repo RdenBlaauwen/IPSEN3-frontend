@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 import { Http, Response, Headers } from "@angular/http";
 import { Router } from "@angular/router";
+import { Employee } from "../models/Employee";
 
 
 @Injectable()
@@ -11,6 +12,31 @@ export class EmployeeService
     constructor(private auth: AuthService, private router: Router, private http: Http)
     {
 
+    }
+    public register(employee: Employee): void
+    {
+        let data =
+        {
+            employeeId: employee.employeeId,
+            employeeFirstname: employee.employeeFirstName,
+            employeeLastName: employee.employeeLastName,
+            employeePassword: employee.employeePassword,
+            employeeEmail: employee.employeeEmail,
+            employeeIsDeleted: employee.employeeIsDeleted,
+            employeeRole: employee.employeeRole
+        };
+        
+        this.http.post('users', data).subscribe
+        (
+            data =>
+            {
+                alert('Employee succesvol aangemaakt');
+            },
+            error =>
+            {
+                alert('Aanmaken employee mislukt');
+            }
+        );
     }
     private goHome()
     {
