@@ -19,7 +19,8 @@ export class EmployeeService
     public login(email: string, password: string)
     {
         let headers = this.auth.createAuthHeader(email, password);
-         this.http.get(`http://localhost:8080/api/login/`, {headers: headers}).subscribe(
+        //`http://localhost:8080/api/login/`
+         this.http.get(`/api/login/`, {headers: headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
          for(let employee of res.json())
