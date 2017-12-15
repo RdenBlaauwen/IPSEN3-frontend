@@ -21,11 +21,13 @@ import { ManualComponent } from './manual/manual.component';
 import { AccountSelfComponent } from './account-self/account-self.component';
 import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material';
+import { HomeComponent } from './home/home.component';
+import { AddProjectComponent } from './projects/add-project/add-project.component';
+
 import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
-import { HomeComponent } from './home/home.component';
-import { AddProjectComponent } from './projects/add-project/add-project.component';
+import { HoursService } from './services/hours.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
   ],
   providers: [ProjectService,
     AuthService,
-    EmployeeService],
+    EmployeeService,
+    HoursService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
