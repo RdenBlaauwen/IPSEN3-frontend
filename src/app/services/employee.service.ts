@@ -19,7 +19,7 @@ export class EmployeeService
     public login(email: string, password: string)
     {
         let headers = this.auth.createAuthHeader(email, password);
-         this.http.get(`/api/login/`,{headers:headers}).subscribe(
+         this.http.get(`http://localhost:8080/api/login/`,{headers:headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
           
