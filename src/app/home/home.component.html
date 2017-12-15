@@ -1,67 +1,71 @@
-<div id= "fullPage" class="col-sm-12">
-<div *ngIf="validated" class="container-fluid all">
-    <header class="row">
-      <div class="col-sm-12">
-        <div class="row align-items-center justify-content-end">
-            <div class="col-lg-3 col-xl-4"><h2>Hello {{name}}</h2></div>
-            <div class="col-md-3 col-xl-2">
-                <a routerLink="/{{baseLinks[3].name}}" class="cnt btn btn-info" role="button">
-                    {{baseLinks[3].displayName}}
-                </a>
-            </div>
-            <div class="col-md-3 col-xl-2">
-                <a routerLink="/{{baseLinks[2].name}}" class="cnt btn btn-info" role="button">
-                    {{baseLinks[2].displayName}}
-                </a>
-            </div>
-            <div class="col-md-3 col-xl-2">
-                    <a routerLink="/{{baseLinks[0].name}}" class="cnt btn btn-info" role="button">
-                        {{baseLinks[0].displayName}}
-                    </a>
-                </div>
-        </div>
-      </div>
-    </header>
-    <div class="row nav-content">
-      <nav class="col-sm-2">
-        <div class="row">
-            <ul>
-                <li *ngFor="let link of links" [class.selected]="link === selectedLink"
-                (click)="onLink(link)" class="col-sm-12">
-                    <a routerLink="/{{link.name}}" class="cnt pagelink mat-button">
-                            {{link.displayName}}
-                    </a>
-                </li>
-                <button class="mat-button" mat-button=""><span class="mat-button-wrapper">Click me!</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button>
-            </ul>
-        </div>
-        <div class="row">
-            <ul>
-                <li class="col-sm-12 btn">
-                    <a routerLink="/{{baseLinks[3].name}}" class="cnt pagelink">
+<div id= "fullPage">
+    <div *ngIf="validated" class="container-fluid all">
+        <header class="row">
+          <div class="col-sm-12">
+            <div class="row align-items-center justify-content-end">
+                <div class="col-lg-3 col-xl-4"><h2>Hello {{name}}</h2></div>
+                <div class="col-md-3 col-xl-2">
+                    <a routerLink="/{{baseLinks[3].name}}" class="cnt btn btn-info" role="button">
                         {{baseLinks[3].displayName}}
                     </a>
-                </li>
-                <li class="col-sm-12 btn">
-                    <a routerLink="/{{baseLinks[2].name}}" class="cnt pagelink">
+                </div>
+                <div class="col-md-3 col-xl-2">
+                    <a routerLink="/{{baseLinks[2].name}}" class="cnt btn btn-info" role="button">
                         {{baseLinks[2].displayName}}
                     </a>
-                </li>
-                <li class="col-sm-12 btn">
-                    <a routerLink="/{{baseLinks[0].name}}" class="cnt pagelink">
-                        {{baseLinks[0].displayName}}
+                </div>
+                <div class="col-md-3 col-xl-2">
+                    <a routerLink="/create_sprint" class="cnt btn btn-info" role="button">
+                        Createsprint
                     </a>
-                </li>
-            </ul>
+                </div>
+                <div class="col-md-3 col-xl-2">
+                        <a routerLink="/{{baseLinks[0].name}}" class="cnt btn btn-info" role="button">
+                            {{baseLinks[0].displayName}}
+                        </a>
+                    </div>
+            </div>
+          </div>
+        </header>
+        <div class="row nav-content">
+          <nav class="col-sm-2">
+            <div class="row">
+                <ul>
+                    <li *ngFor="let link of links" [class.selected]="link === selectedLink"
+                    (click)="onLink(link)" class="col-sm-12">
+                        <a routerLink="/{{link.name}}" class="cnt pagelink mat-button">
+                                {{link.displayName}}
+                        </a>
+                    </li>
+                    <button class="mat-button" mat-button=""><span class="mat-button-wrapper">Click me!</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button>
+                </ul>
+            </div>
+            <div class="row">
+                <ul>
+                    <li class="col-sm-12 btn">
+                        <a routerLink="/{{baseLinks[3].name}}" class="cnt pagelink">
+                            {{baseLinks[3].displayName}}
+                        </a>
+                    </li>
+                    <li class="col-sm-12 btn">
+                        <a routerLink="/{{baseLinks[2].name}}" class="cnt pagelink">
+                            {{baseLinks[2].displayName}}
+                        </a>
+                    </li>
+                    <li class="col-sm-12 btn">
+                        <a routerLink="/{{baseLinks[0].name}}" class="cnt pagelink">
+                            {{baseLinks[0].displayName}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+          </nav>
         </div>
-      </nav>
-      <main class="col-sm-10">
-          <router-outlet></router-outlet>
-      </main>
     </div>
-</div>
-</div>
-<!-- <div *ngIf="!validated;then redirect()">
-    <b>Bitch you gotta login!</b>
-    <app-login></app-login>
-</div> -->
+        
+    </div>
+    
+    <div *ngIf="!validated">
+        <b>Bitch you gotta login!</b>
+        <a routerLink="" class="cnt pagelink">Login</a>
+    </div>

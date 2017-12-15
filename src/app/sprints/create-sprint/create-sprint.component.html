@@ -1,3 +1,46 @@
-<p>
-  create-sprint works!
-</p>
+<mat-card>
+
+  <mat-card-header>
+      <mat-card-title>
+          <h1>Maak een nieuwe Sprint</h1>
+      </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+      <form name="registerForm" #registerForm="ngForm" (ngSubmit)="createSprint()">
+
+          <mat-form-field class="full-width">
+              <input matInput type="text" name="sprintName" placeholder="sprintName" required [(ngModel)]="sprint.sprintName" #sprintName="ngModel" />
+
+          </mat-form-field>
+          
+          <mat-form-field class="full-width">
+              <input matInput type="date" name="email" placeholder="sprintStartDate" required [(ngModel)]="sprint.sprintStartDate" #sprintStartDate="ngModel" />
+
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+              <input matInput type="date" name="password" placeholder="sprintEndDate" required [(ngModel)]="sprint.sprintEndDate" #sprintEndDate="ngModel" />
+
+          </mat-form-field>          
+          <mat-form-field class="full-width">
+            <input matInput type="text" name="password" placeholder="sprintDescription" required [(ngModel)]="sprint.sprintDescription" #sprintDescription="ngModel" />
+
+        </mat-form-field>
+          <mat-form-field>
+                <mat-select [(ngModel)]="selectedProject" placeholder="Kies het project" name="project">
+                  <mat-option *ngFor="let project of projects" [value]="project.projectId">
+                    {{ project.projectName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+          <button mat-raised-button type="submit" class="mat-primary" >Toevoegen</button>
+
+      </form>
+
+  </mat-card-content>
+
+
+</mat-card>
