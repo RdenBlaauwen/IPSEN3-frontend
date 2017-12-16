@@ -12,7 +12,7 @@ import { Project } from '../models/ProjectModel';
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
   displayedColumns = ['projectName', 'projectDescription', 'projectStatus'];
-
+  selectedProject: Project;
   constructor(private projectService: ProjectService) {
     this.loadData().then((data) => {
       this.dataSource = new MatTableDataSource<Project>(data);
@@ -41,6 +41,16 @@ export class ProjectsComponent implements OnInit {
           project.projectCustomerFk);
       }));
   }
-
+  selectRow(row) {
+    this.selectedProject = row
+  }
+  modifyProject()
+  {
+    this.projectService.setProjectToModify(this.selectedProject);
+  }
+  deleteProject()
+  {
+    this.projectService.removeProject(this.selectedProject);
+  }
   ngOnInit() {}
 }

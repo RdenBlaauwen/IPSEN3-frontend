@@ -2,21 +2,121 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Project } from '../models/ProjectModel';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { Headers, Http, Response } from '@angular/http';
+import { CustomerModel } from '../models/CustomerModel';
 
 @Injectable()
 export class ProjectService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
-  readonly INSERT_PROJECT = 'http://localhost:8080/api/projects/create/url';
+  readonly INSERT_PROJECT = '/api/projects/create/';
+  projectToModify: Project;
+  constructor(private auth: AuthService, private http: HttpClient, private router: Router
+  ,private httpN: Http) { }
 
-  constructor(private http: HttpClient) { }
-  body = {};
-  insertNewProject(name: string, description: string, customer_fk: string) {
-    return this.http.post(this.INSERT_PROJECT, this.body, {
-      params: new HttpParams().set('name', name).set('description', description).set('custid', customer_fk)
-    });
+  public removeProject(sp: Project)
+  {
+    let data =
+    {
+        projectId: sp.projectId,
+        projectDescription: sp.projectDescription,
+        projectName: sp.projectName,
+        projectIsDeleted: sp.projectIsDeleted,
+        projectCustomerFk: sp.projectCustomerFk
+
+    };
+    let headers = this.auth.createAuthHeader(
+        this.auth.emailAddress, this.auth.password);
+    this.httpN.post(`/api/projects/delete/`, data,{headers: headers}).subscribe
+    (
+        data =>
+        {
+            alert('Project succesvol verwijderd');
+        },
+        error =>
+        {
+            alert('Verwijderen Project mislukt');
+        }
+    );
+
+  }
+
+  public insertNewProject(sp: Project): void
+  {
+      let data =
+      {
+          projectId: sp.projectId,
+          projectDescription: sp.projectDescription,
+          projectName: sp.projectName,
+          projectIsDeleted: sp.projectIsDeleted,
+          projectCustomerFk: sp.projectCustomerFk
+
+      };
+      let headers = this.auth.createAuthHeader(
+          this.auth.emailAddress, this.auth.password);
+      this.httpN.post(`/api/projects/create/`, data).subscribe
+      (
+          data =>
+          {
+              alert('Project succesvol aangemaakt');
+          },
+          error =>
+          {
+              alert('Aanmaken Project mislukt');
+          }
+      );
+  }
+
+  public getAllCustomers()
+  {
+    let customers: CustomerModel[] = [];
+    this.httpN.get(`/api/customers/getAll/`).subscribe(
+      (res: Response) =>{
+        for(let customer of res.json())
+            {
+                let customerContainer = new CustomerModel(customer.customer_id, 
+                  customer.customer_name, customer.customer_description,
+                  customer.customer_isdeleted);
+                  customers.push(customerContainer);
+            }
+      })
+      return customers;
   }
 
   getAllProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.ALL_PROJECT_JSON);
+  }
+
+  public setProjectToModify(project: Project)
+  {
+    this.projectToModify = project;
+    this.router.navigate(['modify-project'])
+  }
+
+  public updateProject(project: Project)
+  {
+    let data =
+    {
+        projectId: project.projectId,
+        projectName: project.projectName,
+        projectDescription: project.projectDescription,
+        projectCustomerFk: project.projectCustomerFk,
+        projectIsDeleted: project.projectIsDeleted
+
+    };
+    let headers = this.auth.createAuthHeader(
+        this.auth.emailAddress, this.auth.password);
+    this.httpN.put(`/api/projects/update/`, data,{headers: headers}).subscribe
+    (
+        data =>
+        {
+            alert('Project succesvol gewijzigd');
+        },
+        error =>
+        {
+            alert('Project update mislukt');
+        }
+    );
   }
 }

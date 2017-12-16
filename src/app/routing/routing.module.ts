@@ -16,12 +16,14 @@ import {BASE_PAGES,ADMIN_PAGES} from '../page-list';
 import { HomeComponent } from '../home/home.component';
 import {AddProjectComponent} from "../projects/add-project/add-project.component";
 import { CreateSprintComponent } from '../sprints/create-sprint/create-sprint.component';
+import { EditProjectComponent } from '../projects/edit-project/edit-project.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'home', component: HomeComponent},
   { path: 'add_project', component: AddProjectComponent },
   { path: 'create_sprint', component: CreateSprintComponent },
+  { path: 'modify-project', component: EditProjectComponent },
   { path: BASE_PAGES[2].name, component: AccountSelfComponent },
   { path: BASE_PAGES[3].name, component: ManualComponent },
   { path: ADMIN_PAGES[0].name, component: HoursComponent },

@@ -1,18 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { MatSnackBar } from '@angular/material';
+import { CustomerModel } from '../../models/CustomerModel';
+import { Project } from '../../models/ProjectModel';
 
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
   styleUrls: ['./add-project.component.css']
 })
-export class AddProjectComponent implements OnInit {
+export class AddProjectComponent{
+  project: Project = new Project();
+  customers: CustomerModel[];
+  selectdCustomer: number;
+  
+  constructor(private projectService: ProjectService, public snackBar: MatSnackBar) { 
+    this.customers = projectService.getAllCustomers();
+  }
 
-  constructor(private projectService: ProjectService, public snackBar: MatSnackBar) { }
-
-  insertNewProject(project_name: string, project_description: string, customer_fk: string) {
-    this.projectService.insertNewProject(project_name, project_description, customer_fk).subscribe();
+  insertNewProject() {
+    this.project.projectCustomerFk = this.selectdCustomer;
+    this.projectService.insertNewProject(this.project);
+    this.openSnackBar();
   }
 
   openSnackBar() {
@@ -20,6 +29,5 @@ export class AddProjectComponent implements OnInit {
         duration: 1000
       });
     }
-
-  ngOnInit() {}
+    
 }
