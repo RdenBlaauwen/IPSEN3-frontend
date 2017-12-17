@@ -13,7 +13,7 @@ export class ProjectService {
   readonly INSERT_PROJECT = '/api/projects/create/';
   projectToModify: Project;
   constructor(private auth: AuthService, private http: HttpClient, private router: Router
-  ,private httpN: Http) { }
+  ,private httpN: Http) { this.getAllProjects(); }
 
   public removeProject(sp: Project)
   {

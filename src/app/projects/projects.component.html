@@ -16,9 +16,9 @@
       <mat-cell *matCellDef="let Project"> {{Project.projectDescription}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="projectStatus">
-      <mat-header-cell *matHeaderCellDef> Project Status </mat-header-cell>
-      <mat-cell *matCellDef="let Project"> {{Project.projectIsDeleted}} </mat-cell>
+    <ng-container matColumnDef="customerName">
+      <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
+      <mat-cell *matCellDef="let Project"> {{Project.customerName}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -11,7 +11,7 @@ import { Project } from '../models/ProjectModel';
 
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
-  displayedColumns = ['projectName', 'projectDescription', 'projectStatus'];
+  displayedColumns = ['projectName', 'projectDescription', 'customerName'];
   selectedProject: Project;
   constructor(private projectService: ProjectService) {
     this.loadData().then((data) => {
@@ -38,7 +38,8 @@ export class ProjectsComponent implements OnInit {
           project.projectName,
           project.projectDescription,
           project.projectIsDeleted,
-          project.projectCustomerFk);
+          project.projectCustomerFk,
+          project.customerName);
       }));
   }
   selectRow(row) {
