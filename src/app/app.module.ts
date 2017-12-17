@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule } from '@angular/material';
+import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule, MAT_DATE_LOCALE } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,6 +32,8 @@ import { AuthService } from './services/auth.service';
 import { HoursService } from './services/hours.service';
 import { CreateSprintComponent } from './sprints/create-sprint/create-sprint.component';
 import { SprintService } from './services/sprint.service';
+import { RouterModule } from '@angular/router';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -51,7 +53,8 @@ import { SprintService } from './services/sprint.service';
     HomeComponent,
     AddProjectComponent,
     EditProjectComponent,
-    CreateSprintComponent
+    CreateSprintComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -72,12 +75,14 @@ import { SprintService } from './services/sprint.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    RouterModule
   ],
   providers: [ProjectService,
     AuthService,
     EmployeeService,
-    HoursService, SprintService],
+    HoursService, SprintService,
+    {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

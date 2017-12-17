@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/ProjectModel';
+import { AuthService } from '../services/auth.service';
+import { Employee } from '../models/Employee';
 
 @Component({
   selector: 'app-projects',
@@ -13,7 +15,9 @@ export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
   displayedColumns = ['projectName', 'projectDescription', 'customerName'];
   selectedProject: Project;
-  constructor(private projectService: ProjectService) {
+  loggedEmployeeModel: Employee;
+  constructor(private projectService: ProjectService, auth: AuthService) {
+    this.loggedEmployeeModel = auth.getEmployeeModel();
     this.loadData().then((data) => {
       this.dataSource = new MatTableDataSource<Project>(data);
     }, (error) => console.log(error.SessionNotCreatedError));

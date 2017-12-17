@@ -48,23 +48,34 @@ export class EmployeeService
          this.http.get(`/api/login/`, {headers: headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
-         for(let employee of res.json())
+         for(let em of res.json())
          {
-           if(employee.employeeEmail == email && employee.employeePassword == password)
+           if(em.employeeEmail == email && em.employeePassword == password)
            {
+            let loggedUserObject = new Employee(em.employeeId, em.employeeFirstname,em.employeeLastName
+                ,em.employeePassword 
+                ,em.employeeEmail,
+                em.employeeIsDeleted,
+                em.employeeRole);
              let authorization = 
              {
                email,
                password,
-               name: employee.employeeFirstname
+               loggedUserObject
              }
-             this.goHome();
              let auth = JSON.stringify(authorization);
              let storage = false ? localStorage : sessionStorage;
              storage.setItem('authorization', auth);
+             this.goHome();
            }
          }
        })
        
+    }
+    public removeSessions()
+    {
+        const storage = false ? localStorage : sessionStorage;
+        storage.removeItem('authorization');
+        this.auth.setNullAfterLogout();
     }
 }

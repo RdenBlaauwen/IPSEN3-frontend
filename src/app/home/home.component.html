@@ -3,7 +3,7 @@
         <header class="row">
           <div class="col-sm-12">
             <div class="row align-items-center justify-content-end">
-                <div class="col-lg-3 col-xl-4"><h2>Hello {{name}}</h2></div>
+                <div class="col-lg-3 col-xl-4"><h2>Hello {{loggedEmployeeModel.employeeFirstName}}</h2></div>
                 <div class="col-md-3 col-xl-2">
                     <a routerLink="/{{baseLinks[3].name}}" class="cnt btn btn-info" role="button">
                         {{baseLinks[3].displayName}}
@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-xl-2">
-                    <a routerLink="/create_sprint" class="cnt btn btn-info" role="button">
+                    <a *ngIf="loggedEmployeeModel.employeeRole == 'manager'" routerLink="/create_sprint" class="cnt btn btn-info" role="button">
                         Createsprint
                     </a>
                 </div>
@@ -25,8 +25,8 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-xl-2">
-                        <a routerLink="/{{baseLinks[0].name}}" class="cnt btn btn-info" role="button">
-                            {{baseLinks[0].displayName}}
+                        <a routerLink="/logout" class="cnt btn btn-info" role="button">
+                            Uitloggen
                         </a>
                     </div>
             </div>
@@ -70,7 +70,7 @@
         
     </div>
     
-    <div *ngIf="!validated">
+    <div *ngIf="!validated;">
         <b>Bitch you gotta login!</b>
         <a routerLink="" class="cnt pagelink">Login</a>
     </div>

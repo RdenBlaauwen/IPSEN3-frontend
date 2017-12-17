@@ -1,11 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
+import { Employee } from "../models/Employee";
 @Injectable()
 export class AuthService {
     password: string = null;
     emailAddress: string = null;
-    name: string = null;
-    constructor() {}
+    loggedUserObject: Employee = null;
+    constructor() {
+        this.getAuthorization();
+        console.log("Dit is het email na verversen pagina: "+this.emailAddress);
+    }
     public createAuthHeader(email: string, password: string) {
         const loginEncoded =  btoa(email + ':' + password);
         const headers = new Headers();
@@ -39,10 +43,17 @@ export class AuthService {
             const authorization = JSON.parse(authorizationString);
             this.emailAddress = authorization['email'];
             this.password = authorization['password'];
-            this.name = authorization['name'];
+            this.loggedUserObject = authorization['loggedUserObject'];
         }
     }
-    public getEmployeeName() {
-        return this.name;
+    public getEmployeeModel() {
+        return this.loggedUserObject;
     }
+    public setNullAfterLogout()
+    {
+        this.emailAddress = null;
+        this.password = null;
+        this.loggedUserObject = null;
+    }
+
 }

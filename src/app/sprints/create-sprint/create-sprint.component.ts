@@ -12,9 +12,12 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./create-sprint.component.css']
 })
 export class CreateSprintComponent {
+  date = new Date().toDateString();
+  serializedDate = new FormControl((new Date()).toISOString());
   sprint: SprintModel = new SprintModel();
   projects: Project[];
   selectedProject: number;
+  startDate: string;
   constructor(private sprintService: SprintService) {
     this.projects = sprintService.getAllProjects();
    }

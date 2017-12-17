@@ -4,6 +4,7 @@ import { Page } from '../page';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Employee } from '../models/Employee';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +14,13 @@ import { AuthService } from '../services/auth.service';
 export class HomeComponent implements OnInit {
 
   validated: boolean;
-  name: string;
+  loggedEmployeeModel: Employee;
 
   constructor(private http: Http, private router: Router, private auth: AuthService) { 
     //Checkt of de authorizatie al bestaat in de localStorage
     auth.getAuthorization();
     this.validated = auth.isAuthorized();
-    this.name = auth.getEmployeeName();
+    this.loggedEmployeeModel = auth.getEmployeeModel();
   }
 
   title = 'Webedu-mockup';
@@ -33,9 +34,6 @@ export class HomeComponent implements OnInit {
     onLink(link: Page){
       this.selectedLink=link;
     }
-    redirect()
-    {
-      this.router.navigate(['login']);
-    }
+
 
 }
