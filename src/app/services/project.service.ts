@@ -71,7 +71,8 @@ export class ProjectService {
   public getAllCustomers()
   {
     let customers: CustomerModel[] = [];
-    this.httpN.get(`/api/customers/getAll/`).subscribe(
+    let headers = this.auth.createAuthHeader(this.auth.emailAddress, this.auth.password);
+    this.httpN.get(`/api/customers/getAll/`, {headers: headers}).subscribe(
       (res: Response) =>{
         for(let customer of res.json())
             {
@@ -86,7 +87,7 @@ export class ProjectService {
 
   getAllProjects(): Observable<Project[]> {
       let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers});
+    return this.http.get<Project[]>(this.ALL_PROJECT_JSON);
   }
 
   public setProjectToModify(project: Project)
@@ -108,7 +109,7 @@ export class ProjectService {
     };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.put(`/api/projects/update/`, data,{headers: headers}).subscribe
+    this.httpN.put(`/api/projects/update`, data).subscribe
     (
         data =>
         {
