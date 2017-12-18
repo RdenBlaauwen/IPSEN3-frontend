@@ -65,7 +65,7 @@ export class CustomerService {
 
   getAllCustomers(): Observable<CustomerModel[]> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    return this.http.get<CustomerModel[]>(`/api/customers/getAll/`, {headers:headers});
+    return this.http.get<CustomerModel[]>(`/api/customers/getAll/`, {headers: headers});
   }
 
   public setCustomerToModify(customer: CustomerModel)
