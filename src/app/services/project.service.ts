@@ -87,7 +87,7 @@ export class ProjectService {
 
   getAllProjects(): Observable<Project[]> {
       let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    return this.http.get<Project[]>(this.ALL_PROJECT_JSON);
+    return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers});
   }
 
   public setProjectToModify(project: Project)
@@ -109,7 +109,7 @@ export class ProjectService {
     };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.put(`/api/projects/update`, data).subscribe
+    this.httpN.put(`/api/projects/update/`, data,{headers: headers}).subscribe
     (
         data =>
         {
