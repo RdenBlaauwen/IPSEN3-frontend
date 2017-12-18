@@ -37,6 +37,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { CustomerService } from './services/customer.service';
 import { ModifyCustomerComponent } from './customers/modify-customer/modify-customer.component';
 import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
+import { ExportComponent } from './export/export.component'; 
 
 
 
@@ -59,7 +60,8 @@ import { CreateCustomerComponent } from './customers/create-customer/create-cust
     CreateSprintComponent,
     LogoutComponent,
     ModifyCustomerComponent,
-    CreateCustomerComponent
+    CreateCustomerComponent,
+    ExportComponent
   ],
   imports: [
     BrowserModule,
