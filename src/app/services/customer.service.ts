@@ -26,7 +26,7 @@ export class CustomerService {
     };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.post(`/api/projects/remove/`, data,{headers: headers}).subscribe
+    this.httpN.put(`/api/customers/remove/`, data,{headers: headers}).subscribe
     (
         data =>
         {
@@ -64,7 +64,8 @@ export class CustomerService {
   }
 
   getAllCustomers(): Observable<CustomerModel[]> {
-    return this.http.get<CustomerModel[]>(`/api/customers/getAll/`);
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    return this.http.get<CustomerModel[]>(`/api/customers/getAll/`, {headers:headers});
   }
 
   public setCustomerToModify(customer: CustomerModel)

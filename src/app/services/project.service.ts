@@ -85,7 +85,8 @@ export class ProjectService {
   }
 
   getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.ALL_PROJECT_JSON);
+      let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers});
   }
 
   public setProjectToModify(project: Project)

@@ -29,3 +29,4 @@
 </div>
 <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyProject()" >Wijzigen</button>
 <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteProject()" >Verwijderen</button>
+<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" routerLink="/add_project" >Toevoegen</button>
