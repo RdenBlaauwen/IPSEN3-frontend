@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import { Employee } from "../models/Employee";
+import { HttpHeaders } from "@angular/common/http";
 @Injectable()
 export class AuthService {
     password: string = null;
@@ -13,6 +14,14 @@ export class AuthService {
     public createAuthHeader(email: string, password: string) {
         const loginEncoded =  btoa(email + ':' + password);
         const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic ' + loginEncoded);
+        return headers;
+    }
+
+    public createAuthHttpHeader(email: string, password: string) {
+        const loginEncoded =  btoa(email + ':' + password);
+        const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Basic ' + loginEncoded);
         return headers;

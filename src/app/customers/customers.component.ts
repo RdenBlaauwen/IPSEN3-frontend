@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { CustomerModel } from '../models/CustomerModel';
+import { Employee } from '../models/Employee';
+import { AuthService } from '../services/auth.service';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-customers',
@@ -7,30 +11,50 @@ import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-  displayedColumns: any[];
-  dataSource;
-  customerData: Customer[];
-  constructor() {
-    this.displayedColumns = ['customer_name', 'customer_description'];
-    this.customerData  = [
-      {customer_name: 'Bob', customer_description: 'DO NOT TRADE AWAY.'},
-      {customer_name: 'Meowmel', customer_description: 'Meowmeowmeowmeowwww...'}, 
-      {customer_name: 'Terratomere', customer_description: 'This does lotsa damage.'}
-      
-    ];
-    this.dataSource = new MatTableDataSource(this.customerData);
+  private dataSource: MatTableDataSource<CustomerModel>;
+  displayedColumns = ['customerName', 'customerDescription'];
+  selectedCustomer: CustomerModel;
+  loggedEmployeeModel: Employee;
+  constructor(private customerService: CustomerService, auth: AuthService) {
+    this.loggedEmployeeModel = auth.getEmployeeModel();
+    this.loadData().then((data) => {
+      this.dataSource = new MatTableDataSource<CustomerModel>(data);
+    }, (error) => console.log(error.SessionNotCreatedError));
+  }
 
-   }
-    applyFilter(filterValue: string) {
-     filterValue = filterValue.trim(); // Remove whitespace
-     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-     this.dataSource.filter = filterValue;
-   }
+  //  MatTableDataSource function
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  //  Return promise to use to fill data
+  //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
+  loadData(): Promise<CustomerModel[]> {
+    return this.customerService.getAllCustomers()
+      .toPromise()
+      .then(res => res)
+      .then(customers => customers.map(customer => {
+        return new CustomerModel(
+          customer.customer_id,
+          customer.customer_name,
+          customer.customer_description,
+          customer.customer_isdeleted);
+      }));
+  }
+  selectRow(row) {
+    this.selectedCustomer = row
+  }
+  modifyCustomer()
+  {
+    this.customerService.setCustomerToModify(this.selectedCustomer);
+  }
+  deleteCustomer()
+  {
+    this.customerService.removeCustomer(this.selectedCustomer);
+  }
   ngOnInit() {
   }
 
-}
-export interface Customer {
-  customer_name: string;
-  customer_description: string;
 }

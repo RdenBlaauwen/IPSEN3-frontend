@@ -1,0 +1,28 @@
+
+<mat-card>
+
+  <mat-card-header>
+      <mat-card-title>
+          <h1>Aanmaken Klant</h1>
+      </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+      <form name="createForm" #registerForm="ngForm" (ngSubmit)="insertNewCustomer()">
+
+        <mat-form-field class="" style="margin-top: 20px">
+          <input matInput #customerName name="customerName"  required [(ngModel)]="customer.customer_name" #customerName="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="customerDescription" required [(ngModel)]="customer.customer_description" #customerDescription="ngModel">
+        </mat-form-field><br>
+              <br>
+          <button mat-raised-button type="submit" class="mat-primary" >Toevoegen</button>
+
+      </form>
+
+  </mat-card-content>
+
+
+</mat-card>

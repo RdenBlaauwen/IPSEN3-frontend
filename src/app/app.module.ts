@@ -34,6 +34,9 @@ import { CreateSprintComponent } from './sprints/create-sprint/create-sprint.com
 import { SprintService } from './services/sprint.service';
 import { RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout/logout.component';
+import { CustomerService } from './services/customer.service';
+import { ModifyCustomerComponent } from './customers/modify-customer/modify-customer.component';
+import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 
 
 
@@ -54,7 +57,9 @@ import { LogoutComponent } from './logout/logout.component';
     AddProjectComponent,
     EditProjectComponent,
     CreateSprintComponent,
-    LogoutComponent
+    LogoutComponent,
+    ModifyCustomerComponent,
+    CreateCustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,7 @@ import { LogoutComponent } from './logout/logout.component';
     AuthService,
     EmployeeService,
     HoursService, SprintService,
+    CustomerService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })

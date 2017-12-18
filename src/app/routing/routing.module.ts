@@ -18,6 +18,8 @@ import {AddProjectComponent} from "../projects/add-project/add-project.component
 import { CreateSprintComponent } from '../sprints/create-sprint/create-sprint.component';
 import { EditProjectComponent } from '../projects/edit-project/edit-project.component';
 import { LogoutComponent } from '../logout/logout.component';
+import { ModifyCustomerComponent } from '../customers/modify-customer/modify-customer.component';
+import { CreateCustomerComponent } from '../customers/create-customer/create-customer.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'add_project', component: AddProjectComponent },
   { path: 'create_sprint', component: CreateSprintComponent },
   { path: 'modify-project', component: EditProjectComponent },
+  { path: 'modify-customer', component: ModifyCustomerComponent },
+  { path: 'create-customer', component: CreateCustomerComponent },
   { path: 'logout', component: LogoutComponent},
   { path: BASE_PAGES[2].name, component: AccountSelfComponent },
   { path: BASE_PAGES[3].name, component: ManualComponent },
