@@ -6,15 +6,12 @@ import { Employee } from "../models/Employee";
 
 
 @Injectable()
-export class EmployeeService
-{
-  naam : string = null;
-    constructor(private auth: AuthService, private router: Router, private http: Http)
-    {
+export class EmployeeService {
+  naam: string = null;
+    constructor(private auth: AuthService, private router: Router, private http: Http) {
 
     }
-    public register(employee: Employee): void
-    {
+    public register(employee: Employee): void {
         let data =
         {
             employeeId: employee.employeeId,
@@ -45,7 +42,7 @@ export class EmployeeService
     public login(email: string, password: string)
     {
         let headers = this.auth.createAuthHeader(email, password);
-         this.http.get(`/api/login/`, {headers: headers}).subscribe(
+         this.http.get('http://localhost:8080/api/login/', {headers: headers}).subscribe(
          (res: Response) => {
            console.log(res.json());
          for(let em of res.json())

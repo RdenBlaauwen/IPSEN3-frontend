@@ -5,42 +5,73 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
     </div>
-    <mat-table #table [dataSource]="dataSource">
+    <mat-table #table [dataSource]="dataSource" matSort
+    matSortActive="entryDate" matSortDirection="asc">
 
-      <!-- project_name Column -->  
-      <ng-container matColumnDef="project_name">
-        <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.project_name}} </mat-cell>
+      <!-- entryDescription Column -->  
+      <ng-container matColumnDef="entryDescription">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Beschrijving </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryDescription}} </mat-cell>
       </ng-container>
       
       <!-- sprint_name Column -->
-      <ng-container matColumnDef="sprint_name">
-        <mat-header-cell *matHeaderCellDef> Sprint </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.sprint_name}} </mat-cell>
+      <ng-container matColumnDef="entryStatus">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryStatus}} </mat-cell>
       </ng-container>
       
       <!-- userstory Column -->
-      <ng-container matColumnDef="userstory">
-        <mat-header-cell *matHeaderCellDef> Userstory </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.userstory}} </mat-cell>
+      <ng-container matColumnDef="entryDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Datum </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryDate}} </mat-cell>
       </ng-container>
 
       <!-- starttime Column -->
-      <ng-container matColumnDef="starttime">
-        <mat-header-cell *matHeaderCellDef> Starttijd </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.starttime}} </mat-cell>
+      <ng-container matColumnDef="entryStartTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Starttijd </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryStartTime}} </mat-cell>
       </ng-container>
 
       <!-- endtime Column -->
-      <ng-container matColumnDef="endtime">
-        <mat-header-cell *matHeaderCellDef> Eindtijd </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.endtime}} </mat-cell>
+      <ng-container matColumnDef="entryEndTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Eindtijd </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryEndTime}} </mat-cell>
       </ng-container>
 
       <!-- exception Column -->
-      <ng-container matColumnDef="exception">
-        <mat-header-cell *matHeaderCellDef> Uitzondering </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.exception}} </mat-cell>
+      <ng-container matColumnDef="entryIsLocked">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Gesloten? </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryIsLocked}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeFk">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Medewerker </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.employeeFk}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entryProjectFk">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Project </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryProjectFk}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entrySprintFk">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Sprint </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entrySprintFk}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entryUserstoryFk">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Userstory </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryUserstoryFk}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isDeleted">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Verwijderd? </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.isDeleted}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isCurrent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nieuwe versie? </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.isCurrent}} </mat-cell>
       </ng-container>
 
 
