@@ -1,7 +1,12 @@
+import { ProjectService } from './../services/project.service';
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
 import {HoursService} from '../services/hours.service';
 import { EntryModel } from '../models/EntryModel';
+import { Project } from '../models/ProjectModel';
+import {FormControl} from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Employee } from '../models/Employee';
 
 @Component({
   selector: 'app-hours',
@@ -12,14 +17,42 @@ export class HoursComponent implements OnInit {
   displayedColumns: any[];
   dataSource;
   entryData: EntryModel[];
-  constructor(private hoursService: HoursService) {
+  projectList: Project[];
+  oldVersionsChecked = false;
+
+  entryDateControl = new FormControl(new Date());
+  serializedDate = new FormControl((new Date()).toISOString());
+
+  maxDate: Date;
+  minDate: Date;
+
+  currentRole = 'employee';
+
+  constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
+
+    this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    console.log(this.currentRole);
+
+    // bereken welke datum het is
+    const today = new Date();
+    const dd = today.getDate();
+    const mm =  today.getMonth();
+    const yyyy = today.getFullYear();
+    // maximum te kiezen datum (vandaag)
+    this.maxDate = new Date(yyyy,mm,dd);
+    //minimum te kiezen datum (week geleden)
+    this.minDate = new Date(yyyy,mm,dd-7);
 
     this.displayedColumns = ['entryDescription', 
     'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','employeeFk',
   'entryProjectFk','entrySprintFk','entryUserstoryFk','isDeleted','isCurrent'];
-  this.readEntryData().then((data) => {
-    this.dataSource = new MatTableDataSource<EntryModel>(data);
-  }, (error) => console.log(error.SessionNotCreatedError));
+    this.readEntryData().then((data) => {
+      this.dataSource = new MatTableDataSource<EntryModel>(data);
+    }, (error) => console.log(error.SessionNotCreatedError));
+
+    // this.readProjectList().then((data) => {
+    //   this.
+    // });
    }
     applyFilter(filterValue: string) {
      filterValue = filterValue.trim(); // Remove whitespace
@@ -31,11 +64,6 @@ export class HoursComponent implements OnInit {
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
    readEntryData(): Promise<EntryModel[]> {
-    // this.entryData  = [
-    //   {project_name: 'Zed', sprint_name: "Sprint 1", userstory: 'Als kat kan ik dingen van kasten afduwen', starttime: '00:00', endtime: '00:00', exception: false},
-    //   {project_name: 'Zoe', sprint_name: "Sprint 2", userstory: 'Als persoon kan ik niet Boris zijn', starttime: '07:00', endtime: '08:15', exception: true},
-    //   {project_name: 'Kittan', sprint_name: "Sprint swaggerino", userstory: 'Als levend ding kan ik sterven', starttime: '17:00', endtime: '20:00', exception: false}
-    // ];
     return this.hoursService.getAllEntries().toPromise()
     .then(res => res)
     .then(entries => entries.map(entry => {
@@ -55,8 +83,27 @@ export class HoursComponent implements OnInit {
         entry.isCurrent);
     }));
    }
+   readProjectList(): Promise<Project[]> {
+     return this.projectService.getAllProjects().toPromise()
+     .then(res => res).then(projects => projects.map(project => {
+        return new Project(
+          project.projectId,
+          project.projectName,
+          project.projectDescription,
+          project.projectIsDeleted,
+          project.projectCustomerFk,
+          project.customerName
+        );
+     }));
+   }
   ngOnInit() {
     this.readEntryData();
+    this.readProjectList();
+  }
+
+  toggleOldVersions($event) {
+    this.oldVersionsChecked = !this.oldVersionsChecked;
+    console.log($event);
   }
 
 }

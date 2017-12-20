@@ -10,6 +10,7 @@ import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, 
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
@@ -25,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
+// import {FormControl} from '@angular/forms';
 
 import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
@@ -65,9 +67,11 @@ import { CreateCustomerComponent } from './customers/create-customer/create-cust
     BrowserModule,
     BrowserAnimationsModule,
     RoutingModule,
+    // FormControl,
     HttpModule,
     HttpClientModule,
     HttpClientModule,
+    MatCheckboxModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,

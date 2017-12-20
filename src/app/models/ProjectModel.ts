@@ -6,6 +6,7 @@ export class Project {
     public projectDescription?: string, 
     public projectIsDeleted?: boolean, 
     public projectCustomerFk?: number,
-    public customerName?: string)
+    public customerName?: string,
+    public isCurrent?: boolean)
   {}
 }

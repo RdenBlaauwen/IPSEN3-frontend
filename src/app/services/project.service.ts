@@ -93,7 +93,7 @@ export class ProjectService {
   public setProjectToModify(project: Project)
   {
     this.projectToModify = project;
-    this.router.navigate(['modify-project'])
+    this.router.navigate(['modify-project']);
   }
 
   public updateProject(project: Project)
