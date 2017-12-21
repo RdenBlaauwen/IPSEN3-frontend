@@ -7,6 +7,8 @@ import { Project } from '../models/ProjectModel';
 import {FormControl} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
+import { EventEmitter, ChangeDetectorRef} from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-hours',
@@ -43,11 +45,8 @@ export class HoursComponent implements OnInit {
     const yyyy = today.getFullYear();
     // maximum te kiezen datum (vandaag)
     this.maxDate = new Date(yyyy,mm,dd);
-    //minimum te kiezen datum (week geleden)
+    // minimum te kiezen datum (week geleden)
     this.minDate = new Date(yyyy,mm,dd-7);
-
-    
-
     // this.readProjectList().then((data) => {
     //   this.
     // });
@@ -130,6 +129,7 @@ export class HoursComponent implements OnInit {
           this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
         }
       }
+      
     }else{
       this.displayedColumns = ['entryDescription', 
       'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',

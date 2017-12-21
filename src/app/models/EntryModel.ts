@@ -1,4 +1,5 @@
 export class EntryModel {
+    isVisible = true;
     constructor(
         public entryId?: number,
         public entryDescription?: string,

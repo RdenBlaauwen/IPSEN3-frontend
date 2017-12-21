@@ -1,81 +1,221 @@
 <div class="row">
   <div class="example-container mat-elevation-z8 col-sm-10">
     <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
-        <mat-checkbox *ngIf="currentRole!='employee'"
+      <mat-checkbox *ngIf="currentRole!='employee'"
         #versionsCheckBox
         [value]="" [checked]="oldVersionsChecked"
         (change)="toggleOldVersions($event)"
-        >Laat oude of verwijderde versies zien</mat-checkbox>
+        >Laat oude of verwijderde versies zien
+      </mat-checkbox>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
       </mat-form-field>
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- entryDescription Column -->  
       <ng-container matColumnDef="entryDescription">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Beschrijving </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryDescription}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="row">
+          <mat-form-field class="col-sm-12 mat-header-search">
+            <input type="text" matTextareaAutosize matInput placeholder="Beschrijving">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <span class="col-sm-12">Beschrijving</span>
+        </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{element.entryDescription}} 
+        </mat-cell>
       </ng-container>
       
       <!-- sprint_name Column -->
       <ng-container matColumnDef="entryStatus">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryStatus}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="row">
+            <mat-form-field class="col-sm-12 mat-header-search">
+              <input type="text" matTextareaAutosize matInput placeholder="Status">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <span class="col-sm-12">Status</span>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryStatus}} 
+          </mat-cell>
       </ng-container>
       
       <!-- userstory Column -->
       <ng-container matColumnDef="entryDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Datum </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryDate}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input matInput  [matDatepicker]="searchdatePicker" placeholder="Datum">
+                  <mat-datepicker-toggle matSuffix [for]="searchdatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #searchdatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row">
+              <span class="col-sm-12">Datum</span>
+            </div>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryDate}} 
+          </mat-cell>
       </ng-container>
 
       <!-- starttime Column -->
       <ng-container matColumnDef="entryStartTime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Starttijd </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryStartTime}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="time" matTextareaAutosize matInput placeholder="Starttijd">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Starttijd</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryStartTime}} 
+          </mat-cell>
       </ng-container>
 
       <!-- endtime Column -->
       <ng-container matColumnDef="entryEndTime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Eindtijd </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryEndTime}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="time" matTextareaAutosize matInput placeholder="Eindtijd">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Eindtijd</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+            {{element.entryEndTime}} 
+        </mat-cell>
       </ng-container>
 
       <!-- exception Column -->
       <ng-container matColumnDef="entryIsLocked">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Gesloten? </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryIsLocked}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-checkbox class="col-sm-12 mat-header-search"
+                #isDeletedCheckBox
+                [value]=""
+                ></mat-checkbox>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">
+                  Gesloten?
+                </span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+            {{element.entryIsLocked}} 
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="entryEmployeeName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Medewerker </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryEmployeeName}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="text" matTextareaAutosize matInput placeholder="Medewerker">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Medewerker</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryEmployeeName}} 
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="entryProjectName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Project </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryProjectName}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="text" matTextareaAutosize matInput placeholder="Project" required>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Project</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryProjectName}} 
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="entrySprintName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Sprint </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entrySprintName}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="text" matTextareaAutosize matInput placeholder="Categorie">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Categorie</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entrySprintName}} 
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="entryUserstoryName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Userstory </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryUserstoryName}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-form-field class="col-sm-12 mat-header-search">
+                  <input type="text" matTextareaAutosize matInput placeholder="Taak">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Taak</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.entryUserstoryName}} 
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="isDeleted">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Verwijderd? </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.isDeleted}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-checkbox class="col-sm-12 mat-header-search"
+                #isDeletedCheckBox
+                [value]=""
+                ></mat-checkbox>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Verwijderd?</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.isDeleted}} 
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="isCurrent">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Nieuwe versie? </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.isCurrent}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+                <mat-checkbox class="col-sm-12 mat-header-search"
+                #isDeletedCheckBox
+                [value]=""
+                ></mat-checkbox>
+              </div>
+              <div class="row">
+                <span class="col-sm-12">Huidige versie?</span>
+              </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+              {{element.isCurrent}} 
+          </mat-cell>
       </ng-container>
 
 
