@@ -71,7 +71,8 @@ export class ProjectService {
   public getAllCustomers()
   {
     let customers: CustomerModel[] = [];
-    this.httpN.get(`/api/customers/getAll/`).subscribe(
+    let headers = this.auth.createAuthHeader(this.auth.emailAddress, this.auth.password);
+    this.httpN.get(`/api/customers/getAll/`, {headers: headers}).subscribe(
       (res: Response) =>{
         for(let customer of res.json())
             {
