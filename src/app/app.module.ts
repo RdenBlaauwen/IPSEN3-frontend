@@ -10,7 +10,6 @@ import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, 
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
@@ -74,7 +73,6 @@ import { ExportComponent } from './export/export.component';
     HttpModule,
     HttpClientModule,
     HttpClientModule,
-    MatButtonToggleModule,
     MatCheckboxModule,
     MatTableModule,
     MatFormFieldModule,
