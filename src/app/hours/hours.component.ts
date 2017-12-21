@@ -7,6 +7,8 @@ import { Project } from '../models/ProjectModel';
 import {FormControl} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import * as moment from '../../../node_modules/moment';
 
 @Component({
   selector: 'app-hours',
@@ -18,10 +20,14 @@ export class HoursComponent implements OnInit {
   dataSource;
   entryData: EntryModel[];
   entryVersionData = [];
+
   projectList: Project[];
+
   oldVersionsChecked = false;
+  weken = ['1','2','3','5','6','7'];
 
   entryDateControl = new FormControl(new Date());
+  searchDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
 
   maxDate: Date;

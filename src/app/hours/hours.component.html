@@ -1,38 +1,77 @@
 <div class="row">
   <div class="example-container mat-elevation-z8 col-sm-10">
     <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
-        <mat-checkbox *ngIf="currentRole!='employee'"
+      <mat-checkbox *ngIf="currentRole!='employee'"
         #versionsCheckBox
         [value]="" [checked]="oldVersionsChecked"
         (change)="toggleOldVersions($event)"
-        >Laat oude of verwijderde versies zien</mat-checkbox>
+        >Laat oude of verwijderde versies zien
+      </mat-checkbox>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
       </mat-form-field>
+      <mat-button-toggle-group #group="matButtonToggleGroup">
+          <mat-button-toggle *ngFor="let week of weken" value="{{week}}">
+            <span>{{week}}</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- entryDescription Column -->  
-      <ng-container matColumnDef="entryDescription">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Beschrijving </mat-header-cell>
+      <ng-container matColumnDef="entryDescription">  
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="row">
+            <mat-form-field class="col-sm-12">
+              <textarea type="text" matTextareaAutosize matInput placeholder="Beschrijving"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <span class="col-sm-12">Beschrijving</span>
+          </div>
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.entryDescription}} </mat-cell>
       </ng-container>
       
       <!-- sprint_name Column -->
       <ng-container matColumnDef="entryStatus">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="row">
+              <mat-form-field class="col-sm-12">
+                <textarea type="text" matTextareaAutosize matInput placeholder="Status"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <span class="col-sm-12">Status</span>
+            </div>
+          </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.entryStatus}} </mat-cell>
       </ng-container>
       
       <!-- userstory Column -->
       <ng-container matColumnDef="entryDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Datum </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 
+          <div class="row">
+            <mat-form-field class="col-sm-12">
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <span class="col-sm-12">Datum</span>
+          </div>
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.entryDate}} </mat-cell>
       </ng-container>
 
       <!-- starttime Column -->
       <ng-container matColumnDef="entryStartTime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Starttijd </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 
+            <owl-date-time [(ngModel)]="dateValue" [locale]="en"></owl-date-time>
+            Starttijd 
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.entryStartTime}} </mat-cell>
       </ng-container>
 
