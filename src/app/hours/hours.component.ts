@@ -1,6 +1,6 @@
 import { ProjectService } from './../services/project.service';
-import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
 import {HoursService} from '../services/hours.service';
 import { EntryModel } from '../models/EntryModel';
 import { Project } from '../models/ProjectModel';
@@ -17,6 +17,7 @@ export class HoursComponent implements OnInit {
   displayedColumns: any[];
   dataSource;
   entryData: EntryModel[];
+  entryVersionData = [];
   projectList: Project[];
   oldVersionsChecked = false;
 
@@ -27,6 +28,8 @@ export class HoursComponent implements OnInit {
   minDate: Date;
 
   currentRole = 'employee';
+
+  // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
 
@@ -43,22 +46,29 @@ export class HoursComponent implements OnInit {
     //minimum te kiezen datum (week geleden)
     this.minDate = new Date(yyyy,mm,dd-7);
 
-    this.displayedColumns = ['entryDescription', 
-    'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','employeeFk',
-  'entryProjectFk','entrySprintFk','entryUserstoryFk','isDeleted','isCurrent'];
-    this.readEntryData().then((data) => {
-      this.dataSource = new MatTableDataSource<EntryModel>(data);
-    }, (error) => console.log(error.SessionNotCreatedError));
+    
 
     // this.readProjectList().then((data) => {
     //   this.
     // });
    }
-    applyFilter(filterValue: string) {
+  applyFilter(filterValue: string) {
      filterValue = filterValue.trim(); // Remove whitespace
      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
      this.dataSource.filter = filterValue;
    }
+
+   ngOnInit() {
+    this.readEntryData().then((data) => {
+      this.entryData = data;
+      this.filterEntries();
+      this.dataSource = new MatTableDataSource<EntryModel>(this.entryData);
+    }, (error) => console.log(error.SessionNotCreatedError));
+    this.readProjectList();
+  }
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
@@ -77,10 +87,14 @@ export class HoursComponent implements OnInit {
         entry.entryIsLocked,
         entry.employeeFk,
         entry.entryProjectFk,
+        entry.entryProjectName,
         entry.entrySprintFk,
+        entry.entrySprintName,
         entry.entryUserstoryFk,
+        entry.entryUserstoryName,
         entry.isDeleted,
-        entry.isCurrent);
+        entry.isCurrent,
+        entry.entryEmployeeName);
     }));
    }
    readProjectList(): Promise<Project[]> {
@@ -96,14 +110,39 @@ export class HoursComponent implements OnInit {
         );
      }));
    }
-  ngOnInit() {
-    this.readEntryData();
-    this.readProjectList();
-  }
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
+    this.filterEntries();
     console.log($event);
+  }
+
+  filterEntries() {
+    if (this.oldVersionsChecked) {
+      this.displayedColumns = ['entryDescription', 
+      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
+      'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+      for (let entry of this.entryVersionData){
+          this.entryData.push(entry);
+      }
+      for (let entry of this.entryData) {
+        if (this.entryVersionData.includes(entry)){
+          this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
+        }
+      }
+    }else{
+      this.displayedColumns = ['entryDescription', 
+      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
+      'entryProjectName','entrySprintName','entryUserstoryName'];
+      for (let entry of this.entryData){
+        if (!entry.isCurrent || entry.isDeleted) {
+          this.entryVersionData.push(entry);
+        }
+      }
+      for (let entry of this.entryVersionData) {
+        this.entryData.splice(this.entryData.indexOf(entry),1);
+      }
+    }
   }
 
 }

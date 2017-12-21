@@ -10,8 +10,7 @@
         >Laat oude of verwijderde versies zien</mat-checkbox>
       </mat-form-field>
     </div>
-    <mat-table #table [dataSource]="dataSource" matSort
-    matSortActive="entryDate" matSortDirection="asc">
+    <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- entryDescription Column -->  
       <ng-container matColumnDef="entryDescription">
@@ -49,24 +48,24 @@
         <mat-cell *matCellDef="let element"> {{element.entryIsLocked}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="employeeFk">
+      <ng-container matColumnDef="entryEmployeeName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Medewerker </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.employeeFk}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryEmployeeName}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="entryProjectFk">
+      <ng-container matColumnDef="entryProjectName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Project </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryProjectFk}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryProjectName}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="entrySprintFk">
+      <ng-container matColumnDef="entrySprintName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Sprint </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entrySprintFk}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.entrySprintName}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="entryUserstoryFk">
+      <ng-container matColumnDef="entryUserstoryName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Userstory </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.entryUserstoryFk}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.entryUserstoryName}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="isDeleted">
