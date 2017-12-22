@@ -1,3 +1,4 @@
+import { WeekModel } from './../models/WeekModel';
 import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
@@ -9,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
 import { EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import { DayModel } from '../models/DayModel';
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
 export class HoursComponent implements OnInit {
   displayedColumns: any[];
   dataSource;
-  entryData: EntryModel[];
+  entryData: WeekModel[];
   entryVersionData = [];
   projectList: Project[];
   oldVersionsChecked = false;
@@ -44,9 +45,9 @@ export class HoursComponent implements OnInit {
     const mm =  today.getMonth();
     const yyyy = today.getFullYear();
     // maximum te kiezen datum (vandaag)
-    this.maxDate = new Date(yyyy,mm,dd);
+    this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    this.minDate = new Date(yyyy,mm,dd-7);
+    this.minDate = new Date(yyyy, mm, dd - 7);
     // this.readProjectList().then((data) => {
     //   this.
     // });
@@ -58,10 +59,11 @@ export class HoursComponent implements OnInit {
    }
 
    ngOnInit() {
+    this.displayedColumns = ['entryDescription', 'entryStatus'];
     this.readEntryData().then((data) => {
       this.entryData = data;
-      this.filterEntries();
-      this.dataSource = new MatTableDataSource<EntryModel>(this.entryData);
+      // this.filterEntries();
+      this.dataSource = new MatTableDataSource<WeekModel>(this.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
     this.readProjectList();
   }
@@ -72,28 +74,36 @@ export class HoursComponent implements OnInit {
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
-   readEntryData(): Promise<EntryModel[]> {
+   readEntryData(): Promise<WeekModel[]> {
+    console.log('readEntryData(): start');
     return this.hoursService.getAllEntries().toPromise()
     .then(res => res)
-    .then(entries => entries.map(entry => {
-      return new EntryModel(
-        entry.entryId,
-        entry.entryDescription,
-        entry.entryStatus,
-        entry.entryDate,
-        entry.entryStartTime,
-        entry.entryEndTime,
-        entry.entryIsLocked,
-        entry.employeeFk,
-        entry.entryProjectFk,
-        entry.entryProjectName,
-        entry.entrySprintFk,
-        entry.entrySprintName,
-        entry.entryUserstoryFk,
-        entry.entryUserstoryName,
-        entry.isDeleted,
-        entry.isCurrent,
-        entry.entryEmployeeName);
+    .then(weeks => weeks.map(week => {
+      console.log('readEntryData(): mapping');
+      return new WeekModel(
+        week.beginDate,
+        week.endDate,
+        week.dayModels
+        // day.date,
+        // day.entryModels
+        // entry.entryId,
+        // entry.entryDescription,
+        // entry.entryStatus,
+        // entry.entryDate,
+        // entry.entryStartTime,
+        // entry.entryEndTime,
+        // entry.entryIsLocked,
+        // entry.employeeFk,
+        // entry.entryProjectFk,
+        // entry.entryProjectName,
+        // entry.entrySprintFk,
+        // entry.entrySprintName,
+        // entry.entryUserstoryFk,
+        // entry.entryUserstoryName,
+        // entry.isDeleted,
+        // entry.isCurrent,
+        // entry.entryEmployeeName
+      );
     }));
    }
    readProjectList(): Promise<Project[]> {
@@ -112,38 +122,37 @@ export class HoursComponent implements OnInit {
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
-    this.filterEntries();
+    // this.filterEntries();
     console.log($event);
   }
 
-  filterEntries() {
-    if (this.oldVersionsChecked) {
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
-      for (let entry of this.entryVersionData){
-          this.entryData.push(entry);
-      }
-      for (let entry of this.entryData) {
-        if (this.entryVersionData.includes(entry)){
-          this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
-        }
-      }
-      
-    }else{
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName'];
-      for (let entry of this.entryData){
-        if (!entry.isCurrent || entry.isDeleted) {
-          this.entryVersionData.push(entry);
-        }
-      }
-      for (let entry of this.entryVersionData) {
-        this.entryData.splice(this.entryData.indexOf(entry),1);
-      }
-    }
-  }
+  // filterEntries() {
+  //   if (this.oldVersionsChecked) {
+  //     this.displayedColumns = ['entryDescription', 
+  //     'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
+  //     'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+  //     for (let entry of this.entryVersionData){
+  //         this.entryData.push(entry);
+  //     }
+  //     for (let entry of this.entryData) {
+  //       if (this.entryVersionData.includes(entry)){
+  //         this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
+  //       }
+  //     }
+  //   }else{
+  //     this.displayedColumns = ['entryDescription', 
+  //     'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
+  //     'entryProjectName','entrySprintName','entryUserstoryName'];
+  //     for (let entry of this.entryData){
+  //       if (!entry.isCurrent || entry.isDeleted) {
+  //         this.entryVersionData.push(entry);
+  //       }
+  //     }
+  //     for (let entry of this.entryVersionData) {
+  //       this.entryData.splice(this.entryData.indexOf(entry),1);
+  //     }
+  //   }
+  // }
 
 }
 // export interface Entry {

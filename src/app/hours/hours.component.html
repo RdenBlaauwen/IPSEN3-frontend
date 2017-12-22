@@ -26,7 +26,7 @@
         </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            {{element.entryDescription}} 
+            {{element.beginDate}} 
         </mat-cell>
       </ng-container>
       
@@ -43,11 +43,11 @@
           </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.entryStatus}} 
+              {{element.endDate}} 
           </mat-cell>
       </ng-container>
       
-      <!-- userstory Column -->
+      <!-- userstory Column 
       <ng-container matColumnDef="entryDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
@@ -66,7 +66,7 @@
           </mat-cell>
       </ng-container>
 
-      <!-- starttime Column -->
+      <!-- starttime Column 
       <ng-container matColumnDef="entryStartTime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
@@ -83,7 +83,7 @@
           </mat-cell>
       </ng-container>
 
-      <!-- endtime Column -->
+      <!-- endtime Column 
       <ng-container matColumnDef="entryEndTime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
@@ -100,7 +100,7 @@
         </mat-cell>
       </ng-container>
 
-      <!-- exception Column -->
+      <!-- exception Column 
       <ng-container matColumnDef="entryIsLocked">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
@@ -218,7 +218,7 @@
           </mat-cell>
       </ng-container>
 
-
+      -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

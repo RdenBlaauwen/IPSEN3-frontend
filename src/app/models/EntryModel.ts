@@ -17,6 +17,5 @@ export class EntryModel {
         public entryUserstoryName?: String,
         public isDeleted?: boolean,
         public isCurrent?: true,
-        public entryEmployeeName?: String)
-    {}
+        public entryEmployeeName?: String) {}
 }
