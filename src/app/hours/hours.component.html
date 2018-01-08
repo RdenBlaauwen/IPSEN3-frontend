@@ -26,10 +26,7 @@
         </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div *ngFor="let entry of element.entryModels" class="mat-cell cdk-column-entryDescription mat-column-entryDescription" role="gridcell">
-              {{entry.entryDescription}} 
-          </div>
-            
+            <div class="">{{element.entryDescription}}</div>
         </mat-cell>
       </ng-container>
       
@@ -45,11 +42,9 @@
             <span class="col-sm-12">Status</span>
           </div>
         </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-            <div *ngFor="let entry of element.entryModels" class="mat-cell cdk-column-entryDescription mat-column-entryDescription" role="gridcell">
-                {{entry.entryStatus}} 
-            </div>
-          </mat-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="">{{element.entryStatus}}</div>
+        </mat-cell>
       </ng-container>
       
       <!-- userstory Column 
