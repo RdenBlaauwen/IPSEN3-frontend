@@ -7,9 +7,9 @@
         (change)="toggleOldVersions($event)"
         >Laat oude of verwijderde versies zien
       </mat-checkbox>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
-      </mat-form-field>
+      </mat-form-field>-->
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -26,7 +26,7 @@
         </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            {{element.beginDate}} 
+            {{element.date}} 
         </mat-cell>
       </ng-container>
       
@@ -43,7 +43,7 @@
           </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.endDate}} 
+              {{element.date}} 
           </mat-cell>
       </ng-container>
       
