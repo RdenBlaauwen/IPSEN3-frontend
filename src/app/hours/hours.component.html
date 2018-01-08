@@ -26,7 +26,10 @@
         </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            {{element.date}} 
+          <div *ngFor="let entry of element.entryModels" class="mat-cell cdk-column-entryDescription mat-column-entryDescription" role="gridcell">
+              {{entry.entryDescription}} 
+          </div>
+            
         </mat-cell>
       </ng-container>
       
@@ -43,7 +46,9 @@
           </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.date}} 
+            <div *ngFor="let entry of element.entryModels" class="mat-cell cdk-column-entryDescription mat-column-entryDescription" role="gridcell">
+                {{entry.entryStatus}} 
+            </div>
           </mat-cell>
       </ng-container>
       

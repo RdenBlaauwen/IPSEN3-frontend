@@ -1,6 +1,6 @@
 import { DayModel } from './DayModel';
 export class WeekModel {
-    // private inactiveDays = [];
+    private inactiveDays = [];
     constructor(
         public beginDate?: Date,
         public endDate?: Date,
