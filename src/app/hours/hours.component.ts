@@ -13,6 +13,9 @@ import { Observable } from 'rxjs/Observable';
 import { DayModel } from '../models/DayModel';
 import { WeekFilter } from '../helpers/WeekFilter';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {MatTab} from '@angular/material/tabs';
+
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
@@ -61,11 +64,19 @@ export class HoursComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.updateData();  
+    this.updateData(this.currentWeek);  
   }
 
-  updateData(){
-    this.readEntryData().then((data) => {
+  tabChange(event: MatTabChangeEvent){
+    console.log(event.tab.textLabel);
+    this.updateData(event.tab.textLabel);
+  }
+
+  updateData(weekString: string): void{
+
+    console.log('updateData: ');
+    this.currentWeek=weekString;
+    this.readEntryData(weekString).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
       this.weekFilter = new WeekFilter(data);
@@ -78,9 +89,9 @@ export class HoursComponent implements OnInit {
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
-   readEntryData(): Promise<WeekModel> {
+   readEntryData(weekString: string): Promise<WeekModel> {
     console.log('readEntryData(): start');
-    return this.hoursService.getAllEntries(this.currentWeek).toPromise()
+    return this.hoursService.getAllEntries(weekString).toPromise()
     .then(weeks => {return weeks});
    }
    testEn(beginDate): String{
