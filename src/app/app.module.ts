@@ -26,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
+import {MatTabsModule} from '@angular/material/tabs';
 // import {FormControl} from '@angular/forms';
 
 import { ProjectService } from './services/project.service';
@@ -40,6 +41,7 @@ import { CustomerService } from './services/customer.service';
 import { ModifyCustomerComponent } from './customers/modify-customer/modify-customer.component';
 import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 import { ExportComponent } from './export/export.component'; 
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 
@@ -73,8 +75,10 @@ import { ExportComponent } from './export/export.component';
     HttpModule,
     HttpClientModule,
     HttpClientModule,
+    MatButtonToggleModule,
     MatCheckboxModule,
     MatTableModule,
+    MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,

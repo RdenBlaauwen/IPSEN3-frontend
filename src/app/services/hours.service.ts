@@ -22,10 +22,10 @@ export class HoursService {
   //   });
   // }
 
-  getAllEntries(): Observable<WeekModel> {
+  getAllEntries(week: string): Observable<WeekModel> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
     let params = new URLSearchParams();
-    params.append('startdate', '18-12-2017');
-    return this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate=18-12-2017', {headers: headers});
+    params.append('startdate', week);
+    return this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
   }
 }

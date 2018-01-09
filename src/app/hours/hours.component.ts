@@ -12,6 +12,7 @@ import { EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { DayModel } from '../models/DayModel';
 import { WeekFilter } from '../helpers/WeekFilter';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
@@ -22,6 +23,8 @@ export class HoursComponent implements OnInit {
   dataSource: MatTableDataSource<EntryModel>;
   weekFilter: WeekFilter;
   projectList: Project[];
+  currentWeek = '18-12-2017';
+  availableWeeks = ['13-11-2017','20-11-2017','27-11-2017','04-12-2017','11-12-2017','18-12-2017']
   oldVersionsChecked = false;
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
@@ -49,15 +52,6 @@ export class HoursComponent implements OnInit {
     // this.readProjectList().then((data) => {
     //   this.
     // });
-
-    this.readEntryData().then((data) => {
-      // this.entryData = data;
-      // this.filterEntries();
-      this.weekFilter = new WeekFilter(data);
-      console.log('Hier is de data: '+this.weekFilter.entryData);
-      this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
-    }, (error) => console.log(error.SessionNotCreatedError));
-    this.readProjectList();
    }
 
   applyFilter(filterValue: string) {
@@ -66,19 +60,27 @@ export class HoursComponent implements OnInit {
      this.dataSource.filter = filterValue;
    }
 
-   ngOnInit() {
-    
+  ngOnInit() {
+    this.updateData();  
   }
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
+
+  updateData(){
+    this.readEntryData().then((data) => {
+      // this.entryData = data;
+      // this.filterEntries();
+      this.weekFilter = new WeekFilter(data);
+      console.log('Hier is de data: '+this.weekFilter.entryData);
+      this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
+    }, (error) => console.log(error.SessionNotCreatedError));
+    this.readProjectList();
+  }
 
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
    readEntryData(): Promise<WeekModel> {
     console.log('readEntryData(): start');
-    return this.hoursService.getAllEntries().toPromise()
+    return this.hoursService.getAllEntries(this.currentWeek).toPromise()
     .then(weeks => {return weeks});
    }
    testEn(beginDate): String{
