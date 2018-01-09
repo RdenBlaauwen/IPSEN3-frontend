@@ -11,6 +11,7 @@ import { Employee } from '../models/Employee';
 import { EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { DayModel } from '../models/DayModel';
+import { WeekFilter } from '../helpers/WeekFilter';
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
@@ -18,15 +19,12 @@ import { DayModel } from '../models/DayModel';
 })
 export class HoursComponent implements OnInit {
   displayedColumns = ['entryDescription', 'entryStatus'];
-  dataSource: MatTableDataSource<DayModel>;
-  weekData: WeekModel;
-  entryVersionData = [];
+  dataSource: MatTableDataSource<EntryModel>;
+  weekFilter: WeekFilter;
   projectList: Project[];
   oldVersionsChecked = false;
-
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
-
   maxDate: Date;
   minDate: Date;
 
@@ -55,9 +53,9 @@ export class HoursComponent implements OnInit {
     this.readEntryData().then((data) => {
       // this.entryData = data;
       // this.filterEntries();
-      this.weekData=data;
-      console.log('Hier is de data: '+this.weekData.dayModels);
-      this.dataSource = new MatTableDataSource<DayModel>(this.weekData.dayModels);
+      this.weekFilter = new WeekFilter(data);
+      console.log('Hier is de data: '+this.weekFilter.entryData);
+      this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
     this.readProjectList();
    }
@@ -81,37 +79,7 @@ export class HoursComponent implements OnInit {
    readEntryData(): Promise<WeekModel> {
     console.log('readEntryData(): start');
     return this.hoursService.getAllEntries().toPromise()
-    .then(weeks => {return weeks}
-    );
-
-    // weeks.map(week => {
-    //   return new WeekModel(
-    //         week.beginDate,
-    //         week.endDate,
-    //         // week.dayModels
-    //         // day.date,
-    //         // day.entryModels
-    //         // entry.entryId,
-    //         // entry.entryDescription,
-    //         // entry.entryStatus,
-    //         // entry.entryDate,
-    //         // entry.entryStartTime,
-    //         // entry.entryEndTime,
-    //         // entry.entryIsLocked,
-    //         // entry.employeeFk,
-    //         // entry.entryProjectFk,
-    //         // entry.entryProjectName,
-    //         // entry.entrySprintFk,
-    //         // entry.entrySprintName,
-    //         // entry.entryUserstoryFk,
-    //         // entry.entryUserstoryName,
-    //         // entry.isDeleted,
-    //         // entry.isCurrent,
-    //         // entry.entryEmployeeName
-    //       );
-    //     }
-    //   )
-
+    .then(weeks => {return weeks});
    }
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
@@ -135,41 +103,4 @@ export class HoursComponent implements OnInit {
     // this.filterEntries();
     console.log($event);
   }
-
-  // filterEntries() {
-  //   if (this.oldVersionsChecked) {
-  //     this.displayedColumns = ['entryDescription', 
-  //     'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-  //     'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
-  //     for (let entry of this.entryVersionData){
-  //         this.entryData.push(entry);
-  //     }
-  //     for (let entry of this.entryData) {
-  //       if (this.entryVersionData.includes(entry)){
-  //         this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
-  //       }
-  //     }
-  //   }else{
-  //     this.displayedColumns = ['entryDescription', 
-  //     'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-  //     'entryProjectName','entrySprintName','entryUserstoryName'];
-  //     for (let entry of this.entryData){
-  //       if (!entry.isCurrent || entry.isDeleted) {
-  //         this.entryVersionData.push(entry);
-  //       }
-  //     }
-  //     for (let entry of this.entryVersionData) {
-  //       this.entryData.splice(this.entryData.indexOf(entry),1);
-  //     }
-  //   }
-  // }
-
 }
-// export interface Entry {
-//   project_name: string;
-//   sprint_name: string;
-//   userstory: string;
-//   starttime: string;
-//   endtime: string;
-//   exception: boolean;
-// }

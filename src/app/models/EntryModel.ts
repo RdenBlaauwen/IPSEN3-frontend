@@ -1,5 +1,5 @@
 export class EntryModel {
-    isVisible = true;
+    // isVisible = true;
     constructor(
         public entryId?: number,
         public entryDescription?: string,
@@ -10,12 +10,12 @@ export class EntryModel {
         public entryIsLocked?: boolean,
         public employeeFk?: number,
         public entryProjectFk?: number,
-        public entryProjectName?: String,
+        public entryProjectName?: string,
         public entrySprintFk?: number,
-        public entrySprintName?: String,
+        public entrySprintName?: string,
         public entryUserstoryFk?: number,
-        public entryUserstoryName?: String,
+        public entryUserstoryName?: string,
         public isDeleted?: boolean,
         public isCurrent?: true,
-        public entryEmployeeName?: String) {}
+        public entryEmployeeName?: string) {}
 }
