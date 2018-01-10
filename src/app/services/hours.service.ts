@@ -26,6 +26,8 @@ export class HoursService {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
     let params = new URLSearchParams();
     params.append('startdate', week);
-    return this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
+    let result = this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
+    console.log("service: result "+result);
+    return result;
   }
 }

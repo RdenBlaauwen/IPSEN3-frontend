@@ -15,6 +15,7 @@ import { WeekFilter } from '../helpers/WeekFilter';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {MatTab} from '@angular/material/tabs';
+import { DateHelper } from '../helpers/dateHelper';
 
 @Component({
   selector: 'app-hours',
@@ -22,13 +23,16 @@ import {MatTab} from '@angular/material/tabs';
   styleUrls: ['./hours.component.css']
 })
 export class HoursComponent implements OnInit {
-  displayedColumns = ['entryDescription', 'entryStatus'];
+  displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+                      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+                      'entrySprintName','entryUserstoryName'];
   dataSource: MatTableDataSource<EntryModel>;
   weekFilter: WeekFilter;
   projectList: Project[];
   currentWeek = '18-12-2017';
-  availableWeeks = ['13-11-2017','20-11-2017','27-11-2017','04-12-2017','11-12-2017','18-12-2017']
+  availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
+  dateHelper = new DateHelper();
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
   maxDate: Date;
@@ -52,15 +56,6 @@ export class HoursComponent implements OnInit {
     this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
     this.minDate = new Date(yyyy, mm, dd - 7);
-    // this.readProjectList().then((data) => {
-    //   this.
-    // });
-   }
-
-  applyFilter(filterValue: string) {
-     filterValue = filterValue.trim(); // Remove whitespace
-     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-     this.dataSource.filter = filterValue;
    }
 
   ngOnInit() {
@@ -70,15 +65,15 @@ export class HoursComponent implements OnInit {
   tabChange(event: MatTabChangeEvent){
     console.log(event.tab.textLabel);
     this.updateData(event.tab.textLabel);
-  }
+  } 
 
   updateData(weekString: string): void{
-
     console.log('updateData: ');
     this.currentWeek=weekString;
     this.readEntryData(weekString).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
+      
       this.weekFilter = new WeekFilter(data);
       console.log('Hier is de data: '+this.weekFilter.entryData);
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
@@ -86,6 +81,10 @@ export class HoursComponent implements OnInit {
     this.readProjectList();
   }
 
+  dataToTable(): void{
+    console.log("dataToTable()");
+    this.dataSource.data=this.weekFilter.entryData;
+  }
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
