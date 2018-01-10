@@ -112,6 +112,15 @@ export class HoursComponent implements OnInit {
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
+    if(this.oldVersionsChecked){
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+    }else{
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName'];
+    }
     // this.filterEntries();
     console.log($event);
   }

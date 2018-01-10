@@ -12,12 +12,12 @@ export class WeekFilter{
     private _dateArg: string;
     private _startTimeArg: string;
     private _EndTimeArg: string;
-    private _isLockedArg: boolean;
+    private _isLockedArg = false;
     private _projectNameArg: string;
     private _sprintNameArg: string;
     private _userStoryNameArg: string;
-    private _isDeletedArg: boolean;
-    private _isCurrentArg: boolean;
+    private _isDeletedArg = false;
+    private _isCurrentArg = true;
     private _employeeNameArg: string;
 
     public set idArg(id: number){
@@ -71,33 +71,34 @@ export class WeekFilter{
 
 	public set isDeletedArg(value: boolean) {
         this._isDeletedArg = value;
+        console.log("isDeletedArg: "+value);
         this.filterTable();
 	}
 
 	public set isCurrentArg(value: boolean) {
         this._isCurrentArg = value;
+        // console.log("isCurrentArg: "+value);
         this.filterTable();
 	}
 
 	public set employeeNameArg(value: string) {
-        console.log('WeekFilter employeeName: '+value);
         this._employeeNameArg = value;
         this.filterTable();
 	}
 
     constructor(private weekModel: WeekModel){
         console.log('data in filter: '+weekModel);
-        this.fillTable();
-        // this.filterTable();
+        // this.fillTable();
+        this.filterTable();
     }
-    private fillTable(): void{
-        this.entryData = new Array<EntryModel>();
-        for (let day of this.weekModel.dayModels){
-            for(let entry of day.entryModels){
-                this.entryData.push(entry);
-            }
-        }
-    }
+    // private fillTable(): void{
+    //     this.entryData = new Array<EntryModel>();
+    //     for (let day of this.weekModel.dayModels){
+    //         for(let entry of day.entryModels){
+    //             this.entryData.push(entry);
+    //         }
+    //     }
+    // }
     public filterTable(): void{
         let srch = new Searcher();
         // console.log('pre filterTable(): entrydata '+this.entryData);
@@ -120,13 +121,14 @@ export class WeekFilter{
                 let hasProjectName = srch.hasString(entry.entryProjectName,this._projectNameArg);
 
                 let hasSprintName = srch.hasString(entry.entrySprintName,this._sprintNameArg);
-                console.log('WeekFilter hasSprintName='+hasSprintName);
                 let hasUserStoryName = srch.hasString(entry.entryUserstoryName,this._userStoryNameArg);
-                console.log('WeekFilter hasUserStoryName='+hasUserStoryName);
 
-                // let isDeleted = entry.isDeleted==this._isDeletedArg;
-                // let isCurrent = entry.isCurrent==this._isCurrentArg;
+                let isDeleted = this._isDeletedArg ? true : !entry.isDeleted;
+                let isCurrent = this._isCurrentArg ? entry.isCurrent : true;
                 let hasEmployee = srch.hasString(entry.entryEmployeeName,this._employeeNameArg);
+                console.log('WeekFilter description='+entry.entryDescription);
+                console.log('WeekFilter isDeletedArg='+this._isDeletedArg+' !entry.isDeleted='+!entry.isDeleted+" isDeleted="+isDeleted);
+                // console.log('WeekFilter isCurrent='+isCurrent);
                 
                 // if(hasId&&hasDescription&&hasStatus&&hasDate
                 // &&hasStartTime&&hasEndTime&&isLocked&&hasProjectName
@@ -137,8 +139,9 @@ export class WeekFilter{
                 // }
 
                 if(hasId&&hasDescription&&hasStatus&&hasDate&&hasStartTime&&hasEndTime&&hasEmployee&&hasProjectName
-                    &&isLocked&&hasSprintName&&hasUserStoryName){
-                        // console.log('push '+entry.entryDescription);
+                    &&isLocked&&hasSprintName&&hasUserStoryName&&isCurrent&&isDeleted){
+                        console.log('push '+isDeleted);
+                        console.log(this.entryData);
                         this.entryData.push(entry);
                     }
                 

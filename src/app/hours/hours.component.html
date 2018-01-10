@@ -5,7 +5,7 @@
         <mat-checkbox *ngIf="currentRole!='employee'"
           #versionsCheckBox
           [value]="" [checked]="oldVersionsChecked"
-          (change)="toggleOldVersions($event)"
+          (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
           >Laat oude of verwijderde versies zien
         </mat-checkbox>
       </div>
@@ -120,7 +120,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
-                #isDeletedCheckBox
+                #isLockedCheckBox
                 [value]=""
                 (change)="weekFilter.isLockedArg=$event.checked; dataToTable()"
                 ></mat-checkbox>
@@ -132,7 +132,7 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-            {{element.entryIsLocked}} 
+            {{(element.entryIsLocked ? 'Ja' : 'Nee')}} 
         </mat-cell>
       </ng-container>
     
@@ -209,13 +209,15 @@
               {{element.entryUserstoryName}} 
           </mat-cell>
       </ng-container>
-<!--
-      <ng-container matColumnDef="isDeleted">
+
+      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isDeleted">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
                 #isDeletedCheckBox
-                [value]=""
+                [value]="" 
+                (change)="weekFilter.isDeletedArg=$event.checked; dataToTable()" 
+                [checked]="true" 
                 ></mat-checkbox>
               </div>
               <div class="row">
@@ -223,16 +225,18 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.isDeleted}} 
-          </mat-cell>
+          {{(element.isDeleted ? 'Ja' : 'Nee')}} 
+        </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="isCurrent">
+      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isCurrent">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
-                #isDeletedCheckBox
-                [value]=""
+                #isNotCurrentCheckBox
+                [value]="" 
+                (change)="weekFilter.isCurrentArg=$event.checked; dataToTable()" 
+                [checked]="true"
                 ></mat-checkbox>
               </div>
               <div class="row">
@@ -240,7 +244,7 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.isCurrent}} 
+              {{(element.isCurrent ? 'Ja' : 'Nee')}} 
           </mat-cell>
       </ng-container>
 
