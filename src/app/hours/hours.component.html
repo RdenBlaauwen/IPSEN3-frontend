@@ -1,15 +1,23 @@
 <div class="row">
   <div class="example-container mat-elevation-z8 col-sm-10">
     <div class="example-header">
-      <mat-checkbox *ngIf="currentRole!='employee'"
-        #versionsCheckBox
-        [value]="" [checked]="oldVersionsChecked"
-        (change)="toggleOldVersions($event)"
-        >Laat oude of verwijderde versies zien
-      </mat-checkbox>
-      <mat-form-field>
+      <div class="row">
+        <mat-checkbox *ngIf="currentRole!='employee'"
+          #versionsCheckBox
+          [value]="" [checked]="oldVersionsChecked"
+          (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
+          >Laat oude of verwijderde versies zien
+        </mat-checkbox>
+      </div>
+      <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
-      </mat-form-field>
+      </mat-form-field>-->
+      <div class="row">
+        <mat-tab-group class="col-sm-12" (selectedTabChange)="tabChange($event)">
+          <mat-tab *ngFor="let week of availableWeeks" label="{{week}}">
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -18,7 +26,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <div class="row">
           <mat-form-field class="col-sm-12 mat-header-search">
-            <input type="text" matTextareaAutosize matInput placeholder="Beschrijving">
+            <input type="text" (input)="weekFilter.descriptionArg =  $event.target.value; dataToTable()" matTextareaAutosize matInput placeholder="Beschrijving">
           </mat-form-field>
         </div>
         <div class="row">
@@ -26,7 +34,7 @@
         </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            {{element.entryDescription}} 
+            <div class="">{{element.entryDescription}}</div>
         </mat-cell>
       </ng-container>
       
@@ -35,16 +43,16 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <div class="row">
             <mat-form-field class="col-sm-12 mat-header-search">
-              <input type="text" matTextareaAutosize matInput placeholder="Status">
+              <input type="text" (input)="weekFilter.statusArg =  $event.target.value; dataToTable()" matTextareaAutosize matInput placeholder="Status">
             </mat-form-field>
           </div>
           <div class="row">
             <span class="col-sm-12">Status</span>
           </div>
         </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-              {{element.entryStatus}} 
-          </mat-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="">{{element.entryStatus}}</div>
+        </mat-cell>
       </ng-container>
       
       <!-- userstory Column -->
@@ -52,7 +60,10 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input matInput  [matDatepicker]="searchdatePicker" placeholder="Datum">
+                  <input matInput  [matDatepicker]="searchdatePicker" 
+                                  (input)="weekFilter.dateArg =  $event.target.value; dataToTable()" 
+                                  (dateChange)="weekFilter.dateArg =  $event.target.value; dataToTable()" 
+                                  placeholder="Datum">
                   <mat-datepicker-toggle matSuffix [for]="searchdatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #searchdatePicker></mat-datepicker>
                 </mat-form-field>
@@ -62,7 +73,7 @@
             </div>
           </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.entryDate}} 
+          <div class="">{{dateHelper.normalizeDateString(element.entryDate)}}</div>
           </mat-cell>
       </ng-container>
 
@@ -71,13 +82,15 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="time" matTextareaAutosize matInput placeholder="Starttijd">
+                  <input type="time" matTextareaAutosize matInput 
+                  (input)="weekFilter.startTimeArg =  $event.target.value; dataToTable()" 
+                  placeholder="Starttijd">
                 </mat-form-field>
               </div>
               <div class="row">
                 <span class="col-sm-12">Starttijd</span>
               </div>
-        </mat-header-cell>
+        </mat-header-cell>  
         <mat-cell *matCellDef="let element"> 
               {{element.entryStartTime}} 
           </mat-cell>
@@ -88,7 +101,9 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="time" matTextareaAutosize matInput placeholder="Eindtijd">
+                  <input type="time" matTextareaAutosize matInput 
+                  (input)="weekFilter.endTimeArg =  $event.target.value; dataToTable()" 
+                  placeholder="Eindtijd">
                 </mat-form-field>
               </div>
               <div class="row">
@@ -100,13 +115,14 @@
         </mat-cell>
       </ng-container>
 
-      <!-- exception Column -->
+      <!-- exception Column-->
       <ng-container matColumnDef="entryIsLocked">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
-                #isDeletedCheckBox
+                #isLockedCheckBox
                 [value]=""
+                (change)="weekFilter.isLockedArg=$event.checked; dataToTable()"
                 ></mat-checkbox>
               </div>
               <div class="row">
@@ -116,15 +132,18 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-            {{element.entryIsLocked}} 
+            {{(element.entryIsLocked ? 'Ja' : 'Nee')}} 
         </mat-cell>
       </ng-container>
+    
 
       <ng-container matColumnDef="entryEmployeeName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="text" matTextareaAutosize matInput placeholder="Medewerker">
+                  <input type="text" matTextareaAutosize matInput 
+                  (input)="weekFilter.employeeNameArg =  $event.target.value; dataToTable()" 
+                  placeholder="Medewerker">
                 </mat-form-field>
               </div>
               <div class="row">
@@ -136,11 +155,14 @@
           </mat-cell>
       </ng-container>
 
+      
       <ng-container matColumnDef="entryProjectName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="text" matTextareaAutosize matInput placeholder="Project" required>
+                  <input type="text" matTextareaAutosize matInput 
+                  (input)="weekFilter.projectNameArg =  $event.target.value; dataToTable()" 
+                  placeholder="Project" required>
                 </mat-form-field>
               </div>
               <div class="row">
@@ -156,7 +178,9 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="text" matTextareaAutosize matInput placeholder="Categorie">
+                  <input type="text" matTextareaAutosize matInput 
+                  (input)="weekFilter.sprintNameArg =  $event.target.value; dataToTable()" 
+                  placeholder="Categorie">
                 </mat-form-field>
               </div>
               <div class="row">
@@ -172,7 +196,9 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-form-field class="col-sm-12 mat-header-search">
-                  <input type="text" matTextareaAutosize matInput placeholder="Taak">
+                  <input type="text" matTextareaAutosize matInput 
+                  (input)="weekFilter.userStoryNameArg =  $event.target.value; dataToTable()" 
+                  placeholder="Taak">
                 </mat-form-field>
               </div>
               <div class="row">
@@ -184,12 +210,14 @@
           </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="isDeleted">
+      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isDeleted">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
                 #isDeletedCheckBox
-                [value]=""
+                [value]="" 
+                (change)="weekFilter.isDeletedArg=$event.checked; dataToTable()" 
+                [checked]="true" 
                 ></mat-checkbox>
               </div>
               <div class="row">
@@ -197,16 +225,18 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.isDeleted}} 
-          </mat-cell>
+          {{(element.isDeleted ? 'Ja' : 'Nee')}} 
+        </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="isCurrent">
+      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isCurrent">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="row">
                 <mat-checkbox class="col-sm-12 mat-header-search"
-                #isDeletedCheckBox
-                [value]=""
+                #isNotCurrentCheckBox
+                [value]="" 
+                (change)="weekFilter.isCurrentArg=$event.checked; dataToTable()" 
+                [checked]="true"
                 ></mat-checkbox>
               </div>
               <div class="row">
@@ -214,11 +244,11 @@
               </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-              {{element.isCurrent}} 
+              {{(element.isCurrent ? 'Ja' : 'Nee')}} 
           </mat-cell>
       </ng-container>
 
-
+      -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

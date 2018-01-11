@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EntryModel } from '../models/EntryModel';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { WeekModel } from '../models/WeekModel';
 
 @Injectable()
 export class HoursService {
@@ -21,8 +22,12 @@ export class HoursService {
   //   });
   // }
 
-  getAllEntries(): Observable<EntryModel[]> {
+  getAllEntries(week: string): Observable<WeekModel> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    return this.http.get<EntryModel[]>(this.ALL_ENTRIES_JSON, {headers: headers});
+    let params = new URLSearchParams();
+    params.append('startdate', week);
+    let result = this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
+    console.log("service: result "+result);
+    return result;
   }
 }

@@ -1,3 +1,4 @@
+import { WeekModel } from './../models/WeekModel';
 import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
@@ -9,6 +10,12 @@ import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
 import { EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { DayModel } from '../models/DayModel';
+import { WeekFilter } from '../helpers/WeekFilter';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {MatTab} from '@angular/material/tabs';
+import { DateHelper } from '../helpers/dateHelper';
 
 @Component({
   selector: 'app-hours',
@@ -16,16 +23,18 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./hours.component.css']
 })
 export class HoursComponent implements OnInit {
-  displayedColumns: any[];
-  dataSource;
-  entryData: EntryModel[];
-  entryVersionData = [];
+  displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+                      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+                      'entrySprintName','entryUserstoryName'];
+  dataSource: MatTableDataSource<EntryModel>;
+  weekFilter: WeekFilter;
   projectList: Project[];
+  currentWeek = '18-12-2017';
+  availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
-
+  dateHelper = new DateHelper();
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
-
   maxDate: Date;
   minDate: Date;
 
@@ -44,57 +53,48 @@ export class HoursComponent implements OnInit {
     const mm =  today.getMonth();
     const yyyy = today.getFullYear();
     // maximum te kiezen datum (vandaag)
-    this.maxDate = new Date(yyyy,mm,dd);
+    this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    this.minDate = new Date(yyyy,mm,dd-7);
-    // this.readProjectList().then((data) => {
-    //   this.
-    // });
-   }
-  applyFilter(filterValue: string) {
-     filterValue = filterValue.trim(); // Remove whitespace
-     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-     this.dataSource.filter = filterValue;
+    this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
-   ngOnInit() {
-    this.readEntryData().then((data) => {
-      this.entryData = data;
-      this.filterEntries();
-      this.dataSource = new MatTableDataSource<EntryModel>(this.entryData);
+  ngOnInit() {
+    this.updateData(this.currentWeek);  
+  }
+
+  tabChange(event: MatTabChangeEvent){
+    console.log(event.tab.textLabel);
+    this.updateData(event.tab.textLabel);
+  } 
+
+  updateData(weekString: string): void{
+    console.log('updateData: ');
+    this.currentWeek=weekString;
+    this.readEntryData(weekString).then((data) => {
+      // this.entryData = data;
+      // this.filterEntries();
+      
+      this.weekFilter = new WeekFilter(data);
+      console.log('Hier is de data: '+this.weekFilter.entryData);
+      this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
     this.readProjectList();
   }
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
 
+  dataToTable(): void{
+    console.log("dataToTable()");
+    this.dataSource.data=this.weekFilter.entryData;
+  }
    /**
     * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
     */
-   readEntryData(): Promise<EntryModel[]> {
-    return this.hoursService.getAllEntries().toPromise()
-    .then(res => res)
-    .then(entries => entries.map(entry => {
-      return new EntryModel(
-        entry.entryId,
-        entry.entryDescription,
-        entry.entryStatus,
-        entry.entryDate,
-        entry.entryStartTime,
-        entry.entryEndTime,
-        entry.entryIsLocked,
-        entry.employeeFk,
-        entry.entryProjectFk,
-        entry.entryProjectName,
-        entry.entrySprintFk,
-        entry.entrySprintName,
-        entry.entryUserstoryFk,
-        entry.entryUserstoryName,
-        entry.isDeleted,
-        entry.isCurrent,
-        entry.entryEmployeeName);
-    }));
+   readEntryData(weekString: string): Promise<WeekModel> {
+    console.log('readEntryData(): start');
+    return this.hoursService.getAllEntries(weekString).toPromise()
+    .then(weeks => {return weeks});
+   }
+   testEn(beginDate): String{
+     return beginDate = '2017-12-18';
    }
    readProjectList(): Promise<Project[]> {
      return this.projectService.getAllProjects().toPromise()
@@ -112,45 +112,16 @@ export class HoursComponent implements OnInit {
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
-    this.filterEntries();
+    if(this.oldVersionsChecked){
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+    }else{
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName'];
+    }
+    // this.filterEntries();
     console.log($event);
   }
-
-  filterEntries() {
-    if (this.oldVersionsChecked) {
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
-      for (let entry of this.entryVersionData){
-          this.entryData.push(entry);
-      }
-      for (let entry of this.entryData) {
-        if (this.entryVersionData.includes(entry)){
-          this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
-        }
-      }
-      
-    }else{
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName'];
-      for (let entry of this.entryData){
-        if (!entry.isCurrent || entry.isDeleted) {
-          this.entryVersionData.push(entry);
-        }
-      }
-      for (let entry of this.entryVersionData) {
-        this.entryData.splice(this.entryData.indexOf(entry),1);
-      }
-    }
-  }
-
 }
-// export interface Entry {
-//   project_name: string;
-//   sprint_name: string;
-//   userstory: string;
-//   starttime: string;
-//   endtime: string;
-//   exception: boolean;
-// }
