@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule, MAT_DATE_LOCALE } from '@angular/material';
+import {MatDialogModule, MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule, MAT_DATE_LOCALE } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,7 +45,9 @@ import { CreateCustomerComponent } from './customers/create-customer/create-cust
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { ExportComponent } from './export/export.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component'; 
+import { FooterComponent } from './shared/footer/footer.component';
+import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
+import { DialogService } from './services/DialogService';
 
 
 
@@ -71,8 +73,10 @@ import { FooterComponent } from './shared/footer/footer.component';
     CreateCustomerComponent,
     ExportComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DialogContentComponent
   ],
+  entryComponents: [DialogContentComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -98,13 +102,15 @@ import { FooterComponent } from './shared/footer/footer.component';
     MatOptionModule,
     MatSelectModule,
     RouterModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule
   ],
   providers: [ProjectService,
     AuthService,
     EmployeeService,
     HoursService, SprintService,
     CustomerService,
+    DialogService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })

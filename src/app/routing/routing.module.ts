@@ -10,9 +10,6 @@ import { ManualComponent } from '../manual/manual.component';
 import { ProjectsComponent } from '../projects/projects.component';
 import { SprintsComponent } from '../sprints/sprints.component';
 import {UserstoriesComponent} from '../userstories/userstories.component';
-
-import{Page}from '../page';
-import {BASE_PAGES,ADMIN_PAGES} from '../page-list';
 import { HomeComponent } from '../home/home.component';
 import {AddProjectComponent} from "../projects/add-project/add-project.component";
 import { CreateSprintComponent } from '../sprints/create-sprint/create-sprint.component';
@@ -30,15 +27,15 @@ const routes: Routes = [
   { path: 'modify-customer', component: ModifyCustomerComponent },
   { path: 'create-customer', component: CreateCustomerComponent },
   { path: 'logout', component: LogoutComponent},
-  { path: BASE_PAGES[2].name, component: AccountSelfComponent },
-  { path: BASE_PAGES[3].name, component: ManualComponent },
-  { path: ADMIN_PAGES[0].name, component: HoursComponent },
-  { path: ADMIN_PAGES[1].name, component: ProjectsComponent },
-  { path: ADMIN_PAGES[2].name, component: SprintsComponent },
-  { path: ADMIN_PAGES[3].name, component: UserstoriesComponent },
-  { path: ADMIN_PAGES[4].name, component: AccountsComponent },
-  { path: ADMIN_PAGES[5].name, component: CustomersComponent },
-  { path: ADMIN_PAGES[6].name, component: DataComponent }
+  { path: 'account-self', component: AccountSelfComponent },
+  { path: 'manual', component: ManualComponent },
+  { path: 'hour-management', component: HoursComponent },
+  { path: 'project-management', component: ProjectsComponent },
+  { path: 'sprint-management', component: SprintsComponent },
+  { path: 'userstory-management', component: UserstoriesComponent },
+  { path: 'account-management', component: AccountsComponent },
+  { path: 'customer-management', component: CustomersComponent },
+  { path: 'data-management', component: DataComponent },
 ];
 
 @NgModule({

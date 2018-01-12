@@ -23,3 +23,14 @@
     color: white;
     background: #009fdf ;
   }
+  .edit {
+    cursor: pointer;
+    }
+    .wijzig{
+    padding: 8px 24px 0;
+    min-width: 300px;
+    margin-top:10%;
+    }
+    .hoofd{
+      background-color: white;
+    }

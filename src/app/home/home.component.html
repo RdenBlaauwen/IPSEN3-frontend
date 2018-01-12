@@ -1,31 +1,30 @@
-<mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-        <div id= "fullPage">
-            <div *ngIf="validated" class="container-fluid all">
+
+    
+            <div  class="container">
                 <div class="row nav-content">
-                <nav class="col-sm-12">
+                <nav class="col-sm-3">
                     <div class="row">
                         <ul>
-                            <li class="col-sm-12">
+                            <li class="col-sm-3">
                                 <a *ngFor="let link of links" routerLink="/{{link.name}}" class="cnt pagelink mat-button">
                                 <button class="btn-primary" [class.selected]="link === selectedLink"
-                                (click)="onLink(link)" class="col-sm-12">{{link.displayName}}</button></a><br>
+                                (click)="onLink(link)" class="col-sm-3">{{link.displayName}}</button></a><br>
                             </li>
                         </ul>
                     </div>
                     <div class="row">
                         <ul>
-                            <li class="col-sm-12 btn">
+                            <li class="col-sm-3 btn">
                                 <a routerLink="/{{baseLinks[3].name}}" class="cnt pagelink">
                                     {{baseLinks[3].displayName}}
                                 </a>
                             </li>
-                            <li class="col-sm-12 btn">
+                            <li class="col-sm-3 btn">
                                 <a routerLink="/{{baseLinks[2].name}}" class="cnt pagelink">
                                     {{baseLinks[2].displayName}}
                                 </a>
                             </li>
-                            <li class="col-sm-12 btn">
+                            <li class="col-sm-3 btn">
                                 <a routerLink="/{{baseLinks[0].name}}" class="cnt pagelink">
                                     {{baseLinks[0].displayName}}
                                 </a>
@@ -33,12 +32,9 @@
                         </ul>
                     </div>
                 </nav>
-                </div>
             </div>
         </div>
-    </mat-sidenav>
     <button mat-button id="toggleBtn" (click)="sidenav.toggle()"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>
-</mat-sidenav-container>
 
 <div *ngIf="!validated;">
     <b>Bitch you gotta login!</b>

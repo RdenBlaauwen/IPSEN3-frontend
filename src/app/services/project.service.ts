@@ -39,7 +39,6 @@ export class ProjectService {
             alert('Verwijderen Project mislukt');
         }
     );
-
   }
 
   public insertNewProject(sp: Project): void
