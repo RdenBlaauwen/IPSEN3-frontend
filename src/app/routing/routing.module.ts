@@ -10,7 +10,6 @@ import { ManualComponent } from '../manual/manual.component';
 import { ProjectsComponent } from '../projects/projects.component';
 import { SprintsComponent } from '../sprints/sprints.component';
 import {UserstoriesComponent} from '../userstories/userstories.component';
-import { HomeComponent } from '../home/home.component';
 import {AddProjectComponent} from "../projects/add-project/add-project.component";
 import { CreateSprintComponent } from '../sprints/create-sprint/create-sprint.component';
 import { EditProjectComponent } from '../projects/edit-project/edit-project.component';
@@ -20,7 +19,6 @@ import { CreateCustomerComponent } from '../customers/create-customer/create-cus
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
-  { path: 'home', component: HomeComponent},
   { path: 'add_project', component: AddProjectComponent },
   { path: 'create_sprint', component: CreateSprintComponent },
   { path: 'modify-project', component: EditProjectComponent },
