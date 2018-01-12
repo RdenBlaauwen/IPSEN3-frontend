@@ -12,8 +12,8 @@ import { CustomerService } from '../services/customer.service';
 })
 export class CustomersComponent implements OnInit {
   private dataSource: MatTableDataSource<CustomerModel>;
-  displayedColumns = ['customerName', 'customerDescription'];
-  selectedCustomer: CustomerModel;
+  displayedColumns = ['customerName', 'customerDescription', 'customerModify','customerDelete'];
+  selectedCustomer: CustomerModel = new CustomerModel();
   loggedEmployeeModel: Employee;
   constructor(private customerService: CustomerService, auth: AuthService) {
     this.loggedEmployeeModel = auth.getEmployeeModel();

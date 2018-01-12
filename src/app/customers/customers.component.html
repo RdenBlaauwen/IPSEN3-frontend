@@ -1,27 +1,67 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
+<div class="row">
+  <div class="col">
+    <mat-sidenav-container class="example-container">
+    <mat-sidenav-content class="hoofd">
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          </mat-form-field>
+        </div>
+        <mat-table #table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="customerName">
+            <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
+            <mat-cell *matCellDef="let Customer"> {{Customer.customer_name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="customerDescription">
+            <mat-header-cell *matHeaderCellDef> Klant Description </mat-header-cell>
+            <mat-cell *matCellDef="let Customer"> {{Customer.customer_description}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="customerModify">
+            <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+            <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="customerDelete">
+              <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+              <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+            </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedCustomer  == row}"></mat-row>
+        </mat-table>
+      </div>
+    </mat-sidenav-content>
+    <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
+    <div class="col-3 wijzig">
+      <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Wijzigen Customer</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyCustomer()">
+              <mat-form-field class="" style="margin-top: 20px">
+                <input matInput #customerName name="customerName" [value]="selectedCustomer.customer_name"  required [(ngModel)]="selectedCustomer.customer_name" #customerName="ngModel">
+              </mat-form-field><br>
+              <mat-form-field class="">
+                <input matInput #customerDescription   name="customerDescription"  [value]="selectedCustomer.customer_description"required [(ngModel)]="selectedCustomer.customer_description" #customerDescription="ngModel">
+              </mat-form-field><br>
+                    <br>
+                <button mat-raised-button type="submit" class="mat-primary" >Wijzigen</button>
+            </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav>
+  </mat-sidenav-container>
   </div>
-  <mat-table #table [dataSource]="dataSource">
-
-    <ng-container matColumnDef="customerName">
-      <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
-      <mat-cell *matCellDef="let Customer"> {{Customer.customer_name}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="customerDescription">
-      <mat-header-cell *matHeaderCellDef> Klant Description </mat-header-cell>
-      <mat-cell *matCellDef="let Customer"> {{Customer.customer_description}} </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedCustomer  == row}"></mat-row>
-  </mat-table>
-
-  
 </div>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyCustomer()" >Wijzigen</button>
+
+<!-- <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyCustomer()" >Wijzigen</button>
 <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteCustomer()" >Verwijderen</button>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" routerLink="/create-customer" >Toevoegen</button>
+<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" routerLink="/create-customer" >Toevoegen</button> -->
