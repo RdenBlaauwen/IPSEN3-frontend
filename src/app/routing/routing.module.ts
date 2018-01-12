@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'userstory-management', component: UserstoriesComponent },
   { path: 'account-management', component: AccountsComponent },
   { path: 'customer-management', component: CustomersComponent },
-  { path: 'data-management', component: DataComponent }
+  { path: 'data-management', component: DataComponent },
 ];
 
 @NgModule({
