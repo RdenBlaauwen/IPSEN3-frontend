@@ -37,7 +37,7 @@ export class EmployeeService {
     }
     private goHome()
     {
-        this.router.navigate(['home']);
+        this.router.navigate(['hour-management']);
     }
     public login(email: string, password: string)
     {
