@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSnackBar, MatDialogRef } from '@angular/material';
 import { CustomerModel } from '../models/CustomerModel';
 import { Employee } from '../models/Employee';
 import { AuthService } from '../services/auth.service';
 import { CustomerService } from '../services/customer.service';
+import { DialogService } from '../services/DialogService';
 
 @Component({
   selector: 'app-customers',
@@ -15,7 +16,7 @@ export class CustomersComponent implements OnInit {
   displayedColumns = ['customerName', 'customerDescription', 'customerModify','customerDelete'];
   selectedCustomer: CustomerModel = new CustomerModel();
   loggedEmployeeModel: Employee;
-  constructor(private customerService: CustomerService, auth: AuthService) {
+  constructor(private customerService: CustomerService, auth: AuthService, private dialogService: DialogService, private snackBar: MatSnackBar) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.loadData().then((data) => {
       this.dataSource = new MatTableDataSource<CustomerModel>(data);
@@ -55,6 +56,16 @@ export class CustomersComponent implements OnInit {
     this.customerService.removeCustomer(this.selectedCustomer);
   }
   ngOnInit() {
+  }
+  openDialog(){
+    this.dialogService.confirm('Bevestigen','Weet u zeker dat u deze klant wilt verwijderen?').subscribe(res=>{
+      if(res.valueOf()){
+        this.deleteCustomer();
+      }
+    });
+  }
+  openCreateDialog(){
+    this.dialogService.createCustomer();
   }
 
 }

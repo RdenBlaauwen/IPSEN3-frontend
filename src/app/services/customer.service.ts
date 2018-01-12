@@ -51,7 +51,7 @@ export class CustomerService {
       };
       let headers = this.auth.createAuthHeader(
           this.auth.emailAddress, this.auth.password);
-      this.httpN.post(`http://localhost:8080/api/customers/createCustomer/`, data).subscribe
+      this.httpN.post(`http://localhost:8080/api/customers/createCustomer/`, data,{headers:headers}).subscribe
       (
           data =>
           {

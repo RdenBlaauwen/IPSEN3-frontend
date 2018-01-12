@@ -5,7 +5,7 @@
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
           <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Zoeken">
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSource">
@@ -63,5 +63,5 @@
 </div>
 
 <!-- <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyCustomer()" >Wijzigen</button>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteCustomer()" >Verwijderen</button>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" routerLink="/create-customer" >Toevoegen</button> -->
+<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteCustomer()" >Verwijderen</button> -->
+<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="openCreateDialog()" >Toevoegen</button>
