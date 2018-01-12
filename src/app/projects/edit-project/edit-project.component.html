@@ -1,16 +1,11 @@
-
 <mat-card>
-
   <mat-card-header>
       <mat-card-title>
           <h1>Wijzigen project</h1>
       </mat-card-title>
   </mat-card-header>
-
   <mat-card-content>
-
       <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyProject()">
-
         <mat-form-field class="" style="margin-top: 20px">
           <input matInput #projectName name="projectName" [value]="selectedProject.projectName"  required [(ngModel)]="selectedProject.projectName" #projectName="ngModel">
         </mat-form-field><br>
@@ -26,10 +21,6 @@
         </mat-form-field><br>
               <br>
           <button mat-raised-button type="submit" class="mat-primary" >Wijzigen</button>
-
       </form>
-
   </mat-card-content>
-
-
 </mat-card>

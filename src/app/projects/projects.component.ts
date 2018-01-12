@@ -4,6 +4,8 @@ import { ProjectService } from '../services/project.service';
 import { Project } from '../models/ProjectModel';
 import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
+import { CustomerModel } from '../models/CustomerModel';
+import { DialogService } from '../services/DialogService';
 
 @Component({
   selector: 'app-projects',
@@ -13,10 +15,12 @@ import { Employee } from '../models/Employee';
 
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
-  displayedColumns = ['projectName', 'projectDescription', 'customerName'];
-  selectedProject: Project;
+  displayedColumns = ['projectName', 'projectDescription', 'customerName', 'projectModify','projectDelete'];
+  selectedProject: Project = new Project();
   loggedEmployeeModel: Employee;
-  constructor(private projectService: ProjectService, auth: AuthService) {
+  customers: CustomerModel[];
+  constructor(private projectService: ProjectService, auth: AuthService, private dialogService: DialogService) {
+    this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.loadData().then((data) => {
       this.dataSource = new MatTableDataSource<Project>(data);
@@ -56,6 +60,13 @@ export class ProjectsComponent implements OnInit {
   deleteProject()
   {
     this.projectService.removeProject(this.selectedProject);
+  }
+  openDialog(){
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ').subscribe(res=>{
+      if(res.valueOf()){
+        this.deleteProject();
+      }
+    })
   }
   ngOnInit() {}
 }
