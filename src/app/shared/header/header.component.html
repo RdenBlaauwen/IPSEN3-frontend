@@ -6,15 +6,17 @@
   <div class="collapse navbar-collapse justify-content-end" id="topNav">
     <ul class="nav justify-content-end">
       <span class="spacer"></span>
-      <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-tachometer"></i></a>
-      </li>
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Go To
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" routerLink="/hour-management" routerLinkActive="active">Entries</a>
+            <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projects</a>
+            <a class="dropdown-item" routerLink="/userstory-management" routerLinkActive="active">User Stories</a>
+            <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categories</a>
+          </div>
+      </div>
       <li class="nav-item">
         <a class="nav-link" routerLink="/login" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
       </li>
