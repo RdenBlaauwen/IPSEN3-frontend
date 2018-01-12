@@ -24,14 +24,9 @@
       <!-- entryDescription Column -->  
       <ng-container matColumnDef="entryDescription">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <div class="row">
-          <mat-form-field class="col-sm-12 mat-header-search">
+          <mat-form-field class="mat-header-search">
             <input type="text" (input)="weekFilter.descriptionArg =  $event.target.value; dataToTable()" matTextareaAutosize matInput placeholder="Beschrijving">
           </mat-form-field>
-        </div>
-        <div class="row">
-          <span class="col-sm-12">Beschrijving</span>
-        </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
             <div class="">{{element.entryDescription}}</div>
@@ -41,14 +36,9 @@
       <!-- sprint_name Column -->
       <ng-container matColumnDef="entryStatus">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <div class="row">
-            <mat-form-field class="col-sm-12 mat-header-search">
+            <mat-form-field class="mat-header-search">
               <input type="text" (input)="weekFilter.statusArg =  $event.target.value; dataToTable()" matTextareaAutosize matInput placeholder="Status">
             </mat-form-field>
-          </div>
-          <div class="row">
-            <span class="col-sm-12">Status</span>
-          </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="">{{element.entryStatus}}</div>
@@ -58,8 +48,7 @@
       <!-- userstory Column -->
       <ng-container matColumnDef="entryDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class=" mat-header-search">
                   <input matInput  [matDatepicker]="searchdatePicker" 
                                   (input)="weekFilter.dateArg =  $event.target.value; dataToTable()" 
                                   (dateChange)="weekFilter.dateArg =  $event.target.value; dataToTable()" 
@@ -67,10 +56,6 @@
                   <mat-datepicker-toggle matSuffix [for]="searchdatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #searchdatePicker></mat-datepicker>
                 </mat-form-field>
-            </div>
-            <div class="row">
-              <span class="col-sm-12">Datum</span>
-            </div>
           </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
           <div class="">{{dateHelper.normalizeDateString(element.entryDate)}}</div>
@@ -80,16 +65,11 @@
       <!-- starttime Column -->
       <ng-container matColumnDef="entryStartTime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="time" matTextareaAutosize matInput 
                   (input)="weekFilter.startTimeArg =  $event.target.value; dataToTable()" 
                   placeholder="Starttijd">
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Starttijd</span>
-              </div>
         </mat-header-cell>  
         <mat-cell *matCellDef="let element"> 
               {{element.entryStartTime}} 
@@ -99,16 +79,11 @@
       <!-- endtime Column -->
       <ng-container matColumnDef="entryEndTime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="time" matTextareaAutosize matInput 
                   (input)="weekFilter.endTimeArg =  $event.target.value; dataToTable()" 
                   placeholder="Eindtijd">
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Eindtijd</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
             {{element.entryEndTime}} 
@@ -118,18 +93,12 @@
       <!-- exception Column-->
       <ng-container matColumnDef="entryIsLocked">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-checkbox class="col-sm-12 mat-header-search"
+            <div class="">Gesloten?</div>
+                <mat-checkbox class=" mat-header-search"
                 #isLockedCheckBox
                 [value]=""
                 (change)="weekFilter.isLockedArg=$event.checked; dataToTable()"
                 ></mat-checkbox>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">
-                  Gesloten?
-                </span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
             {{(element.entryIsLocked ? 'Ja' : 'Nee')}} 
@@ -139,16 +108,11 @@
 
       <ng-container matColumnDef="entryEmployeeName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="text" matTextareaAutosize matInput 
                   (input)="weekFilter.employeeNameArg =  $event.target.value; dataToTable()" 
                   placeholder="Medewerker">
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Medewerker</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
               {{element.entryEmployeeName}} 
@@ -158,16 +122,11 @@
       
       <ng-container matColumnDef="entryProjectName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="text" matTextareaAutosize matInput 
                   (input)="weekFilter.projectNameArg =  $event.target.value; dataToTable()" 
                   placeholder="Project" required>
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Project</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
               {{element.entryProjectName}} 
@@ -176,16 +135,11 @@
 
       <ng-container matColumnDef="entrySprintName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="text" matTextareaAutosize matInput 
                   (input)="weekFilter.sprintNameArg =  $event.target.value; dataToTable()" 
                   placeholder="Categorie">
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Categorie</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
               {{element.entrySprintName}} 
@@ -194,16 +148,11 @@
 
       <ng-container matColumnDef="entryUserstoryName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-form-field class="col-sm-12 mat-header-search">
+                <mat-form-field class="mat-header-search">
                   <input type="text" matTextareaAutosize matInput 
                   (input)="weekFilter.userStoryNameArg =  $event.target.value; dataToTable()" 
                   placeholder="Taak">
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Taak</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
               {{element.entryUserstoryName}} 
@@ -212,17 +161,13 @@
 
       <ng-container *ngIf="oldVersionsChecked" matColumnDef="isDeleted">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-checkbox class="col-sm-12 mat-header-search"
+              <div class="">Verwijderd?</div>
+                <mat-checkbox class="mat-header-search"
                 #isDeletedCheckBox
                 [value]="" 
                 (change)="weekFilter.isDeletedArg=$event.checked; dataToTable()" 
                 [checked]="true" 
                 ></mat-checkbox>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Verwijderd?</span>
-              </div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
           {{(element.isDeleted ? 'Ja' : 'Nee')}} 
@@ -231,17 +176,13 @@
 
       <ng-container *ngIf="oldVersionsChecked" matColumnDef="isCurrent">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <div class="row">
-                <mat-checkbox class="col-sm-12 mat-header-search"
+              <div class="">Huidige versie?</div>
+                <mat-checkbox class="mat-header-search"
                 #isNotCurrentCheckBox
                 [value]="" 
                 (change)="weekFilter.isCurrentArg=$event.checked; dataToTable()" 
                 [checked]="true"
-                ></mat-checkbox>
-              </div>
-              <div class="row">
-                <span class="col-sm-12">Huidige versie?</span>
-              </div>
+                ></mat-checkbox>         
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
               {{(element.isCurrent ? 'Ja' : 'Nee')}} 
@@ -254,14 +195,19 @@
     </mat-table>
   </div>
   <div class="col-sm-2 cud-bar">
-    <form>
+    <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
 
         <!-- <mat-form-field>
           <input type="text" matInput placeholder="Naam" required>
         </mat-form-field> -->
 
         <mat-form-field>
-          <textarea matInput #descriptionField="ngModel"  (change)="log(descriptionField)" name="test" placeholder="Beschrijving" ngModel type="text" matTextareaAutosize required></textarea>
+          <textarea matInput 
+            #descriptionField="ngModel"  
+            (change)="log(descriptionField)" 
+            id="descriptionField  " name="test" 
+            placeholder="Beschrijving" 
+            ngModel type="text" matTextareaAutosize required></textarea>
           <!-- <textarea matInput #descriptionField="ngModel"  (change)="log(test)" name="test" type="text"  placeholder="Beschrijving" required></textarea> -->
           <mat-error *ngIf="descriptionField.touched && !descriptionField.valid">Beschrijving is verplicht.</mat-error>
         </mat-form-field>
@@ -293,12 +239,7 @@
             <mat-option>null</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <mat-form-field *ngIf="currentRole!='employee'">
-            <mat-select placeholder="Werknemer">
-              <mat-option>null</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <button mat-button color="primary">Primary</button>
     </form>
   </div>
 </div>

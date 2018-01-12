@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { WeekModel } from '../models/WeekModel';
 
+
 @Injectable()
 export class HoursService {
   readonly ALL_ENTRIES_JSON = 'http://localhost:8080/api/entries';

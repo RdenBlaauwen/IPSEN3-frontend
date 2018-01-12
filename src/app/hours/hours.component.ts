@@ -16,6 +16,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {MatTab} from '@angular/material/tabs';
 import { DateHelper } from '../helpers/dateHelper';
+import { FormsModule } from '@angular/forms';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-hours',
@@ -122,5 +124,9 @@ export class HoursComponent implements OnInit {
     }
     // this.filterEntries();
     console.log($event);
+  }
+
+  public onSubmit():void{
+    console.log('onSubmit()!');
   }
 }
