@@ -28,7 +28,7 @@ export class ProjectService {
     };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.post(`/api/projects/delete/`, data,{headers: headers}).subscribe
+    this.httpN.post(`http://localhost:8080/api/projects/delete/`, data,{headers: headers}).subscribe
     (
         data =>
         {
@@ -54,7 +54,7 @@ export class ProjectService {
       };
       let headers = this.auth.createAuthHeader(
           this.auth.emailAddress, this.auth.password);
-      this.httpN.post(`/api/projects/create/`, data).subscribe
+      this.httpN.post(`http://localhost:8080/api/projects/create/`, data).subscribe
       (
           data =>
           {
@@ -71,7 +71,7 @@ export class ProjectService {
   {
     let customers: CustomerModel[] = [];
     let headers = this.auth.createAuthHeader(this.auth.emailAddress, this.auth.password);
-    this.httpN.get(`/api/customers/getAll/`, {headers: headers}).subscribe(
+    this.httpN.get(`http://localhost:8080/api/customers/getAll/`, {headers: headers}).subscribe(
       (res: Response) =>{
         for(let customer of res.json())
             {
@@ -108,7 +108,7 @@ export class ProjectService {
     };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.put(`/api/projects/update/`, data,{headers: headers}).subscribe
+    this.httpN.put(`http://localhost:8080/api/projects/update/`, data,{headers: headers}).subscribe
     (
         data =>
         {
