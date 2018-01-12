@@ -47,7 +47,7 @@ export class ProjectsComponent implements OnInit {
       }));
   }
   selectRow(row) {
-    this.selectedProject = row
+    this.selectedProject = row;
   }
   modifyProject()
   {
