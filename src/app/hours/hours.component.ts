@@ -74,9 +74,15 @@ export class HoursComponent implements OnInit {
       // this.entryData = data;
       // this.filterEntries();
       this.weekFilter = new WeekFilter(data);
-      console.log('Hier is de data: '+this.weekFilter.entryData);
+      
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
+    console.log('PROJECTS GONNA GIT LOADED');
+    this.projectService.getAllProjects().then((data) => {
+        this.projectList = data;
+        console.log('Hier is de data: '+this.projectList);
+      }
+    )
   }
 
   dataToTable(): void{

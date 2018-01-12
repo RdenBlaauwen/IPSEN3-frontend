@@ -278,7 +278,7 @@
 
         <mat-form-field>
           <mat-select placeholder="Project">
-            <mat-option>null</mat-option>
+            <mat-option *ngFor="let project of projectList" [value]="project.projectName">{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>
 
