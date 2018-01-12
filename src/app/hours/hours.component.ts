@@ -70,45 +70,38 @@ export class HoursComponent implements OnInit {
   updateData(weekString: string): void{
     console.log('updateData: ');
     this.currentWeek=weekString;
-    this.readEntryData(weekString).then((data) => {
+    this.hoursService.getAllEntries(weekString).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
-      
       this.weekFilter = new WeekFilter(data);
       console.log('Hier is de data: '+this.weekFilter.entryData);
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
-    this.readProjectList();
   }
 
   dataToTable(): void{
     console.log("dataToTable()");
     this.dataSource.data=this.weekFilter.entryData;
   }
-   /**
-    * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
-    */
-   readEntryData(weekString: string): Promise<WeekModel> {
-    console.log('readEntryData(): start');
-    return this.hoursService.getAllEntries(weekString).toPromise()
-    .then(weeks => {return weeks});
-   }
+  log(x){
+    console.log(x);
+  }
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
    }
-   readProjectList(): Promise<Project[]> {
-     return this.projectService.getAllProjects().toPromise()
-     .then(res => res).then(projects => projects.map(project => {
-        return new Project(
-          project.projectId,
-          project.projectName,
-          project.projectDescription,
-          project.projectIsDeleted,
-          project.projectCustomerFk,
-          project.customerName
-        );
-     }));
-   }
+  //  readProjectList(): Promise<Project[]> {
+  //    return this.projectService.getAllProjects().toPromise()
+  //    .then(res => res).then(projects => projects.map(project => {
+  //       return new Project(
+  //         project.projectId,
+  //         project.projectName,
+  //         project.projectDescription,
+  //         project.projectIsDeleted,
+  //         project.projectCustomerFk,
+  //         project.customerName
+  //       );
+  //    }));
+  //  }
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;

@@ -22,12 +22,17 @@ export class HoursService {
   //   });
   // }
 
-  getAllEntries(week: string): Observable<WeekModel> {
+  public getAllEntries(week: string): Promise<WeekModel> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
     let params = new URLSearchParams();
     params.append('startdate', week);
     let result = this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
     console.log("service: result "+result);
-    return result;
+    return result.toPromise().then(weeks => {return weeks});;
+  }
+
+  public createEntry(description: string, date: Date, projectId: number, sprintId: number, 
+                      userStoryId: number, employeeId: number): void {
+    
   }
 }

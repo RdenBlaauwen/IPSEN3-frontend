@@ -18,7 +18,7 @@ export class ProjectsComponent implements OnInit {
   loggedEmployeeModel: Employee;
   constructor(private projectService: ProjectService, auth: AuthService) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.loadData().then((data) => {
+    this.projectService.getAllProjects().then((data) => {
       this.dataSource = new MatTableDataSource<Project>(data);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
@@ -32,20 +32,9 @@ export class ProjectsComponent implements OnInit {
 
   //  Return promise to use to fill data
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<Project[]> {
-    return this.projectService.getAllProjects()
-      .toPromise()
-      .then(res => res)
-      .then(projects => projects.map(project => {
-        return new Project(
-          project.projectId,
-          project.projectName,
-          project.projectDescription,
-          project.projectIsDeleted,
-          project.projectCustomerFk,
-          project.customerName);
-      }));
-  }
+  // loadData(): Promise<Project[]> {
+  //   return this.projectService.getAllProjects();
+  // }
   selectRow(row) {
     this.selectedProject = row;
   }
