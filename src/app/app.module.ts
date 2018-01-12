@@ -24,7 +24,6 @@ import { ManualComponent } from './manual/manual.component';
 import { AccountSelfComponent } from './account-self/account-self.component';
 import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material';
-import { HomeComponent } from './home/home.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -64,7 +63,6 @@ import { DialogService } from './services/DialogService';
     ManualComponent,
     AccountSelfComponent,
     LoginComponent,
-    HomeComponent,
     AddProjectComponent,
     EditProjectComponent,
     CreateSprintComponent,

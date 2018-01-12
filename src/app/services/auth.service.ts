@@ -11,6 +11,11 @@ export class AuthService {
         this.getAuthorization();
         console.log("Dit is het email na verversen pagina: "+this.emailAddress);
     }
+
+    public isAdmin(){
+        return this.getAuthorization() && this.loggedUserObject.employeeRole === 'admin';
+    }
+
     public createAuthHeader(email: string, password: string) {
         const loginEncoded =  btoa(email + ':' + password);
         const headers = new Headers();

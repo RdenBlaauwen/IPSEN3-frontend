@@ -3,7 +3,14 @@
 body, html{
     height: 100%;
 }
-
+.wijzig{
+    padding: 8px 24px 0;
+    min-width: 300px;
+    margin-top:10%;
+    }
+    .hoofd{
+      background-color: white;
+    }
 body
 {
     margin: 0px;

@@ -9,7 +9,7 @@ import { CustomerModel } from '../../models/CustomerModel';
   styleUrls: ['./edit-project.component.css']
 })
 export class EditProjectComponent {
-  selectedProject: Project;
+  selectedProject: Project = new Project();
   customers: CustomerModel[];
   selectedCustomer: number;
   constructor(private projectService: ProjectService) {
@@ -17,7 +17,6 @@ export class EditProjectComponent {
     if(projectService.projectToModify != null)
     {
       this.selectedProject = projectService.projectToModify;
-      
     }
    }
 
