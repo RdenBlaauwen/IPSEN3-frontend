@@ -129,6 +129,10 @@ export class HoursComponent implements OnInit {
   public selectRow(row):void{
     this.selectedEntry=row;
   }
+  /**
+   * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
+   * 
+   */
   public onSubmit():void{
     console.log('onSubmit()!');
   }
