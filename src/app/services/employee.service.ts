@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AuthService } from "./auth.service";
-import { Http, Response, Headers } from "@angular/http";
-import { Router } from "@angular/router";
-import { Employee } from "../models/Employee";
+import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Http, Response, Headers } from '@angular/http';
+import { Router } from '@angular/router';
+import { Employee } from '../models/Employee';
 
 
 @Injectable()
@@ -32,10 +32,11 @@ export class EmployeeService {
             }
         );
     }
-    private goHome()
-    {
+
+    private goHome() {
         this.router.navigate(['hour-management']);
     }
+
     public login(email: string, password: string) {
         const headers = this.auth.createAuthHeader(email, password);
          this.http.get('http://localhost:8080/api/login/', {headers: headers}).subscribe(
@@ -64,6 +65,7 @@ export class EmployeeService {
          }
        });
     }
+
     public removeSessions() {
         const storage = false ? localStorage : sessionStorage;
         storage.removeItem('authorization');
