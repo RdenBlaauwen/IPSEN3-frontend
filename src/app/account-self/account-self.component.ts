@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Employee } from '../models/Employee';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-account-self',
@@ -8,7 +10,9 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class AccountSelfComponent implements OnInit {
 
-  constructor() { }
+  public loggedUser: Employee = this.authService.getEmployeeModel();
+
+  constructor(private authService: AuthService) { }
 
   emailFormControl = new FormControl('', [
     Validators.required,

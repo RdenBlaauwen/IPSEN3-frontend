@@ -3,9 +3,9 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <p class="text-muted justify-content-center">{{ getCurrentPage() }}</p>
+  <p *ngIf="isAuthenticated()" class="text-muted justify-content-center">{{ getCurrentPage() }}</p>
   <div class="collapse navbar-collapse justify-content-end" id="topNav">
-    <p class="text-muted justify-content-center">{{ getCurrentUser() }}</p>
+    <p *ngIf="isAuthenticated()" class="text-muted justify-content-center">{{ getCurrentUser() }}</p>
     <ul class="nav justify-content-end">
       <div *ngIf="isAuthenticated()" class="dropdown">
           <small class="text-muted">Overzichten / CRUD</small>
