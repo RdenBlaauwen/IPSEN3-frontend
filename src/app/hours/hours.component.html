@@ -205,7 +205,7 @@
           <textarea matInput 
             #descriptionField="ngModel"  
             (change)="log(descriptionField)" 
-            id="descriptionField  " name="test" 
+            id="descriptionField" name="descriptionField" 
             placeholder="Beschrijving" 
             ngModel type="text" matTextareaAutosize 
             [value]="selectedEntry.entryDescription"
@@ -218,15 +218,24 @@
           <input matInput #test="ngModel" (change)="log(test)" name="test" placeholder="Test" ngModel>
         </mat-form-field> -->
 
+        
         <mat-form-field>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" placeholder="Datum" [formControl]="entryDateControl">
+          <input matInput 
+          #dateField="ngModel" [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" 
+          id="dateField" name="dateField" 
+          placeholder="Datum" 
+          ngModel 
+          [value]="selectedEntry.entryDate" 
+          [(ngModel)]="selectedEntry.entryDate" required>
+          <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
           <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
           <mat-datepicker #entrydatePicker></mat-datepicker>
+          <mat-error *ngIf="dateField.touched && !dateField.valid">Datum is verplicht.</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Project">
-            <mat-option *ngFor="let project of projectList" [value]="project.projectName">{{project.projectName}}</mat-option>
+          <mat-select placeholder="Project" [(ngModel)]="selectedEntry.entryProjectFk" name="project">
+            <mat-option *ngFor="let project of projectList" [value]="project.projectId">{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>
 

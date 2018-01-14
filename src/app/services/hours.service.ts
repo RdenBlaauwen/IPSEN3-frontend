@@ -32,8 +32,16 @@ export class HoursService {
     return result.toPromise().then(weeks => {return weeks});;
   }
 
-  public createEntry(description: string, date: Date, projectId: number, sprintId: number, 
-                      userStoryId: number, employeeId: number): void {
+  // public createEntry(description: string, date: Date, projectId: number, sprintId: number, 
+  //                     userStoryId: number, employeeId: number): void {
     
+  // }
+
+  public createEntry(entry: EntryModel): void {
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers})
+    .subscribe(response => {
+      console.log(response);
+    });
   }
 }

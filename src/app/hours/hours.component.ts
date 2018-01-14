@@ -46,7 +46,12 @@ export class HoursComponent implements OnInit {
 
   constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
 
-    this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    if(this.auth.getEmployeeModel!=null){
+      this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    } else{
+      console.log('HoursComponent: employeeRole was Null!');
+    }
+    
     console.log(this.currentRole);
 
     // bereken welke datum het is
@@ -134,6 +139,14 @@ export class HoursComponent implements OnInit {
    * 
    */
   public onSubmit():void{
-    console.log('onSubmit()! '+this.selectedEntry.entryDescription);
+    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
+      +", date: "+this.selectedEntry.entryDate
+      +", project: "+this.selectedEntry.entryProjectFk);
+
+      this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+
+      if(this.selectedEntry.entryId==null){
+        this.hoursService.createEntry(this.selectedEntry);
+      }
   }
 }
