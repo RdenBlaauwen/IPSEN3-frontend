@@ -207,7 +207,9 @@
             (change)="log(descriptionField)" 
             id="descriptionField  " name="test" 
             placeholder="Beschrijving" 
-            ngModel type="text" matTextareaAutosize required></textarea>
+            ngModel type="text" matTextareaAutosize 
+            [value]="selectedEntry.entryDescription"
+            [(ngModel)]="selectedEntry.entryDescription" required></textarea>
           <!-- <textarea matInput #descriptionField="ngModel"  (change)="log(test)" name="test" type="text"  placeholder="Beschrijving" required></textarea> -->
           <mat-error *ngIf="descriptionField.touched && !descriptionField.valid">Beschrijving is verplicht.</mat-error>
         </mat-form-field>
@@ -239,7 +241,7 @@
             <mat-option>null</mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-button color="primary">Primary</button>
+        <button mat-raised-button color="primary" type="submit" class="mat-primary" >Wijzigen</button>
     </form>
   </div>
 </div>

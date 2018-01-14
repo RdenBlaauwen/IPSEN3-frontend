@@ -51,7 +51,9 @@
               <mat-card-content>
                   <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyProject()">
                     <mat-form-field class="" style="margin-top: 20px">
-                      <input matInput #projectName name="projectName" [value]="selectedProject.projectName"  required [(ngModel)]="selectedProject.projectName" #projectName="ngModel">
+                      <input matInput #projectName name="projectName" 
+                        [value]="selectedProject.projectName"  required 
+                        [(ngModel)]="selectedProject.projectName" #projectName="ngModel">
                     </mat-form-field><br>
                     <mat-form-field class="">
                       <input matInput name="projectDescription"  #projectDescription [value]="selectedProject.projectDescription"required [(ngModel)]="selectedProject.projectDescription" #projectDescription="ngModel">

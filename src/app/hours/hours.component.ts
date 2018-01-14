@@ -134,6 +134,6 @@ export class HoursComponent implements OnInit {
    * 
    */
   public onSubmit():void{
-    console.log('onSubmit()!');
+    console.log('onSubmit()! '+this.selectedEntry.entryDescription);
   }
 }
