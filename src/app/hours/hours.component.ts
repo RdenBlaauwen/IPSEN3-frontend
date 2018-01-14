@@ -29,6 +29,7 @@ export class HoursComponent implements OnInit {
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
                       'entrySprintName','entryUserstoryName'];
   dataSource: MatTableDataSource<EntryModel>;
+  public selectedEntry: EntryModel = new EntryModel();
   weekFilter: WeekFilter;
   projectList: Project[];
   currentWeek = '18-12-2017';
@@ -39,7 +40,6 @@ export class HoursComponent implements OnInit {
   serializedDate = new FormControl((new Date()).toISOString());
   maxDate: Date;
   minDate: Date;
-
   currentRole = 'employee';
 
   // @ViewChild(MatSort) sort: MatSort;
@@ -126,6 +126,9 @@ export class HoursComponent implements OnInit {
     console.log($event);
   }
 
+  public selectRow(row):void{
+    this.selectedEntry=row;
+  }
   public onSubmit():void{
     console.log('onSubmit()!');
   }
