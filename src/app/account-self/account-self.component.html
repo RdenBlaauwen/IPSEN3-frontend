@@ -1,3 +1,25 @@
-<p>
-  account-self works!
-</p>
+<div class="container">
+  <h3 class="display-3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
+  <mat-form-field>
+    <input matInput #employeeFirstName id="employeeFirstName" placeholder="First name">
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput #employeeLastName id="employeeLastName" placeholder="Last name">
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput #employeeAddress id="employeeAddress" placeholder="Address">
+  </mat-form-field><br>
+  <mat-form-field class="emailInput">
+    <input matInput placeholder="Email" id="employeeEmail" #employeeEmail [formControl]="emailFormControl">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput type="password" id="employeePassword" #employeePassword placeholder="Password">
+  </mat-form-field><br>
+  <button class="btn btn-primary">Update</button>
+</div>

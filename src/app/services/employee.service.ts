@@ -4,13 +4,13 @@ import { Http, Response, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Employee } from '../models/Employee';
 
-
 @Injectable()
 export class EmployeeService {
-  naam: string = null;
-    constructor(private auth: AuthService, private router: Router, private http: Http) {
+    readonly UPDATE_EMPLOYEE_URL = 'http://localhost:8080/api/login/update';
 
-    }
+    naam: string = null;
+    constructor(private auth: AuthService, private router: Router, private http: Http) {}
+
     public register(employee: Employee): void {
         const data = {
             employeeId: employee.employeeId,
@@ -71,4 +71,9 @@ export class EmployeeService {
         storage.removeItem('authorization');
         this.auth.setNullAfterLogout();
     }
+
+    /**
+     * Update employee
+     */
+    
 }

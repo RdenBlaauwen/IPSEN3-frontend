@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   public isAuthenticated(): boolean {
-    console.log(this.authService.isAuthorized());
     return this.authService.isAuthorized();
   }
 
