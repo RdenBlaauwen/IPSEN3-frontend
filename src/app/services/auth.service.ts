@@ -25,11 +25,7 @@ export class AuthService {
 
     public createAuthHttpHeader(email: string, password: string) {
         const loginEncoded =  btoa(email + ':' + password);
-        let headers = new HttpHeaders();
-        if (this.isAuthorized())
-        {
-            headers = headers.set('Authorization', 'Basic ' + loginEncoded);
-        }
+        let headers = new HttpHeaders().set('Authorization', 'Basic ' + loginEncoded);
         return headers;
     }
 

@@ -1,31 +1,82 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
-  </div>
-  <mat-table #table [dataSource]="dataSource">
+<div class="row">
+    <div class="col">
+      <mat-sidenav-container class="example-container">
+      <mat-sidenav-content class="hoofd">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-header">
+              <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Account Aanmaken</button>
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>
+          </div>
+          <mat-table #table [dataSource]="dataSource">
 
-    <!-- account_name Column -->  
-    <ng-container matColumnDef="account_name">
-      <mat-header-cell *matHeaderCellDef> Naam </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.employeeFirstname}}  {{ element.employeeLastname}} </mat-cell>
-    </ng-container>
+            <!-- account_name Column -->  
+            <ng-container matColumnDef="account_name">
+              <mat-header-cell *matHeaderCellDef> Naam </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.employeeFirstname}}  {{ element.employeeLastname}} </mat-cell>
+            </ng-container>
+            
+            <!-- account_role Column -->
+            <ng-container matColumnDef="account_role">
+              <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.employeeRole}} </mat-cell>
+            </ng-container>
+
+            <!-- email Column -->
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.employeeEmail}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="employeeModify">
+                <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+                <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+              </ng-container>
     
-    <!-- account_role Column -->
-    <ng-container matColumnDef="account_role">
-      <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.employeeRole}} </mat-cell>
-    </ng-container>
+              <ng-container matColumnDef="employeeDelete">
+                  <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+                  <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+                </ng-container>
 
-    <!-- email Column -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.employeeEmail}} </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
-<button mat-raised-button type="submit" class="mat-primary" routerLink="/account-management/create" >Toevoegen</button>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedEmployee  == row}"></mat-row>
+          </mat-table>
+        </div>
+      </mat-sidenav-content>
+      <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
+          <div class="col-3 wijzig">
+          <mat-card>
+              <mat-card-header>
+                  <mat-card-title>
+                      <a><mat-icon class="edit" (click)="sidenav.toggle()">close</mat-icon></a><br><br>
+                      <h1>Wijzigen Account</h1>
+                  </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                  <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyAccount()">
+                    <mat-form-field class="" style="margin-top: 20px">
+                      <input matInput #employeeFirstname name="employeeFirstname" placeholder="Voornaam" [value]="selectedEmployee.employeeFirstname"  required [(ngModel)]="selectedEmployee.employeeFirstname" #employeeFirstname="ngModel">
+                    </mat-form-field><br>
+                    <mat-form-field class="">
+                      <input matInput name="employeeLastname"  #employeeLastname placeholder="Achternaam" [value]="selectedEmployee.employeeLastname"required [(ngModel)]="selectedEmployee.employeeLastname" #employeeLastname="ngModel">
+                    </mat-form-field><br>
+                    <mat-form-field class="">
+                        <input matInput name="employeeRole"  #employeeRole placeholder="Role" [value]="selectedEmployee.employeeRole"required [(ngModel)]="selectedEmployee.employeeRole" #employeeRole="ngModel">
+                      </mat-form-field><br>
+                      <mat-form-field class="">
+                          <input matInput name="employeeEmail"  #employeeEmail placeholder="Email" [value]="selectedEmployee.employeeEmail"required [(ngModel)]="selectedEmployee.employeeEmail" #employeeEmail="ngModel">
+                        </mat-form-field><br>
+                        <mat-form-field class="">
+                            <input matInput name="employeePassword" placeholder="Wachtwoord"  #employeePassword [value]="selectedEmployee.employeePassword"required [(ngModel)]="selectedEmployee.employeePassword" #employeePassword="ngModel">
+                          </mat-form-field><br>
+                          <br>
+                      <button mat-raised-button type="submit" class="btn btn-sm btn-primary" >Wijzigen</button>
+                  </form>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-sidenav>
+        </mat-sidenav-container>
+        </div>
+      </div>

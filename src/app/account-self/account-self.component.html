@@ -1,16 +1,16 @@
 <div class="container">
   <h3 class="display-3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
   <mat-form-field>
-    <input matInput #employeeFirstName id="employeeFirstName" placeholder="First name">
+    <input matInput #employeeFirstName id="employeeFirstName" [(ngModel)]="loggedUser.employeeFirstname" [value]="loggedUser.employeeFirstname" placeholder="First name">
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput #employeeLastName id="employeeLastName" placeholder="Last name">
+    <input matInput #employeeLastName id="employeeLastName" [(ngModel)]="loggedUser.employeeLastname" [value]="loggedUser.employeeLastname"  placeholder="Last name">
   </mat-form-field><br>
-  <mat-form-field>
-    <input matInput #employeeAddress id="employeeAddress" placeholder="Address">
-  </mat-form-field><br>
+  <!-- <mat-form-field>
+    <input matInput #employeeAddress id="employeeAddress" [value]="loggedUser.employeeEmail"  placeholder="Address">
+  </mat-form-field><br> -->
   <mat-form-field class="emailInput">
-    <input matInput placeholder="Email" id="employeeEmail" #employeeEmail [formControl]="emailFormControl">
+    <input matInput placeholder="Email" id="employeeEmail" [(ngModel)]="loggedUser.employeeEmail" [value]="loggedUser.employeeEmail"  #employeeEmail [formControl]="emailFormControl">
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
       Please enter a valid email address
     </mat-error>
@@ -19,7 +19,7 @@
     </mat-error>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput type="password" id="employeePassword" #employeePassword placeholder="Password">
+    <input matInput type="password" [(ngModel)]="loggedUser.employeePassword" [value]="loggedUser.employeePassword"  id="employeePassword" #employeePassword placeholder="Password">
   </mat-form-field><br>
-  <button class="btn btn-primary">Update</button>
+  <button class="btn btn-primary" (click)="updateUser()">Update</button>
 </div>

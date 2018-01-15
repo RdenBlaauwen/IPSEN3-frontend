@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     min-width: 300px;
-    padding: 40px;
   }
   
   .example-header {
@@ -21,10 +20,7 @@
     max-height: 500px;
   }
 
-.selected{
-  color: white;
-  background: #009fdf ;
-}
+
 .matTable{
   
 }

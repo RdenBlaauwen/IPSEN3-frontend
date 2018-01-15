@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { EmployeeService } from '../services/employee.service';
+import { Employee } from '../models/Employee';
+import { DialogService } from '../services/DialogService';
 
 @Component({
   selector: 'app-accounts',
@@ -8,12 +10,14 @@ import { EmployeeService } from '../services/employee.service';
   styleUrls: ['./accounts.component.css']
 })
 export class AccountsComponent implements OnInit {
+  selectedEmployee: Employee = new Employee();
   displayedColumns: any[];
   dataSource;
-  constructor(private employeeService: EmployeeService ) {
-    this.displayedColumns = ['account_name', 'account_role', 'email'];
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService) {
+    this.displayedColumns = ['account_name', 'account_role', 'email', 'employeeModify', 'employeeDelete'];
     employeeService.getAllEmployees().subscribe(users =>{
       this.dataSource = new MatTableDataSource(users);
+      console.log(users);
     });
    }
 
@@ -24,6 +28,19 @@ export class AccountsComponent implements OnInit {
    }
 
   ngOnInit() {
+  }
+  modifyAccount(){
+    this.employeeService.modifyEmployee(this.selectedEmployee);
+  }
+  openCreateDialog(){
+    this.dialogService.createAccount();
+  }
+  selectRow(row: Employee) {
+    this.selectedEmployee = row;
+    
+  }
+  openDialog(){
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze account wilt verwijderen? ');
   }
 
 }
