@@ -22,6 +22,10 @@ import { UserStoryService } from '../services/userStory.service';
 import { UserStory } from '../models/UserStoryModel';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/CategoryModel';
+import { AddEntryComponent } from './add-entry/add-entry.component';
+import { EditEntryComponent } from './edit-entry/edit-entry.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-hours',
@@ -33,26 +37,19 @@ export class HoursComponent implements OnInit {
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
                       'entrySprintName','entryUserstoryName'];
   dataSource: MatTableDataSource<EntryModel>;
-  public selectedEntry: EntryModel = new EntryModel();
   weekFilter: WeekFilter;
-  public projectList: Project[];
-  public categoryList: Category[];
-  public userStoryList: UserStory[];
   currentWeek = '18-12-2017';
   availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
+  public selectedRow: EntryModel;
   dateHelper = new DateHelper();
-  entryDateControl = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
-  maxDate: Date;
-  minDate: Date;
   currentRole = 'employee';
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-     private auth: AuthService) {
+  constructor(private hoursService: HoursService, 
+     private auth: AuthService, addEntryComponent: AddEntryComponent, 
+     editEntryComponent: EditEntryComponent, public dialog: MatDialog) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -61,16 +58,6 @@ export class HoursComponent implements OnInit {
     }
     
     console.log(this.currentRole);
-
-    // bereken welke datum het is
-    const today = new Date();
-    const dd = today.getDate();
-    const mm =  today.getMonth();
-    const yyyy = today.getFullYear();
-    // maximum te kiezen datum (vandaag)
-    this.maxDate = new Date(yyyy, mm, dd);
-    // minimum te kiezen datum (week geleden)
-    // this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
   ngOnInit() {
@@ -93,29 +80,6 @@ export class HoursComponent implements OnInit {
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
     console.log('PROJECTS GONNA GIT LOADED');
-    this.projectService.getAllProjects().then((data) => {
-        this.projectList = data;
-        console.log('Hier is de project data: '+this.projectList);
-      }
-    );
-    this.categoryService.getAllCategories()
-    .toPromise()
-    .then(res => res)
-    .then(categories => categories.map(category => {
-      return new Category(
-        category.categoryId,
-        category.categoryIsDeleted,
-        category.categoryName,
-        category.categoryStartDate,
-        category.categoryEndDate,
-        category.categoryDescription,
-        category.projectFK,
-        category.projectName);
-    })).then((data) => {
-      this.categoryList = data;
-      console.log('Hier is de category data: '+this.categoryList);
-    }
-  );
   }
 
   dataToTable(): void{
@@ -158,25 +122,15 @@ export class HoursComponent implements OnInit {
   }
 
   public selectRow(row):void{
-    this.selectedEntry=row;
+    this.selectedRow=row;
   }
-  /**
-   * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
-   * 
-   */
-  public onSubmit():void{
-    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
-      +", date: "+this.selectedEntry.entryDate
-      +", project: "+this.selectedEntry.entryProjectFk);
 
-      this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+  public openAddEntry(){
+    let dialogRef = this.dialog.open(AddEntryComponent, {data: this.selectedRow});
 
-      if(this.selectedEntry.entryId==null){
-        this.hoursService.createEntry(this.selectedEntry).then((data) => {
-            console.log(data);
-            this.updateData();
-          }
-        );
-      }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed: '+result);
+    });
   }
+
 }

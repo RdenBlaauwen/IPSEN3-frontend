@@ -1,0 +1,92 @@
+  <h1 mat-dialog-title>Toevoegen Entry</h1>
+  <mat-dialog-content>
+    <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <!-- <mat-form-field>
+          <input type="text" matInput placeholder="Naam" required>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <textarea matInput 
+            #descriptionField="ngModel"  
+            (change)="log(descriptionField)" 
+            id="descriptionField" name="descriptionField" 
+            placeholder="Beschrijving" 
+            ngModel type="text" matTextareaAutosize 
+            [value]="selectedEntry.entryDescription"
+            [(ngModel)]="selectedEntry.entryDescription" required></textarea>
+          <!-- <textarea matInput #descriptionField="ngModel"  (change)="log(test)" name="test" type="text"  placeholder="Beschrijving" required></textarea> -->
+          <mat-error *ngIf="descriptionField.touched && !descriptionField.valid">Beschrijving is verplicht.</mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+          <input matInput #test="ngModel" (change)="log(test)" name="test" placeholder="Test" ngModel>
+        </mat-form-field> -->
+
+        
+        <mat-form-field>
+          <input matInput 
+          #dateField="ngModel" [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" 
+          id="dateField" name="dateField" 
+          placeholder="Datum" 
+          ngModel 
+          [value]="selectedEntry.entryDate" 
+          [(ngModel)]="selectedEntry.entryDate" required>
+          <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
+          <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #entrydatePicker></mat-datepicker>
+          <mat-error *ngIf="dateField.touched && !dateField.valid">Datum is verplicht.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput 
+            #startTimeField="ngModel"  
+            (change)="log(startTimeField)" 
+            id="startTimeField" name="startTimeField" 
+            placeholder="Starttijd" 
+            ngModel type="time" 
+            [value]="selectedEntry.entryStartTime"
+            [(ngModel)]="selectedEntry.entryStartTime" required>
+          <mat-error *ngIf="startTimeField.touched && !startTimeField.valid">Starttijd is verplicht.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput 
+            #endTimeField="ngModel"  
+            (change)="log(endTimeField)" 
+            id="endTimeField" name="endTimeField" 
+            placeholder="Eindtijd" 
+            ngModel type="time" 
+            [value]="selectedEntry.entryEndTime"
+            [(ngModel)]="selectedEntry.entryEndTime" required>
+          <mat-error *ngIf="endTimeField.touched && !endTimeField.valid">Eindtijd is verplicht.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Project" [(ngModel)]="selectedEntry.entryProjectFk" name="project">
+            <mat-option *ngFor="let project of projectList" [value]="project.projectId">{{project.projectName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Sprint">
+            <mat-option>null</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Userstory">
+            <mat-option>null</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="mat-primary" >Wijzigen</button>
+    </form>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+      <button mat-raised-button (click)="test()" color="primary">
+        Okays!
+      </button>
+      <button mat-raised-button (click)="dialogRef.close()">
+        Cancel
+      </button>
+    </div>

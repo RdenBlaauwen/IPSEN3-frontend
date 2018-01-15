@@ -48,8 +48,9 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
-
-
+import { AddEntryComponent } from './hours/add-entry/add-entry.component';
+import { EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,9 @@ import { UserStoryService } from './services/userStory.service';
     ExportComponent,
     HeaderComponent,
     FooterComponent,
-    DialogContentComponent
+    DialogContentComponent,
+    AddEntryComponent,
+    EditEntryComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [
@@ -85,6 +88,7 @@ import { UserStoryService } from './services/userStory.service';
     HttpClientModule,
     HttpClientModule,
     MatButtonToggleModule,
+    MatButtonModule,
     MatCheckboxModule,
     MatTableModule,
     MatTabsModule,
@@ -105,11 +109,14 @@ import { UserStoryService } from './services/userStory.service';
     MatDialogModule
   ],
   providers: [ProjectService,
+    AddEntryComponent,
     AuthService,
+    EditEntryComponent,
     EmployeeService,
     HoursService, CategoryService,
     CustomerService,
     DialogService,
+    MatDialogRef,
     UserStoryService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
