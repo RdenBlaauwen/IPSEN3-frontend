@@ -18,6 +18,10 @@ import {MatTab} from '@angular/material/tabs';
 import { DateHelper } from '../helpers/dateHelper';
 import { FormsModule } from '@angular/forms';
 import {NgForm} from '@angular/forms';
+import { UserStoryService } from '../services/userStory.service';
+import { UserStory } from '../models/UserStoryModel';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../models/CategoryModel';
 
 @Component({
   selector: 'app-hours',
@@ -31,7 +35,9 @@ export class HoursComponent implements OnInit {
   dataSource: MatTableDataSource<EntryModel>;
   public selectedEntry: EntryModel = new EntryModel();
   weekFilter: WeekFilter;
-  projectList: Project[];
+  public projectList: Project[];
+  public categoryList: Category[];
+  public userStoryList: UserStory[];
   currentWeek = '18-12-2017';
   availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
@@ -44,7 +50,9 @@ export class HoursComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
+  constructor(private hoursService: HoursService, private projectService: ProjectService, 
+    private userStoryService: UserStoryService, private categoryService: CategoryService,
+     private auth: AuthService) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -87,9 +95,27 @@ export class HoursComponent implements OnInit {
     console.log('PROJECTS GONNA GIT LOADED');
     this.projectService.getAllProjects().then((data) => {
         this.projectList = data;
-        console.log('Hier is de data: '+this.projectList);
+        console.log('Hier is de project data: '+this.projectList);
       }
     );
+    this.categoryService.getAllCategories()
+    .toPromise()
+    .then(res => res)
+    .then(categories => categories.map(category => {
+      return new Category(
+        category.categoryId,
+        category.categoryIsDeleted,
+        category.categoryName,
+        category.categoryStartDate,
+        category.categoryEndDate,
+        category.categoryDescription,
+        category.projectFK,
+        category.projectName);
+    })).then((data) => {
+      this.categoryList = data;
+      console.log('Hier is de category data: '+this.categoryList);
+    }
+  );
   }
 
   dataToTable(): void{

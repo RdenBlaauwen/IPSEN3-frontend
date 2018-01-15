@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from "@angular/router";
 import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
-@Injectable()
 
+@Injectable()
 export class UserStoryService
 {
     readonly ALL_CATEGORIES_JSON = 'http://localhost:8080/api/userstories/read';

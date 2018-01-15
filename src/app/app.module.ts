@@ -47,6 +47,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
+import { UserStoryService } from './services/userStory.service';
 
 
 
@@ -109,6 +110,7 @@ import { DialogService } from './services/DialogService';
     HoursService, CategoryService,
     CustomerService,
     DialogService,
+    UserStoryService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })
