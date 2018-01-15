@@ -3,6 +3,7 @@ import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/
 import { UserStory } from '../models/UserStoryModel';
 import { Category } from '../models/CategoryModel';
 import { CategoryService } from '../services/category.service';
+import { UserStoryService} from '../services/userStory.service';
 import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/DialogService';
 import { Employee } from '../models/Employee';
@@ -39,7 +40,7 @@ export class UserStoryComponent implements OnInit {
   //  Return promise to use to fill data
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
   loadData(): Promise<Category[]> {
-    return this.categoryService.getAllCategories()
+    return this.userStoryService.getAllCategories()
       .toPromise()
       .then(res => res)
       .then(categories => categories.map(category => {
@@ -55,15 +56,15 @@ export class UserStoryComponent implements OnInit {
       }));
   }
   selectRow(row) {
-    this.selectedCategory = row;
+    this.selectedUserStory = row;
   }
 
   modifyCategory() {
-    this.categoryService.setCategoryToModify(this.selectedCategory);
+    this.userStoryService.setCategoryToModify(this.selectedUserStory);
   }
 
   deleteCategory() {
-    this.categoryService.removeCategory(this.selectedCategory);
+    this.userStoryService.removeCategory(this.selectedUserStory);
   }
 
   openDialog() {
