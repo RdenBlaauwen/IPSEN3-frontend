@@ -15,7 +15,7 @@ import { DialogService } from '../services/DialogService';
 
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
-  displayedColumns = ['projectName', 'projectDescription', 'customerName', 'projectModify','projectDelete'];
+  displayedColumns = ['projectName', 'projectDescription', 'customerName'];
   selectedProject: Project = new Project();
   loggedEmployeeModel: Employee;
   customers: CustomerModel[];
@@ -42,20 +42,22 @@ export class ProjectsComponent implements OnInit {
   selectRow(row) {
     this.selectedProject = row;
   }
-  modifyProject()
-  {
+
+  modifyProject() {
     this.projectService.setProjectToModify(this.selectedProject);
   }
-  deleteProject()
-  {
+
+  deleteProject() {
     this.projectService.removeProject(this.selectedProject);
   }
-  openDialog(){
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ').subscribe(res=>{
-      if(res.valueOf()){
+
+  openDialog() {
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ')
+    .subscribe(res => {
+      if (res.valueOf()) {
         this.deleteProject();
       }
-    })
+    });
   }
   ngOnInit() {}
 }

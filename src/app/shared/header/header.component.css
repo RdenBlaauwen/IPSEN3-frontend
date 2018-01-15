@@ -11,6 +11,18 @@ div a{
 }
 
 .spacer{
-  margin-right: 25px;
+  margin-right: 70px;
 }
-  
+
+button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
+p, .settings{
+  margin: auto;
+}

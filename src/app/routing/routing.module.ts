@@ -8,10 +8,10 @@ import { HoursComponent } from '../hours/hours.component';
 import { LoginComponent } from '../login/login.component';
 import { ManualComponent } from '../manual/manual.component';
 import { ProjectsComponent } from '../projects/projects.component';
-import { SprintsComponent } from '../sprints/sprints.component';
-import {UserstoriesComponent} from '../userstories/userstories.component';
+import { CategoryComponent } from '../categories/categories.component';
+import {UserStoryComponent} from '../userstories/userstories.component';
 import {AddProjectComponent} from "../projects/add-project/add-project.component";
-import { CreateSprintComponent } from '../sprints/create-sprint/create-sprint.component';
+import { CreateCategoryComponent } from '../categories/create-category/create-category.component';
 import { EditProjectComponent } from '../projects/edit-project/edit-project.component';
 import { LogoutComponent } from '../logout/logout.component';
 import { ModifyCustomerComponent } from '../customers/modify-customer/modify-customer.component';
@@ -20,7 +20,7 @@ import { CreateCustomerComponent } from '../customers/create-customer/create-cus
 const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'add_project', component: AddProjectComponent },
-  { path: 'create_sprint', component: CreateSprintComponent },
+  { path: 'create_sprint', component: CreateCategoryComponent },
   { path: 'modify-project', component: EditProjectComponent },
   { path: 'modify-customer', component: ModifyCustomerComponent },
   { path: 'create-customer', component: CreateCustomerComponent },
@@ -29,8 +29,8 @@ const routes: Routes = [
   { path: 'manual', component: ManualComponent },
   { path: 'hour-management', component: HoursComponent },
   { path: 'project-management', component: ProjectsComponent },
-  { path: 'sprint-management', component: SprintsComponent },
-  { path: 'userstory-management', component: UserstoriesComponent },
+  { path: 'sprint-management', component: CategoryComponent },
+  { path: 'userstory-management', component: UserStoryComponent },
   { path: 'account-management', component: AccountsComponent },
   { path: 'customer-management', component: CustomersComponent },
   { path: 'data-management', component: DataComponent },
