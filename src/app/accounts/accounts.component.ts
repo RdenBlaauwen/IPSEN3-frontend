@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-accounts',
@@ -9,15 +10,11 @@ import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/
 export class AccountsComponent implements OnInit {
   displayedColumns: any[];
   dataSource;
-  accountData: Account[];
-  constructor() {
+  constructor(private employeeService: EmployeeService ) {
     this.displayedColumns = ['account_name', 'account_role', 'email'];
-    this.accountData  = [
-      {account_name: 'Kees', account_role: 'Manager', email: "Ikbeenkees@email.com"},
-      {account_name: 'Yue', account_role: 'Employee', email: 'shewhoismadeoflightharbingerofstars@theastraldeity.com'},
-      {account_name: 'Mudgraw', account_role: 'Admin', email: 'Mudgraw@chultanguides.com'}
-    ];
-    this.dataSource = new MatTableDataSource(this.accountData);
+    employeeService.getAllEmployees().subscribe(users =>{
+      this.dataSource = new MatTableDataSource(users);
+    });
    }
 
     applyFilter(filterValue: string) {
@@ -31,9 +28,4 @@ export class AccountsComponent implements OnInit {
 
 }
 
-export interface Account {
-  account_name: string;
-  account_role: string;
-  email: string;
-}
 

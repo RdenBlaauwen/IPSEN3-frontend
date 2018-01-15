@@ -9,22 +9,23 @@
     <!-- account_name Column -->  
     <ng-container matColumnDef="account_name">
       <mat-header-cell *matHeaderCellDef> Naam </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.account_name}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.employeeFirstname}}  {{ element.employeeLastname}} </mat-cell>
     </ng-container>
     
     <!-- account_role Column -->
     <ng-container matColumnDef="account_role">
       <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.account_role}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.employeeRole}} </mat-cell>
     </ng-container>
 
     <!-- email Column -->
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.employeeEmail}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+<button mat-raised-button type="submit" class="mat-primary" routerLink="/account-management/create" >Toevoegen</button>

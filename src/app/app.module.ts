@@ -48,6 +48,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
+import { CreateAccountComponent } from './accounts/create-account/create-account.component';
 
 
 
@@ -73,7 +74,8 @@ import { UserStoryService } from './services/userStory.service';
     ExportComponent,
     HeaderComponent,
     FooterComponent,
-    DialogContentComponent
+    DialogContentComponent,
+    CreateAccountComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [

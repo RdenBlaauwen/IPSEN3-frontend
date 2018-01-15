@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public getCurrentUser(): string {
-    return this.authService.getEmployeeModel().employeeFirstName + ' ' + this.authService.getEmployeeModel().employeeLastName;
+    return this.authService.getEmployeeModel().employeeFirstname + ' ' + this.authService.getEmployeeModel().employeeLastname;
   }
 
   public getCurrentPage(): string {
