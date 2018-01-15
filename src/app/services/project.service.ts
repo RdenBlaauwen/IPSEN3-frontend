@@ -110,7 +110,11 @@ export class ProjectService {
     this.httpN.put(`http://localhost:8080/api/projects/update/`, data, {headers: headers}).subscribe
     (
         resp => {
-            alert('Project succesvol gewijzigd');
+            if(resp){
+                alert('Project succesvol gewijzigd');
+            }else{
+                alert('Er is iets fout gegaan');
+            }            
         },
         error => {
             alert('Project update mislukt');
