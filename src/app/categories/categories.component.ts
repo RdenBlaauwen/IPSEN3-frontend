@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { UserStory } from '../models/UserStoryModel';
-import { Category } from '../models/CategoryModel';
-import { CategoryService } from '../services/category.service';
+import { Category } from '../models/CategoryModel'
+import { Employee } from '../models/Employee'
+import { Project } from '../models/ProjectModel'
+import { CategoryService } from '../services/category.service'
 import { AuthService } from '../services/auth.service';
-import { DialogService } from '../services/DialogService';
-import { Employee } from '../models/Employee';
+import { DialogService } from '../services/DialogService'
 
 @Component({
-  selector: 'app-userstories',
-  templateUrl: './userstories.component.html',
-  styleUrls: ['./userstories.component.css']
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.css']
 })
 
-export class UserStoryComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
-  private dataSource: MatTableDataSource<UserStory>;
-  displayedColumns = ['userStoryName', 'userStoryDescription'];
-  selectedUserStory: UserStory = new UserStory();
-
+  private dataSource: MatTableDataSource<Category>;
+  displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK'];
+  selectedCategory: Category = new Category();
   loggedEmployeeModel: Employee;
-  categories: Category[];
-  constructor(private userStoryService: UserStoryService, auth: AuthService, private dialogService: DialogService) {
+  projects: Project[];
+  constructor(private categoryService: CategoryService, auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.loadData().then((data) => {

@@ -15,8 +15,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RoutingModule } from './routing/routing.module';
 import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
-import { SprintsComponent } from './sprints/sprints.component';
-import { UserstoriesComponent } from './userstories/userstories.component';
+import { CategoryComponent } from './categories/categories.component';
+import { UserStoryComponent } from './userstories/userstories.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DataComponent } from './data/data.component';
@@ -32,8 +32,8 @@ import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
 import { HoursService } from './services/hours.service';
-import { CreateSprintComponent } from './sprints/create-sprint/create-sprint.component';
-import { SprintService } from './services/sprint.service';
+import { CreateCategoryComponent } from './categories/create-category/create-category.component';
+import { CategoryService } from './services/category.service';
 import { RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout/logout.component';
 import { CustomerService } from './services/customer.service';
@@ -52,8 +52,8 @@ import { DialogService } from './services/DialogService';
     AppComponent,
     HoursComponent,
     ProjectsComponent,
-    SprintsComponent,
-    UserstoriesComponent,
+    CategoryComponent,
+    UserStoryComponent,
     AccountsComponent,
     CustomersComponent,
     DataComponent,
@@ -62,7 +62,7 @@ import { DialogService } from './services/DialogService';
     LoginComponent,
     AddProjectComponent,
     EditProjectComponent,
-    CreateSprintComponent,
+    CreateCategoryComponent,
     LogoutComponent,
     ModifyCustomerComponent,
     CreateCustomerComponent,
@@ -101,7 +101,7 @@ import { DialogService } from './services/DialogService';
   providers: [ProjectService,
     AuthService,
     EmployeeService,
-    HoursService, SprintService,
+    HoursService, CategoryService,
     CustomerService,
     DialogService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
