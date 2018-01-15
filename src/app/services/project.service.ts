@@ -75,9 +75,20 @@ export class ProjectService {
       return customers;
   }
 
-  getAllProjects(): Observable<Project[]> {
+  getAllProjects(): Promise<Project[]> {
       const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers});
+    return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers})
+    .toPromise()
+    .then(res => res)
+    .then(projects => projects.map(project => {
+      return new Project(
+        project.projectId,
+        project.projectName,
+        project.projectDescription,
+        project.projectIsDeleted,
+        project.projectCustomerFk,
+        project.customerName);
+    }));
   }
 
   public setProjectToModify(project: Project) {

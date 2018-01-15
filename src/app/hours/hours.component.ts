@@ -1,3 +1,4 @@
+import { WeekModel } from './../models/WeekModel';
 import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
@@ -9,6 +10,18 @@ import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
 import { EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { DayModel } from '../models/DayModel';
+import { WeekFilter } from '../helpers/WeekFilter';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {MatTab} from '@angular/material/tabs';
+import { DateHelper } from '../helpers/dateHelper';
+import { FormsModule } from '@angular/forms';
+import {NgForm} from '@angular/forms';
+import { UserStoryService } from '../services/userStory.service';
+import { UserStory } from '../models/UserStoryModel';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../models/CategoryModel';
 
 @Component({
   selector: 'app-hours',
@@ -16,26 +29,37 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./hours.component.css']
 })
 export class HoursComponent implements OnInit {
-  displayedColumns: any[];
-  dataSource;
-  entryData: EntryModel[];
-  entryVersionData = [];
-  projectList: Project[];
+  displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+                      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+                      'entrySprintName','entryUserstoryName'];
+  dataSource: MatTableDataSource<EntryModel>;
+  public selectedEntry: EntryModel = new EntryModel();
+  weekFilter: WeekFilter;
+  public projectList: Project[];
+  public categoryList: Category[];
+  public userStoryList: UserStory[];
+  currentWeek = '18-12-2017';
+  availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
-
+  dateHelper = new DateHelper();
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
-
   maxDate: Date;
   minDate: Date;
-
   currentRole = 'employee';
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
+  constructor(private hoursService: HoursService, private projectService: ProjectService, 
+    private userStoryService: UserStoryService, private categoryService: CategoryService,
+     private auth: AuthService) {
 
-    this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    if(this.auth.getEmployeeModel!=null){
+      this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    } else{
+      console.log('HoursComponent: employeeRole was Null!');
+    }
+    
     console.log(this.currentRole);
 
     // bereken welke datum het is
@@ -44,113 +68,115 @@ export class HoursComponent implements OnInit {
     const mm =  today.getMonth();
     const yyyy = today.getFullYear();
     // maximum te kiezen datum (vandaag)
-    this.maxDate = new Date(yyyy,mm,dd);
+    this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    this.minDate = new Date(yyyy,mm,dd-7);
-    // this.readProjectList().then((data) => {
-    //   this.
-    // });
-   }
-  applyFilter(filterValue: string) {
-     filterValue = filterValue.trim(); // Remove whitespace
-     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-     this.dataSource.filter = filterValue;
+    // this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
-   ngOnInit() {
-    this.readEntryData().then((data) => {
-      this.entryData = data;
-      this.filterEntries();
-      this.dataSource = new MatTableDataSource<EntryModel>(this.entryData);
-    }, (error) => console.log(error.SessionNotCreatedError));
-    this.readProjectList();
+  ngOnInit() {
+    this.updateData();  
   }
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
 
-   /**
-    * Deze method update de table. Hij haalt roept HoursService aan om data uit de database te krijgen.
-    */
-   readEntryData(): Promise<EntryModel[]> {
-    return this.hoursService.getAllEntries().toPromise()
+  tabChange(event: MatTabChangeEvent){
+    console.log(event.tab.textLabel);
+    this.currentWeek=event.tab.textLabel;
+    this.updateData();
+  } 
+
+  updateData(): void{
+    console.log('updateData: ');
+    this.hoursService.getAllEntries(this.currentWeek).then((data) => {
+      // this.entryData = data;
+      // this.filterEntries();
+      this.weekFilter = new WeekFilter(data);
+      
+      this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
+    }, (error) => console.log(error.SessionNotCreatedError));
+    console.log('PROJECTS GONNA GIT LOADED');
+    this.projectService.getAllProjects().then((data) => {
+        this.projectList = data;
+        console.log('Hier is de project data: '+this.projectList);
+      }
+    );
+    this.categoryService.getAllCategories()
+    .toPromise()
     .then(res => res)
-    .then(entries => entries.map(entry => {
-      return new EntryModel(
-        entry.entryId,
-        entry.entryDescription,
-        entry.entryStatus,
-        entry.entryDate,
-        entry.entryStartTime,
-        entry.entryEndTime,
-        entry.entryIsLocked,
-        entry.employeeFk,
-        entry.entryProjectFk,
-        entry.entryProjectName,
-        entry.entrySprintFk,
-        entry.entrySprintName,
-        entry.entryUserstoryFk,
-        entry.entryUserstoryName,
-        entry.isDeleted,
-        entry.isCurrent,
-        entry.entryEmployeeName);
-    }));
+    .then(categories => categories.map(category => {
+      return new Category(
+        category.categoryId,
+        category.categoryIsDeleted,
+        category.categoryName,
+        category.categoryStartDate,
+        category.categoryEndDate,
+        category.categoryDescription,
+        category.projectFK,
+        category.projectName);
+    })).then((data) => {
+      this.categoryList = data;
+      console.log('Hier is de category data: '+this.categoryList);
+    }
+  );
+  }
+
+  dataToTable(): void{
+    console.log("dataToTable()");
+    this.dataSource.data=this.weekFilter.entryData;
+  }
+  log(x){
+    console.log(x);
+  }
+   testEn(beginDate): String{
+     return beginDate = '2017-12-18';
    }
-   readProjectList(): Promise<Project[]> {
-     return this.projectService.getAllProjects().toPromise()
-     .then(res => res).then(projects => projects.map(project => {
-        return new Project(
-          project.projectId,
-          project.projectName,
-          project.projectDescription,
-          project.projectIsDeleted,
-          project.projectCustomerFk,
-          project.customerName
-        );
-     }));
-   }
+  //  readProjectList(): Promise<Project[]> {
+  //    return this.projectService.getAllProjects().toPromise()
+  //    .then(res => res).then(projects => projects.map(project => {
+  //       return new Project(
+  //         project.projectId,
+  //         project.projectName,
+  //         project.projectDescription,
+  //         project.projectIsDeleted,
+  //         project.projectCustomerFk,
+  //         project.customerName
+  //       );
+  //    }));
+  //  }
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
-    this.filterEntries();
+    if(this.oldVersionsChecked){
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+    }else{
+      this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
+      'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
+      'entrySprintName','entryUserstoryName'];
+    }
+    // this.filterEntries();
     console.log($event);
   }
 
-  filterEntries() {
-    if (this.oldVersionsChecked) {
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
-      for (let entry of this.entryVersionData){
-          this.entryData.push(entry);
-      }
-      for (let entry of this.entryData) {
-        if (this.entryVersionData.includes(entry)){
-          this.entryVersionData.splice(this.entryVersionData.indexOf(entry),1);
-        }
-      }
-      
-    }else{
-      this.displayedColumns = ['entryDescription', 
-      'entryStatus', 'entryDate', 'entryStartTime', 'entryEndTime', 'entryIsLocked','entryEmployeeName',
-      'entryProjectName','entrySprintName','entryUserstoryName'];
-      for (let entry of this.entryData){
-        if (!entry.isCurrent || entry.isDeleted) {
-          this.entryVersionData.push(entry);
-        }
-      }
-      for (let entry of this.entryVersionData) {
-        this.entryData.splice(this.entryData.indexOf(entry),1);
-      }
-    }
+  public selectRow(row):void{
+    this.selectedEntry=row;
   }
+  /**
+   * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
+   * 
+   */
+  public onSubmit():void{
+    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
+      +", date: "+this.selectedEntry.entryDate
+      +", project: "+this.selectedEntry.entryProjectFk);
 
+      this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+
+      if(this.selectedEntry.entryId==null){
+        this.hoursService.createEntry(this.selectedEntry).then((data) => {
+            console.log(data);
+            this.updateData();
+          }
+        );
+      }
+  }
 }
-// export interface Entry {
-//   project_name: string;
-//   sprint_name: string;
-//   userstory: string;
-//   starttime: string;
-//   endtime: string;
-//   exception: boolean;
-// }

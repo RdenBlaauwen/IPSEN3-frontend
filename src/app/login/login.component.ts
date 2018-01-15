@@ -19,7 +19,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class LoginComponent  {
   email_input = new FormControl('', [Validators.required, Validators.email]);
   employees: string[];
-  email: string;
+  emailArg: string;
+  passwordArg: string;
   currentEmployee: string = null;
 
   constructor(private router: Router, private employeeService: EmployeeService, private auth: AuthService,
@@ -34,8 +35,11 @@ export class LoginComponent  {
     sanitizer.bypassSecurityTrustResourceUrl('assets/password_visible.svg'));
   }
 
-  checkLogin(email: string, password: string) {
-    this.employeeService.login(email, password);
+  checkLogin() {
+    if(this.emailArg!=null&&this.passwordArg!=null
+      &&this.emailArg!=""&&this.passwordArg!=""){
+        this.employeeService.login(this.emailArg, this.passwordArg);
+    }
   }
 
   getErrorMessage() {
