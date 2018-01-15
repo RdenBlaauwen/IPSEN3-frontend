@@ -7,10 +7,11 @@ import { Router } from "@angular/router";
 import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
 @Injectable()
-export class CategoryService
+
+export class UserStoryService
 {
-    readonly ALL_CATEGORIES_JSON = 'http://localhost:8080/api/categories/read';
-    readonly INSERT_CATEGORY = 'http://localhost:8080/api/categories/create/';
+    readonly ALL_CATEGORIES_JSON = 'http://localhost:8080/api/userstories/read';
+    readonly INSERT_CATEGORY = 'http://localhost:8080/api/userstories/create/';
     categoryToModify : Category;
 
     constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
