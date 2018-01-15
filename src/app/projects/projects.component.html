@@ -5,7 +5,6 @@
     </mat-form-field>
   </div>
   <mat-table #table [dataSource]="dataSource">
-
     <ng-container matColumnDef="projectName">
       <mat-header-cell *matHeaderCellDef> Project Name </mat-header-cell>
       <mat-cell *matCellDef="let Project"> {{Project.projectName}} </mat-cell>
@@ -24,8 +23,6 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedProject  == row}"></mat-row>
   </mat-table>
-
-  
 </div>
 <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyProject()" >Wijzigen</button>
 <button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteProject()" >Verwijderen</button>

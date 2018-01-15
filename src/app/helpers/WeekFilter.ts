@@ -34,7 +34,7 @@ export class WeekFilter{
         this.filterTable();
     }
     public set dateArg(date: string){
-        console.log('dateArg: '+date);
+        // console.log('dateArg: '+date);
         this._dateArg=date;
         this.filterTable();
     }
@@ -71,7 +71,7 @@ export class WeekFilter{
 
 	public set isDeletedArg(value: boolean) {
         this._isDeletedArg = value;
-        console.log("isDeletedArg: "+value);
+        // console.log("isDeletedArg: "+value);
         this.filterTable();
 	}
 
@@ -87,7 +87,7 @@ export class WeekFilter{
 	}
 
     constructor(private weekModel: WeekModel){
-        console.log('data in filter: '+weekModel);
+        // console.log('data in filter: '+weekModel);
         // this.fillTable();
         this.filterTable();
     }
@@ -126,8 +126,8 @@ export class WeekFilter{
                 let isDeleted = this._isDeletedArg ? true : !entry.isDeleted;
                 let isCurrent = this._isCurrentArg ? entry.isCurrent : true;
                 let hasEmployee = srch.hasString(entry.entryEmployeeName,this._employeeNameArg);
-                console.log('WeekFilter description='+entry.entryDescription);
-                console.log('WeekFilter isDeletedArg='+this._isDeletedArg+' !entry.isDeleted='+!entry.isDeleted+" isDeleted="+isDeleted);
+                // console.log('WeekFilter description='+entry.entryDescription);
+                // console.log('WeekFilter isDeletedArg='+this._isDeletedArg+' !entry.isDeleted='+!entry.isDeleted+" isDeleted="+isDeleted);
                 // console.log('WeekFilter isCurrent='+isCurrent);
                 
                 // if(hasId&&hasDescription&&hasStatus&&hasDate
@@ -140,8 +140,8 @@ export class WeekFilter{
 
                 if(hasId&&hasDescription&&hasStatus&&hasDate&&hasStartTime&&hasEndTime&&hasEmployee&&hasProjectName
                     &&isLocked&&hasSprintName&&hasUserStoryName&&isCurrent&&isDeleted){
-                        console.log('push '+isDeleted);
-                        console.log(this.entryData);
+                        // console.log('push '+isDeleted);
+                        // console.log(this.entryData);
                         this.entryData.push(entry);
                     }
                 

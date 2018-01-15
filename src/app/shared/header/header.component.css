@@ -1,12 +1,28 @@
 nav{
-    width: 100%;
-  }
+  width: 100%;
+}
+
+i{
+  color: white;
+}
   
-  nav a{
-    color: white;
-  }
-  
-  .spacer{
-    margin-right: 25px;
-  }
-  
+div a{
+  color:black;
+}
+
+.spacer{
+  margin-right: 70px;
+}
+
+button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
+p, .settings{
+  margin: auto;
+}

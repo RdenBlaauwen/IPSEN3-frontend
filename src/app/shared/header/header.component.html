@@ -1,16 +1,31 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-code"></i> WebEdu</a>
+  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-code"></i> WebEdu </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <p *ngIf="isAuthenticated()" class="text-muted justify-content-center">{{ getCurrentPage() }}</p>
   <div class="collapse navbar-collapse justify-content-end" id="topNav">
+    <p *ngIf="isAuthenticated()" class="text-muted justify-content-center">{{ getCurrentUser() }}</p>
     <ul class="nav justify-content-end">
+      <div *ngIf="isAuthenticated()" class="dropdown">
+          <small class="text-muted">Overzichten / CRUD</small>
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-table" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" routerLink="/hour-management" routerLinkActive="active">Entries</a>
+            <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projects</a>
+            <a class="dropdown-item" routerLink="/userstory-management" routerLinkActive="active">User Stories</a>
+            <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categories</a>
+          </div>
+      </div>
       <span class="spacer"></span>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active"><i class="fa fa-tachometer"></i></a>
+      <li *ngIf="!isAuthenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/logout" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
+      <small *ngIf="isAuthenticated()" class="text-muted settings">Settings</small>
+      <li *ngIf="isAuthenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
       </li>
     </ul>
   </div>

@@ -16,6 +16,12 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {MatTab} from '@angular/material/tabs';
 import { DateHelper } from '../helpers/dateHelper';
+import { FormsModule } from '@angular/forms';
+import {NgForm} from '@angular/forms';
+import { UserStoryService } from '../services/userStory.service';
+import { UserStory } from '../models/UserStoryModel';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../models/CategoryModel';
 
 @Component({
   selector: 'app-hours',
@@ -27,8 +33,11 @@ export class HoursComponent implements OnInit {
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
                       'entrySprintName','entryUserstoryName'];
   dataSource: MatTableDataSource<EntryModel>;
+  public selectedEntry: EntryModel = new EntryModel();
   weekFilter: WeekFilter;
-  projectList: Project[];
+  public projectList: Project[];
+  public categoryList: Category[];
+  public userStoryList: UserStory[];
   currentWeek = '18-12-2017';
   availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
@@ -37,14 +46,20 @@ export class HoursComponent implements OnInit {
   serializedDate = new FormControl((new Date()).toISOString());
   maxDate: Date;
   minDate: Date;
-
   currentRole = 'employee';
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, private projectService: ProjectService, private auth: AuthService) {
+  constructor(private hoursService: HoursService, private projectService: ProjectService, 
+    private userStoryService: UserStoryService, private categoryService: CategoryService,
+     private auth: AuthService) {
 
-    this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    if(this.auth.getEmployeeModel!=null){
+      this.currentRole = this.auth.getEmployeeModel().employeeRole;
+    } else{
+      console.log('HoursComponent: employeeRole was Null!');
+    }
+    
     console.log(this.currentRole);
 
     // bereken welke datum het is
@@ -55,28 +70,52 @@ export class HoursComponent implements OnInit {
     // maximum te kiezen datum (vandaag)
     this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    this.minDate = new Date(yyyy, mm, dd - 7);
+    // this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
   ngOnInit() {
-    this.updateData(this.currentWeek);  
+    this.updateData();  
   }
 
   tabChange(event: MatTabChangeEvent){
     console.log(event.tab.textLabel);
-    this.updateData(event.tab.textLabel);
+    this.currentWeek=event.tab.textLabel;
+    this.updateData();
   } 
 
-  updateData(weekString: string): void{
+  updateData(): void{
     console.log('updateData: ');
-    this.currentWeek=weekString;
-    this.hoursService.getAllEntries(weekString).then((data) => {
+    this.hoursService.getAllEntries(this.currentWeek).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
       this.weekFilter = new WeekFilter(data);
-      console.log('Hier is de data: '+this.weekFilter.entryData);
+      
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
+    console.log('PROJECTS GONNA GIT LOADED');
+    this.projectService.getAllProjects().then((data) => {
+        this.projectList = data;
+        console.log('Hier is de project data: '+this.projectList);
+      }
+    );
+    this.categoryService.getAllCategories()
+    .toPromise()
+    .then(res => res)
+    .then(categories => categories.map(category => {
+      return new Category(
+        category.categoryId,
+        category.categoryIsDeleted,
+        category.categoryName,
+        category.categoryStartDate,
+        category.categoryEndDate,
+        category.categoryDescription,
+        category.projectFK,
+        category.projectName);
+    })).then((data) => {
+      this.categoryList = data;
+      console.log('Hier is de category data: '+this.categoryList);
+    }
+  );
   }
 
   dataToTable(): void{
@@ -116,5 +155,28 @@ export class HoursComponent implements OnInit {
     }
     // this.filterEntries();
     console.log($event);
+  }
+
+  public selectRow(row):void{
+    this.selectedEntry=row;
+  }
+  /**
+   * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
+   * 
+   */
+  public onSubmit():void{
+    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
+      +", date: "+this.selectedEntry.entryDate
+      +", project: "+this.selectedEntry.entryProjectFk);
+
+      this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+
+      if(this.selectedEntry.entryId==null){
+        this.hoursService.createEntry(this.selectedEntry).then((data) => {
+            console.log(data);
+            this.updateData();
+          }
+        );
+      }
   }
 }
