@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,12 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) { }
+
+  public logoutUser() {
+    this.employeeService.removeSessions();
+    this.employeeService.goLogin();
+  }
 
   public isAuthenticated(): boolean {
     return this.authService.isAuthorized();

@@ -27,6 +27,10 @@
       <li *ngIf="isAuthenticated()" class="nav-item">
         <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
       </li>
+      <small *ngIf="isAuthenticated()" class="text-muted settings">Logout</small>
+      <li *ngIf="isAuthenticated()" class="nav-item">
+        <a class="nav-link" (click)="logoutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+      </li>
     </ul>
   </div>
 </nav>
