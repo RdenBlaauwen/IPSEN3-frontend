@@ -38,9 +38,6 @@ export class WeekFilter{
         this._dateArg=date;
         this.filterTable();
     }
-    // public set dateArgFromDate(date: EventEmitter<MatDatepickerInputEvent<D>>){
-        
-    // }
     public set startTimeArg(startTime: string){
         this._startTimeArg=startTime;
         this.filterTable();
