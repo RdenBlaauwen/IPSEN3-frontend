@@ -6,6 +6,7 @@ import { EntryModel } from '../models/EntryModel';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { WeekModel } from '../models/WeekModel';
+import { HoursComponent } from '../hours/hours.component';
 
 
 @Injectable()
@@ -29,7 +30,7 @@ export class HoursService {
     params.append('startdate', week);
     let result = this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
     console.log("service: result "+result);
-    return result.toPromise().then(weeks => {return weeks});;
+    return result.toPromise().then(weeks => {return weeks});
   }
 
   // public createEntry(description: string, date: Date, projectId: number, sprintId: number, 
@@ -37,11 +38,15 @@ export class HoursService {
     
   // }
 
-  public createEntry(entry: EntryModel): void {
+  public createEntry(entry: EntryModel): Promise<any> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers})
-    .subscribe(response => {
-      console.log(response);
-    });
+    // this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers})
+    // .subscribe(response => {
+    //   hoursComponent.updateData();
+    //   console.log(response);
+    //   return response.;
+    // });
+    let result=this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers});
+    return result.toPromise().then(res => {return res});
   }
 }

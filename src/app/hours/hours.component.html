@@ -72,8 +72,8 @@
                 </mat-form-field>
         </mat-header-cell>  
         <mat-cell *matCellDef="let element"> 
-              {{element.entryStartTime}} 
-          </mat-cell>
+          {{element.entryStartTime}} 
+        </mat-cell>
       </ng-container>
 
       <!-- endtime Column -->
@@ -86,7 +86,7 @@
                 </mat-form-field>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
-            {{element.entryEndTime}} 
+          {{element.entryEndTime}} 
         </mat-cell>
       </ng-container>
 
@@ -231,6 +231,30 @@
           <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
           <mat-datepicker #entrydatePicker></mat-datepicker>
           <mat-error *ngIf="dateField.touched && !dateField.valid">Datum is verplicht.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput 
+            #startTimeField="ngModel"  
+            (change)="log(startTimeField)" 
+            id="startTimeField" name="startTimeField" 
+            placeholder="Starttijd" 
+            ngModel type="time" 
+            [value]="selectedEntry.entryStartTime"
+            [(ngModel)]="selectedEntry.entryStartTime" required>
+          <mat-error *ngIf="startTimeField.touched && !startTimeField.valid">Starttijd is verplicht.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput 
+            #endTimeField="ngModel"  
+            (change)="log(endTimeField)" 
+            id="endTimeField" name="endTimeField" 
+            placeholder="Eindtijd" 
+            ngModel type="time" 
+            [value]="selectedEntry.entryEndTime"
+            [(ngModel)]="selectedEntry.entryEndTime" required>
+          <mat-error *ngIf="endTimeField.touched && !endTimeField.valid">Eindtijd is verplicht.</mat-error>
         </mat-form-field>
 
         <mat-form-field>

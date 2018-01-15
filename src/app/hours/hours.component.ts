@@ -62,22 +62,22 @@ export class HoursComponent implements OnInit {
     // maximum te kiezen datum (vandaag)
     this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    this.minDate = new Date(yyyy, mm, dd - 7);
+    // this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
   ngOnInit() {
-    this.updateData(this.currentWeek);  
+    this.updateData();  
   }
 
   tabChange(event: MatTabChangeEvent){
     console.log(event.tab.textLabel);
-    this.updateData(event.tab.textLabel);
+    this.currentWeek=event.tab.textLabel;
+    this.updateData();
   } 
 
-  updateData(weekString: string): void{
+  updateData(): void{
     console.log('updateData: ');
-    this.currentWeek=weekString;
-    this.hoursService.getAllEntries(weekString).then((data) => {
+    this.hoursService.getAllEntries(this.currentWeek).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
       this.weekFilter = new WeekFilter(data);
@@ -89,7 +89,7 @@ export class HoursComponent implements OnInit {
         this.projectList = data;
         console.log('Hier is de data: '+this.projectList);
       }
-    )
+    );
   }
 
   dataToTable(): void{
@@ -146,7 +146,11 @@ export class HoursComponent implements OnInit {
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
       if(this.selectedEntry.entryId==null){
-        this.hoursService.createEntry(this.selectedEntry);
+        this.hoursService.createEntry(this.selectedEntry).then((data) => {
+            console.log(data);
+            this.updateData();
+          }
+        );
       }
   }
 }
