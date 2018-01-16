@@ -6,13 +6,30 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from "@angular/router";
 import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { UserStory } from "../models/UserStoryModel";
 
 @Injectable()
 export class UserStoryService
 {
-    readonly ALL_CATEGORIES_JSON = 'http://localhost:8080/api/userstories/read';
+    readonly ALL_USERSTORIES_JSON = 'http://localhost:8080/api/userstories/read';
     readonly INSERT_CATEGORY = 'http://localhost:8080/api/userstories/create/';
     categoryToModify : Category;
+
+    public getAllUserStories(): Promise<UserStory[]> {
+        let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        let result = this.http.get<UserStory[]>(this.ALL_USERSTORIES_JSON, {headers: headers});
+        console.log("service: result "+result);
+        return result.toPromise()
+        .then(res => res)
+        .then(userstories => userstories.map(userstory => {
+          return new UserStory(
+            userstory.userStoryID,
+            userstory.userStoryName,
+            userstory.userStoryDescription,
+            userstory.userStoryIsDeleted,
+            userstory.isCurrent);
+        }));
+      }
 
     constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
     public insertNewCategory(sp: Category): void
@@ -61,7 +78,7 @@ export class UserStoryService
 
     getAllCategories(): Observable<Category[]> {
         const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-      return this.http.get<Category[]>(this.ALL_CATEGORIES_JSON, {headers: headers});
+      return this.http.get<Category[]>(this.ALL_USERSTORIES_JSON, {headers: headers});
     }
 
 

@@ -58,6 +58,8 @@ import { AddEntryComponent } from './hours/add-entry/add-entry.component';
 
 @NgModule({
   declarations: [
+    AddEntryComponent,
+    EditEntryComponent,
     AppComponent,
     HoursComponent,
     ProjectsComponent,

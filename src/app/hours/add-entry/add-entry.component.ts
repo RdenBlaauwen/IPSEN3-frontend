@@ -64,9 +64,14 @@ export class AddEntryComponent implements OnInit {
     this.projectService.getAllProjects().then((data) => {
         this.projectList = data;
         console.log('Hier is de project data: '+this.projectList);
-        console.log('projects should be open...');
       }
     );
+  }
+  public updateUserStories(){
+    this.userStoryService.getAllUserStories().then((data) =>{
+      this.userStoryList=data;
+      console.log('Hier is de userStory data: '+this.userStoryList);
+    })
   }
   /**
    * Haalt categorieen uit database en zet ze in categoryList voor in de drop down list.
@@ -113,5 +118,9 @@ export class AddEntryComponent implements OnInit {
 
   log(anything){
     console.log('log: '+anything);
+  }
+
+  public close():void{
+    this.hoursComponent.createMode=false;
   }
 }
