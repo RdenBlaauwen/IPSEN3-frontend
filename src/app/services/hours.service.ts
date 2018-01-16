@@ -55,4 +55,9 @@ export class HoursService {
     let result=this.http.put(this.ALL_ENTRIES_JSON, entry, {headers: headers});
     return result.toPromise().then(res => {return res});
   }
+  public deleteEntry(entry: EntryModel): Promise<any> {
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    let result=this.http.delete(this.ALL_ENTRIES_JSON+'?entryid='+entry.entryId, {headers: headers});
+    return result.toPromise().then(res => {return res});
+  }
 }

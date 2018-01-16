@@ -4,17 +4,13 @@
   <app-edit-entry *ngIf="updateMode"></app-edit-entry>
   <div class="example-container">
     <div class="example-header">
-      <div class="row">
         <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"
           #versionsCheckBox
           [value]="" [checked]="oldVersionsChecked"
           (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
           >Laat oude of verwijderde versies zien
         </mat-checkbox>
-          <button mat-raised-button color="primary" (click)="openAddEntry()">Nieuwe Entry</button>
-          <button mat-raised-button color="primary" (click)="openEditEntry()">Entry bewerken</button>
-          <button mat-raised-button color="primary" (click)="openDeleteEntry()">Entry verwijderen</button>
-      </div>
+        <button mat-raised-button color="primary" (click)="openAddEntry()">Nieuwe Entry</button>
       <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
       </mat-form-field>-->
@@ -195,8 +191,18 @@
           </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="entryUpdate">
+        <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openEditEntry(element)">edit</mat-icon></a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entryDelete">
+        <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="deleteEntry(element)">delete</mat-icon></a></mat-cell>
+      </ng-container>
+
       -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>

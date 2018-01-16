@@ -27,6 +27,7 @@ import { AddEntryComponent } from './add-entry/add-entry.component';
 import { EditEntryComponent } from './edit-entry/edit-entry.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DialogService} from '../services/DialogService';
 
 @Component({
   selector: 'app-hours',
@@ -37,7 +38,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class HoursComponent implements OnInit {
   displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-                      'entrySprintName','entryUserstoryName'];
+                      'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
   dataSource: MatTableDataSource<EntryModel>;
   weekFilter: WeekFilter;
   currentWeek = '18-12-2017';
@@ -47,13 +48,13 @@ export class HoursComponent implements OnInit {
   dateHelper = new DateHelper();
   currentRole = 'employee';
 
-  public createMode = false;
+  public createMode = true;
   public updateMode = false;
 
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: HoursService, 
-     private auth: AuthService) {
+     private auth: AuthService, private dialogService: DialogService) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -114,21 +115,21 @@ export class HoursComponent implements OnInit {
     if(this.oldVersionsChecked){
       this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-      'entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+      'entrySprintName','entryUserstoryName','isDeleted','isCurrent','entryUpdate','entryDelete'];
     }else{
       this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-      'entrySprintName','entryUserstoryName'];
+      'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
     }
     // this.filterEntries();
     console.log($event);
   }
 
-  public selectRow(row):void{
+  public openEditEntry(row):void{
     console.log('selectRow(): '+row.entryDescription);
     this.selectedRow=row;
     this.hoursService.selectedEntry=row;
-    
+
     this.createMode=false;
     this.updateMode=true;
     this.hoursService.newEvent(row);
@@ -138,8 +139,19 @@ export class HoursComponent implements OnInit {
     this.createMode=true;
     this.updateMode=false;
   }
-  public openEditEntry(){
-    this.createMode=false;
-    this.updateMode=true;
+  // public openEditEntry(){
+  //   this.createMode=false;
+  //   this.updateMode=true;
+  // }
+
+  public deleteEntry(row){
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze entry wilt verwijderen? ')
+    .subscribe(res => {
+      if (res.valueOf()) {
+        this.hoursService.deleteEntry(row).then((data) => {
+            this.updateData();
+          }, (error) => console.log(error.SessionNotCreatedError));
+      }
+    });
   }
 }

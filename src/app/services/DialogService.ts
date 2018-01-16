@@ -7,6 +7,9 @@ import { CreateCustomerComponent } from '../customers/create-customer/create-cus
 import { AddProjectComponent } from '../projects/add-project/add-project.component';
 import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
 
+/**
+ * Slim idee Reza ;)
+ */
 @Injectable()
 export class DialogService {
 
