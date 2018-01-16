@@ -1,5 +1,7 @@
   
-  <div class="example-container col-sm-12">
+  
+  <app-add-entry *ngIf="createMode"></app-add-entry>
+  <div class="example-container">
     <div class="example-header">
       <div class="row">
         <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"

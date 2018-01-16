@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { EntryModel } from '../../models/EntryModel';
@@ -13,6 +13,7 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/CategoryModel';
 import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { HoursComponent } from '../hours.component';
 
 @Component({
   selector: 'app-add-entry',
@@ -21,10 +22,13 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 @Injectable()
 export class AddEntryComponent implements OnInit {
+  @ViewChild('projectSelect') projectSelect;
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
   public userStoryList: UserStory[];
+
+  public projectListOpen = false;
 
   entryDateControl = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
@@ -33,9 +37,7 @@ export class AddEntryComponent implements OnInit {
 
   constructor(private projectService: ProjectService, 
     private userStoryService: UserStoryService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: HoursService,
-    public dialogRef: MatDialogRef<AddEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    private auth: AuthService, private hoursService: HoursService, private hoursComponent: HoursComponent) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -49,32 +51,47 @@ export class AddEntryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateProjects();
+    this.updateCategories();
   }
-
-  public updateData(){
+  /**
+   * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
+   * 
+   * @author Robert
+   */
+  public updateProjects(){
+    console.log('PROJECTS GONNA GIT LOADED');
     this.projectService.getAllProjects().then((data) => {
         this.projectList = data;
         console.log('Hier is de project data: '+this.projectList);
+        console.log('projects should be open...');
       }
     );
+  }
+  /**
+   * Haalt categorieen uit database en zet ze in categoryList voor in de drop down list.
+   * 
+   * @author Robert
+   */
+  public updateCategories(){
     this.categoryService.getAllCategories()
-      .toPromise()
-      .then(res => res)
-      .then(categories => categories.map(category => {
-          return new Category(
-            category.categoryId,
-            category.categoryIsDeleted,
-            category.categoryName,
-            category.categoryStartDate,
-            category.categoryEndDate,
-            category.categoryDescription,
-            category.projectFK,
-            category.projectName);
-        })).then((data) => {
-        this.categoryList = data;
-        console.log('Hier is de category data: '+this.categoryList);
-      }
-    );
+    .toPromise()
+    .then(res => res)
+    .then(categories => categories.map(category => {
+        return new Category(
+          category.categoryId,
+          category.categoryIsDeleted,
+          category.categoryName,
+          category.categoryStartDate,
+          category.categoryEndDate,
+          category.categoryDescription,
+          category.projectFK,
+          category.projectName);
+      })).then((data) => {
+      this.categoryList = data;
+      console.log('Hier is de category data: '+this.categoryList);
+    }
+  );
   }
   /**
    * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
@@ -87,16 +104,14 @@ export class AddEntryComponent implements OnInit {
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
-      if(this.selectedEntry.entryId==null){
-        this.hoursService.createEntry(this.selectedEntry).then((data) => {
-            console.log(data);
-            this.updateData();
-          }
-        );
-      }
+      this.hoursService.createEntry(this.selectedEntry).then((data) => {
+          console.log(data);
+          this.hoursComponent.updateData();
+        }
+      );
   }
 
-  test(){
-    console.log("DIALOG WORKS!");
+  log(anything){
+    console.log('log: '+anything);
   }
 }

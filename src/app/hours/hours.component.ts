@@ -1,6 +1,7 @@
 import { WeekModel } from './../models/WeekModel';
 import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
 import {HoursService} from '../services/hours.service';
 import { EntryModel } from '../models/EntryModel';
@@ -25,13 +26,14 @@ import { Category } from '../models/CategoryModel';
 import { AddEntryComponent } from './add-entry/add-entry.component';
 import { EditEntryComponent } from './edit-entry/edit-entry.component';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
   styleUrls: ['./hours.component.css']
 })
+@Injectable()
 export class HoursComponent implements OnInit {
   displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
@@ -45,11 +47,13 @@ export class HoursComponent implements OnInit {
   dateHelper = new DateHelper();
   currentRole = 'employee';
 
+  public createMode = false;
+  public updateMode = false;
+
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: HoursService, 
-     private auth: AuthService, addEntryComponent: AddEntryComponent, 
-     editEntryComponent: EditEntryComponent, public dialog: MatDialog) {
+     private auth: AuthService,editEntryComponent: EditEntryComponent) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -79,7 +83,6 @@ export class HoursComponent implements OnInit {
       
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
-    console.log('PROJECTS GONNA GIT LOADED');
   }
 
   dataToTable(): void{
@@ -126,11 +129,11 @@ export class HoursComponent implements OnInit {
   }
 
   public openAddEntry(){
-    let dialogRef = this.dialog.open(AddEntryComponent, {data: this.selectedRow});
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed: '+result);
-    });
+    this.createMode=true;
+    this.updateMode=false;
   }
-
+  public openEditEntry(){
+    this.createMode=false;
+    this.updateMode=false;
+  }
 }
