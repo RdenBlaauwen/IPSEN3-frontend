@@ -1,14 +1,16 @@
-<div class="row">
-  <div class="example-container mat-elevation-z8 col-sm-10">
+  
+  
+  <app-add-entry *ngIf="createMode"></app-add-entry>
+  <app-edit-entry *ngIf="updateMode"></app-edit-entry>
+  <div class="example-container">
     <div class="example-header">
-      <div class="row">
-        <mat-checkbox *ngIf="currentRole!='employee'"
+        <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"
           #versionsCheckBox
           [value]="" [checked]="oldVersionsChecked"
           (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
           >Laat oude of verwijderde versies zien
         </mat-checkbox>
-      </div>
+        <button mat-raised-button color="primary" (click)="openAddEntry()">Nieuwe Entry</button>
       <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 
       </mat-form-field>-->
@@ -189,92 +191,18 @@
           </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="entryUpdate">
+        <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openEditEntry(element)">edit</mat-icon></a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entryDelete">
+        <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="deleteEntry(element)">delete</mat-icon></a></mat-cell>
+      </ng-container>
+
       -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
-  <div class="col-sm-2 cud-bar">
-    <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
-
-        <!-- <mat-form-field>
-          <input type="text" matInput placeholder="Naam" required>
-        </mat-form-field> -->
-
-        <mat-form-field>
-          <textarea matInput 
-            #descriptionField="ngModel"  
-            (change)="log(descriptionField)" 
-            id="descriptionField" name="descriptionField" 
-            placeholder="Beschrijving" 
-            ngModel type="text" matTextareaAutosize 
-            [value]="selectedEntry.entryDescription"
-            [(ngModel)]="selectedEntry.entryDescription" required></textarea>
-          <!-- <textarea matInput #descriptionField="ngModel"  (change)="log(test)" name="test" type="text"  placeholder="Beschrijving" required></textarea> -->
-          <mat-error *ngIf="descriptionField.touched && !descriptionField.valid">Beschrijving is verplicht.</mat-error>
-        </mat-form-field>
-
-        <!-- <mat-form-field>
-          <input matInput #test="ngModel" (change)="log(test)" name="test" placeholder="Test" ngModel>
-        </mat-form-field> -->
-
-        
-        <mat-form-field>
-          <input matInput 
-          #dateField="ngModel" [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" 
-          id="dateField" name="dateField" 
-          placeholder="Datum" 
-          ngModel 
-          [value]="selectedEntry.entryDate" 
-          [(ngModel)]="selectedEntry.entryDate" required>
-          <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
-          <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #entrydatePicker></mat-datepicker>
-          <mat-error *ngIf="dateField.touched && !dateField.valid">Datum is verplicht.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput 
-            #startTimeField="ngModel"  
-            (change)="log(startTimeField)" 
-            id="startTimeField" name="startTimeField" 
-            placeholder="Starttijd" 
-            ngModel type="time" 
-            [value]="selectedEntry.entryStartTime"
-            [(ngModel)]="selectedEntry.entryStartTime" required>
-          <mat-error *ngIf="startTimeField.touched && !startTimeField.valid">Starttijd is verplicht.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput 
-            #endTimeField="ngModel"  
-            (change)="log(endTimeField)" 
-            id="endTimeField" name="endTimeField" 
-            placeholder="Eindtijd" 
-            ngModel type="time" 
-            [value]="selectedEntry.entryEndTime"
-            [(ngModel)]="selectedEntry.entryEndTime" required>
-          <mat-error *ngIf="endTimeField.touched && !endTimeField.valid">Eindtijd is verplicht.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-select placeholder="Project" [(ngModel)]="selectedEntry.entryProjectFk" name="project">
-            <mat-option *ngFor="let project of projectList" [value]="project.projectId">{{project.projectName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-select placeholder="Sprint">
-            <mat-option>null</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-select placeholder="Userstory">
-            <mat-option>null</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" class="mat-primary" >Wijzigen</button>
-    </form>
-  </div>
-</div>

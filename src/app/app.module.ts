@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatDialogModule, MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatTableModule, MatSelectModule, MatOptionModule, MatNativeDateModule, MatDatepickerModule, MatCardModule, MatToolbarModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,11 +49,17 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
+import { CreateAccountComponent } from './accounts/create-account/create-account.component';
+import { ModifyComponent } from './accounts/modify/modify.component';
+import { EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+import { AddEntryComponent } from './hours/add-entry/add-entry.component';
 
 
 
 @NgModule({
   declarations: [
+    AddEntryComponent,
+    EditEntryComponent,
     AppComponent,
     HoursComponent,
     ProjectsComponent,
@@ -73,7 +80,9 @@ import { UserStoryService } from './services/userStory.service';
     ExportComponent,
     HeaderComponent,
     FooterComponent,
-    DialogContentComponent
+    DialogContentComponent,
+    CreateAccountComponent,
+    ModifyComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [
@@ -85,6 +94,7 @@ import { UserStoryService } from './services/userStory.service';
     HttpClientModule,
     HttpClientModule,
     MatButtonToggleModule,
+    MatButtonModule,
     MatCheckboxModule,
     MatTableModule,
     MatTabsModule,
@@ -105,7 +115,9 @@ import { UserStoryService } from './services/userStory.service';
     MatDialogModule
   ],
   providers: [ProjectService,
+    AddEntryComponent,
     AuthService,
+    EditEntryComponent,
     EmployeeService,
     HoursService, CategoryService,
     CustomerService,

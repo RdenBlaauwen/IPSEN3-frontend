@@ -1,6 +1,7 @@
 import { WeekModel } from './../models/WeekModel';
 import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
 import {HoursService} from '../services/hours.service';
 import { EntryModel } from '../models/EntryModel';
@@ -22,37 +23,38 @@ import { UserStoryService } from '../services/userStory.service';
 import { UserStory } from '../models/UserStoryModel';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/CategoryModel';
+import { AddEntryComponent } from './add-entry/add-entry.component';
+import { EditEntryComponent } from './edit-entry/edit-entry.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DialogService} from '../services/DialogService';
 
 @Component({
   selector: 'app-hours',
   templateUrl: './hours.component.html',
   styleUrls: ['./hours.component.css']
 })
+@Injectable()
 export class HoursComponent implements OnInit {
   displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-                      'entrySprintName','entryUserstoryName'];
+                      'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
   dataSource: MatTableDataSource<EntryModel>;
-  public selectedEntry: EntryModel = new EntryModel();
   weekFilter: WeekFilter;
-  public projectList: Project[];
-  public categoryList: Category[];
-  public userStoryList: UserStory[];
   currentWeek = '18-12-2017';
   availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
   oldVersionsChecked = false;
+  public selectedRow: EntryModel;
   dateHelper = new DateHelper();
-  entryDateControl = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
-  maxDate: Date;
-  minDate: Date;
   currentRole = 'employee';
+
+  public createMode = true;
+  public updateMode = false;
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-     private auth: AuthService) {
+  constructor(private hoursService: HoursService, 
+     private auth: AuthService, private dialogService: DialogService) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -61,16 +63,6 @@ export class HoursComponent implements OnInit {
     }
     
     console.log(this.currentRole);
-
-    // bereken welke datum het is
-    const today = new Date();
-    const dd = today.getDate();
-    const mm =  today.getMonth();
-    const yyyy = today.getFullYear();
-    // maximum te kiezen datum (vandaag)
-    this.maxDate = new Date(yyyy, mm, dd);
-    // minimum te kiezen datum (week geleden)
-    // this.minDate = new Date(yyyy, mm, dd - 7);
    }
 
   ngOnInit() {
@@ -92,30 +84,6 @@ export class HoursComponent implements OnInit {
       
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
-    console.log('PROJECTS GONNA GIT LOADED');
-    this.projectService.getAllProjects().then((data) => {
-        this.projectList = data;
-        console.log('Hier is de project data: '+this.projectList);
-      }
-    );
-    this.categoryService.getAllCategories()
-    .toPromise()
-    .then(res => res)
-    .then(categories => categories.map(category => {
-      return new Category(
-        category.categoryId,
-        category.categoryIsDeleted,
-        category.categoryName,
-        category.categoryStartDate,
-        category.categoryEndDate,
-        category.categoryDescription,
-        category.projectFK,
-        category.projectName);
-    })).then((data) => {
-      this.categoryList = data;
-      console.log('Hier is de category data: '+this.categoryList);
-    }
-  );
   }
 
   dataToTable(): void{
@@ -147,36 +115,43 @@ export class HoursComponent implements OnInit {
     if(this.oldVersionsChecked){
       this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-      'entrySprintName','entryUserstoryName','isDeleted','isCurrent'];
+      'entrySprintName','entryUserstoryName','isDeleted','isCurrent','entryUpdate','entryDelete'];
     }else{
       this.displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
-      'entrySprintName','entryUserstoryName'];
+      'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
     }
     // this.filterEntries();
     console.log($event);
   }
 
-  public selectRow(row):void{
-    this.selectedEntry=row;
+  public openEditEntry(row):void{
+    console.log('selectRow(): '+row.entryDescription);
+    this.selectedRow=row;
+    this.hoursService.selectedEntry=row;
+
+    this.createMode=false;
+    this.updateMode=true;
+    this.hoursService.newEvent(row);
   }
-  /**
-   * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
-   * 
-   */
-  public onSubmit():void{
-    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
-      +", date: "+this.selectedEntry.entryDate
-      +", project: "+this.selectedEntry.entryProjectFk);
 
-      this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+  public openAddEntry(){
+    this.createMode=true;
+    this.updateMode=false;
+  }
+  // public openEditEntry(){
+  //   this.createMode=false;
+  //   this.updateMode=true;
+  // }
 
-      if(this.selectedEntry.entryId==null){
-        this.hoursService.createEntry(this.selectedEntry).then((data) => {
-            console.log(data);
+  public deleteEntry(row){
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze entry wilt verwijderen? ')
+    .subscribe(res => {
+      if (res.valueOf()) {
+        this.hoursService.deleteEntry(row).then((data) => {
             this.updateData();
-          }
-        );
+          }, (error) => console.log(error.SessionNotCreatedError));
       }
+    });
   }
 }

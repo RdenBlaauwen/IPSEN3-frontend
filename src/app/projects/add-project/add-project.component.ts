@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { CustomerModel } from '../../models/CustomerModel';
 import { Project } from '../../models/ProjectModel';
 
@@ -14,13 +14,15 @@ export class AddProjectComponent{
   customers: CustomerModel[];
   selectdCustomer: number;
   
-  constructor(private projectService: ProjectService, public snackBar: MatSnackBar) { 
+  constructor(private projectService: ProjectService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>) { 
     this.customers = projectService.getAllCustomers();
   }
 
   insertNewProject() {
     this.project.projectCustomerFk = this.selectdCustomer;
     this.projectService.insertNewProject(this.project);
+    this.dialog.close();
+    history.pushState(null, '/project-management');
     this.openSnackBar();
   }
 

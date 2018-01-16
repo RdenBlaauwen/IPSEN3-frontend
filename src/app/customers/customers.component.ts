@@ -18,8 +18,8 @@ export class CustomersComponent implements OnInit {
   loggedEmployeeModel: Employee;
   constructor(private customerService: CustomerService, auth: AuthService, private dialogService: DialogService, private snackBar: MatSnackBar) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.loadData().then((data) => {
-      this.dataSource = new MatTableDataSource<CustomerModel>(data);
+    this.customerService.getAllCustomers().subscribe( customers=> {
+      this.dataSource = new MatTableDataSource<CustomerModel>(customers);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
 
@@ -29,27 +29,9 @@ export class CustomersComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-
-  //  Return promise to use to fill data
-  //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<CustomerModel[]> {
-    return this.customerService.getAllCustomers()
-      .toPromise()
-      .then(res => res)
-      .then(customers => customers.map(customer => {
-        return new CustomerModel(
-          customer.customer_id,
-          customer.customer_name,
-          customer.customer_description,
-          customer.customer_isdeleted);
-      }));
-  }
   selectRow(row) {
-    this.selectedCustomer = row
-  }
-  modifyCustomer()
-  {
-    this.customerService.setCustomerToModify(this.selectedCustomer);
+    this.selectedCustomer = row;
+    this.customerService.newEvent(row);
   }
   deleteCustomer()
   {

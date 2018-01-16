@@ -6,14 +6,21 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Headers, Http, Response } from '@angular/http';
 import { CustomerModel } from '../models/CustomerModel';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ProjectService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
   readonly INSERT_PROJECT = 'http://localhost:8080/api/projects/create/';
-  projectToModify: Project;
+  private subject = new Subject<any>();
   constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
-
+  newEvent(project: Project){
+        console.log('project newEvent: '+project.projectDescription);
+        this.subject.next(project);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
   public removeProject(sp: Project) {
     const data = {
         projectId: sp.projectId,
@@ -89,11 +96,6 @@ export class ProjectService {
         project.projectCustomerFk,
         project.customerName);
     }));
-  }
-
-  public setProjectToModify(project: Project) {
-    this.projectToModify = project;
-    this.router.navigate(['modify-project']);
   }
 
   public updateProject(project: Project) {

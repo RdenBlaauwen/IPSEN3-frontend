@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>
+          <h1>Aanmaken Account</h1>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <form name="createForm" #registerForm="ngForm" (ngSubmit)="createEmployee()">
+        <mat-form-field class="" style="margin-top: 20px">
+          <input matInput #projectName name="employeeFirstName" placeholder="Voornaam" required [(ngModel)]="employee.employeeFirstname" #employeeFirstName="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="employeeLastName" required placeholder="Achternaam"  [(ngModel)]="employee.employeeLastname" #employeeLastName="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="employeeRole" required placeholder="Role"  [(ngModel)]="employee.employeeRole" #employeeRole="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="employeeEmail" required placeholder="Email"  [(ngModel)]="employee.employeeEmail" #employeeEmail="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="employeePassword" required placeholder="Wachtwoord"  [(ngModel)]="employee.employeePassword" #employeePassword="ngModel">
+        </mat-form-field><br>
+        <!-- <mat-form-field>
+          <mat-select [(ngModel)]="selectdCustomer" placeholder="Kies een klant" name="customer">
+            <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
+              {{ customer.customer_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br><br> -->
+          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
+      </form>
+  </mat-card-content>
+</mat-card>

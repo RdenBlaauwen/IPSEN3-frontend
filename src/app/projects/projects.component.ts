@@ -6,6 +6,8 @@ import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/Employee';
 import { CustomerModel } from '../models/CustomerModel';
 import { DialogService } from '../services/DialogService';
+import { FormControl } from '@angular/forms/';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-projects',
@@ -15,10 +17,12 @@ import { DialogService } from '../services/DialogService';
 
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
-  displayedColumns = ['projectName', 'projectDescription', 'customerName'];
+  displayedColumns = ['projectName', 'projectDescription', 'customerName', 'projectModify', 'projectDelete'];
   selectedProject: Project = new Project();
   loggedEmployeeModel: Employee;
   customers: CustomerModel[];
+  selectedCustomer = new CustomerModel();
+  
   constructor(private projectService: ProjectService, auth: AuthService, private dialogService: DialogService) {
     this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
@@ -34,17 +38,10 @@ export class ProjectsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  //  Return promise to use to fill data
-  //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  // loadData(): Promise<Project[]> {
-  //   return this.projectService.getAllProjects();
-  // }
-  selectRow(row) {
+  selectRow(row: Project) {
     this.selectedProject = row;
-  }
-
-  modifyProject() {
-    this.projectService.setProjectToModify(this.selectedProject);
+    console.log('project selectRow: '+row.projectDescription);
+    this.projectService.newEvent(row);
   }
 
   deleteProject() {
@@ -58,6 +55,10 @@ export class ProjectsComponent implements OnInit {
         this.deleteProject();
       }
     });
+  }
+
+  openCreateDialog(){
+    this.dialogService.createProject();
   }
   ngOnInit() {}
 }
