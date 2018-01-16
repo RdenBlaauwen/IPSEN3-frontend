@@ -1,8 +1,8 @@
 export class Employee {
     constructor(
         public employeeId?: number,
-        public employeeFirstName?: string,
-        public employeeLastName?: string,
+        public employeeFirstname?: string,
+        public employeeLastname?: string,
         public employeePassword?: string,
         public employeeEmail?: string,
         public employeeIsDeleted?: boolean,

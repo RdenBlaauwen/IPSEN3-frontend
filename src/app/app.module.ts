@@ -49,8 +49,12 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
-import { AddEntryComponent } from './hours/add-entry/add-entry.component';
+import { CreateAccountComponent } from './accounts/create-account/create-account.component';
+import { ModifyComponent } from './accounts/modify/modify.component';
 import { EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+import { AddEntryComponent } from './hours/add-entry/add-entry.component';
+
+
 
 @NgModule({
   declarations: [
@@ -75,8 +79,8 @@ import { EditEntryComponent } from './hours/edit-entry/edit-entry.component';
     HeaderComponent,
     FooterComponent,
     DialogContentComponent,
-    AddEntryComponent,
-    EditEntryComponent
+    CreateAccountComponent,
+    ModifyComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [

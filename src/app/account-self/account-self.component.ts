@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Employee } from '../models/Employee';
 import { AuthService } from '../services/auth.service';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-account-self',
@@ -10,9 +11,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class AccountSelfComponent implements OnInit {
 
-  public loggedUser: Employee = this.authService.getEmployeeModel();
+  public loggedUser: Employee = new Employee();
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private employeeService: EmployeeService) { 
+  
+  }
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -20,6 +23,11 @@ export class AccountSelfComponent implements OnInit {
   ]);
 
   ngOnInit() {
+    this.loggedUser = this.authService.getEmployeeModel();
+  }
+
+  updateUser(){
+    this.employeeService.modifyEmployee(this.loggedUser);
   }
 
 }

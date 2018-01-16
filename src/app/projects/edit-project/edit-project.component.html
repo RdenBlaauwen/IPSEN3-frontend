@@ -13,7 +13,7 @@
           <input matInput name="projectDescription"  #projectDescription [value]="selectedProject.projectDescription"required [(ngModel)]="selectedProject.projectDescription" #projectDescription="ngModel">
         </mat-form-field><br>
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedCustomer" placeholder="Kies een klant" name="customer">
+          <mat-select [(ngModel)]="selectedCustomer" [formControl]="fillCustomer"  placeholder="Kies een klant" name="customer">
             <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
               {{ customer.customer_name }}
             </mat-option>
