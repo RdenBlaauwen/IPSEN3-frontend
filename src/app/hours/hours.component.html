@@ -1,6 +1,7 @@
   
   
   <app-add-entry *ngIf="createMode"></app-add-entry>
+  <app-edit-entry *ngIf="updateMode"></app-edit-entry>
   <div class="example-container">
     <div class="example-header">
       <div class="row">
@@ -196,6 +197,6 @@
 
       -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row); openEditEntry()"></mat-row>
     </mat-table>
   </div>

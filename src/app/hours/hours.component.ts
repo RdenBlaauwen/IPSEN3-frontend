@@ -53,7 +53,7 @@ export class HoursComponent implements OnInit {
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: HoursService, 
-     private auth: AuthService,editEntryComponent: EditEntryComponent) {
+     private auth: AuthService) {
 
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -134,6 +134,6 @@ export class HoursComponent implements OnInit {
   }
   public openEditEntry(){
     this.createMode=false;
-    this.updateMode=false;
+    this.updateMode=true;
   }
 }

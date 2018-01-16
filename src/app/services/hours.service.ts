@@ -7,14 +7,20 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { WeekModel } from '../models/WeekModel';
 import { HoursComponent } from '../hours/hours.component';
-
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class HoursService {
   readonly ALL_ENTRIES_JSON = 'http://localhost:8080/api/entries';
+  private subject = new Subject<any>();
   constructor(private auth: AuthService, private router: Router, private http: HttpClient) {
   }
-
+  newEvent(entry: EntryModel){
+    this.subject.next(entry);
+  }
+  get events$ (){
+      return this.subject.asObservable();
+  }
   // retrieveData(){
   //   let authorization = this.auth.getAuthorization();
   //   let headers = this.auth.createAuthHeader(authorization['email'], authorization['password']);
