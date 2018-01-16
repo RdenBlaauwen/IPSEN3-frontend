@@ -11,17 +11,17 @@ import { Subject } from 'rxjs/Subject';
 export class CustomerService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
   readonly INSERT_PROJECT = '/api/projects/create/';
-  customerToModify: CustomerModel;
+  customers: CustomerModel[] = [];
   private subject = new Subject<any>();
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router
-  ,private httpN: Http) { this.getAllCustomers(); }
-  newEvent(customer: CustomerModel){
-    this.subject.next(customer);
-}
-get events$ (){
-    return this.subject.asObservable();
-}
+  ,private httpN: Http) { }
+    newEvent(customer: CustomerModel){
+        this.subject.next(customer);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
   public removeCustomer(sp: CustomerModel)
   {
     let headers = this.auth.createAuthHttpHeader(
@@ -60,12 +60,6 @@ get events$ (){
   getAllCustomers(): Observable<CustomerModel[]> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
     return this.http.get<CustomerModel[]>(`http://localhost:8080/api/customers/getAll/`, {headers: headers});
-  }
-
-  public setCustomerToModify(customer: CustomerModel)
-  {
-    this.customerToModify = customer;
-    this.router.navigate(['modify-customer'])
   }
 
   public updateCustomer(customer: CustomerModel)

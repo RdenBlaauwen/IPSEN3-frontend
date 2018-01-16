@@ -8,7 +8,7 @@ import { EmployeeService } from '../../services/employee.service';
   styleUrls: ['./modify.component.css']
 })
 export class ModifyComponent implements OnInit {
-  selectedEmployee = new Employee();
+  selectedEmployee :Employee = new Employee();
 
   constructor(private employeeService: EmployeeService) { }
 
@@ -16,6 +16,10 @@ export class ModifyComponent implements OnInit {
     this.employeeService.events$.forEach(employee =>{
       this.selectedEmployee = employee;
     })
+  }
+
+  modifyAccount(){
+    this.employeeService.modifyEmployee(this.selectedEmployee);
   }
 
 }

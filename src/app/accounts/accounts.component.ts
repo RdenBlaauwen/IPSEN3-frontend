@@ -37,6 +37,7 @@ export class AccountsComponent implements OnInit {
   }
   selectRow(row: Employee) {
     this.selectedEmployee = row;
+    this.employeeService.newEvent(row);
     
   }
   openDialog(){
