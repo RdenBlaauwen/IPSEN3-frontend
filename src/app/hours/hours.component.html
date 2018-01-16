@@ -197,6 +197,6 @@
 
       -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row); openEditEntry()"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
     </mat-table>
   </div>

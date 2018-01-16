@@ -13,6 +13,7 @@ import { FormControl } from '@angular/forms';
 export class EditProjectComponent implements OnInit{
   ngOnInit(): void {
     this.projectService.events$.forEach(event =>{
+      console.log('project ngOnInit: '+event.projectDescription);
       this.selectedProject = event;
       for(let cus of this.customers){
         if(cus.customer_name == event.customerName){

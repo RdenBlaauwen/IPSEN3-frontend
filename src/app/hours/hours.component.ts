@@ -125,7 +125,13 @@ export class HoursComponent implements OnInit {
   }
 
   public selectRow(row):void{
+    console.log('selectRow(): '+row.entryDescription);
     this.selectedRow=row;
+    this.hoursService.selectedEntry=row;
+    
+    this.createMode=false;
+    this.updateMode=true;
+    this.hoursService.newEvent(row);
   }
 
   public openAddEntry(){

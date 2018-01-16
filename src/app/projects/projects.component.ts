@@ -40,6 +40,7 @@ export class ProjectsComponent implements OnInit {
 
   selectRow(row: Project) {
     this.selectedProject = row;
+    console.log('project selectRow: '+row.projectDescription);
     this.projectService.newEvent(row);
   }
 

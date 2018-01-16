@@ -15,6 +15,7 @@ export class ProjectService {
   private subject = new Subject<any>();
   constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
   newEvent(project: Project){
+        console.log('project newEvent: '+project.projectDescription);
         this.subject.next(project);
     }
     get events$ (){

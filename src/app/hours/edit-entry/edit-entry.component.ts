@@ -14,6 +14,7 @@ import { Category } from '../../models/CategoryModel';
 import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { HoursComponent } from '../hours.component';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-edit-entry',
@@ -50,7 +51,17 @@ export class EditEntryComponent implements OnInit {
     // this.minDate = new Date(yyyy, mm, dd - 7);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    //Haal selectedEvent uit eventslist
+    console.log('ngAfterInit events: '+this.hoursService.events$);
+    this.hoursService.events$.forEach(event =>{
+      console.log('ngAfterInit1: '+event.entryDescription);
+      this.selectedEntry = event;
+    });
+    console.log('ngAfterInit2: '+this.selectedEntry.entryDescription+this.selectedEntry.entryDate);
+    this.selectedEntry=this.hoursService.selectedEntry;
+    // Haal selectedEvent uit hoursService.selectedEntry. 
+    // Dit omdat de eventslist het niet doet de eerste keer dat deze klasse hem roept.
     this.updateProjects();
     this.updateCategories();
   }
@@ -109,7 +120,7 @@ export class EditEntryComponent implements OnInit {
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
-      this.hoursService.createEntry(this.selectedEntry).then((data) => {
+      this.hoursService.updateEntry(this.selectedEntry).then((data) => {
           console.log(data);
           this.hoursComponent.updateData();
         }
