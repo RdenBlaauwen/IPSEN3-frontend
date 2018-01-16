@@ -7,6 +7,7 @@ import { Employee } from '../models/Employee';
 import { CustomerModel } from '../models/CustomerModel';
 import { DialogService } from '../services/DialogService';
 import { FormControl } from '@angular/forms/';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-projects',
@@ -21,7 +22,7 @@ export class ProjectsComponent implements OnInit {
   loggedEmployeeModel: Employee;
   customers: CustomerModel[];
   selectedCustomer = new CustomerModel();
-  fillCustomer = new FormControl();
+  
   constructor(private projectService: ProjectService, auth: AuthService, private dialogService: DialogService) {
     this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
@@ -39,16 +40,7 @@ export class ProjectsComponent implements OnInit {
 
   selectRow(row: Project) {
     this.selectedProject = row;
-    for(let cus of this.customers){
-      if(cus.customer_name == row.customerName){
-        this.fillCustomer = new FormControl(cus.customer_id);
-      }
-    }
-    
-  }
-
-  modifyProject() {
-    this.projectService.setProjectToModify(this.selectedProject);
+    this.projectService.newEvent(row);
   }
 
   deleteProject() {

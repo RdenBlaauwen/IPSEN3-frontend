@@ -49,6 +49,7 @@ import { DialogContentComponent } from './admin/dialog-content/dialog-content.co
 import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
 import { CreateAccountComponent } from './accounts/create-account/create-account.component';
+import { ModifyComponent } from './accounts/modify/modify.component';
 
 
 
@@ -75,7 +76,8 @@ import { CreateAccountComponent } from './accounts/create-account/create-account
     HeaderComponent,
     FooterComponent,
     DialogContentComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    ModifyComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [

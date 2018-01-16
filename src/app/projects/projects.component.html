@@ -42,36 +42,11 @@
     </mat-sidenav-content>
     <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
         <div class="col-3 wijzig">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    <a><mat-icon class="edit" (click)="sidenav.toggle()">close</mat-icon></a><br><br>
-                    <h1>Wijzigen project</h1>
-                </mat-card-title>
-                
-            </mat-card-header>
-            <mat-card-content>
-                <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyProject()">
-                  <mat-form-field class="" style="margin-top: 20px">
-                    <input matInput #projectName name="projectName" [value]="selectedProject.projectName"  required [(ngModel)]="selectedProject.projectName" #projectName="ngModel">
-                  </mat-form-field><br>
-                  <mat-form-field class="">
-                    <input matInput name="projectDescription"  #projectDescription [value]="selectedProject.projectDescription"required [(ngModel)]="selectedProject.projectDescription" #projectDescription="ngModel">
-                  </mat-form-field><br>
-                  <mat-form-field>
-                    <mat-select [(ngModel)]="selectedCustomer" [formControl]="fillCustomer" placeholder="Kies een klant" name="customer">
-                      <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
-                        {{ customer.customer_name }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field><br>
-                        <br>
-                    <button mat-raised-button type="submit" class="mat-primary" >Wijzigen</button>
-                </form>
-            </mat-card-content>
-          </mat-card>
+          <app-edit-project></app-edit-project>
         </div>
       </mat-sidenav>
       </mat-sidenav-container>
       </div>
     </div>
+
+    <button mat-raised-button type="submit" class="mat-primary" (click)="onClick()">CLICK</button>

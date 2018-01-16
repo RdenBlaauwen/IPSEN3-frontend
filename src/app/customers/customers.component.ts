@@ -45,7 +45,8 @@ export class CustomersComponent implements OnInit {
       }));
   }
   selectRow(row) {
-    this.selectedCustomer = row
+    this.selectedCustomer = row;
+    this.customerService.newEvent(row);
   }
   modifyCustomer()
   {

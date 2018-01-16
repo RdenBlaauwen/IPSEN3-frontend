@@ -7,16 +7,17 @@ import { CustomerModel } from '../../models/CustomerModel';
   templateUrl: './modify-customer.component.html',
   styleUrls: ['./modify-customer.component.css']
 })
-export class ModifyCustomerComponent  {
+export class ModifyCustomerComponent implements OnInit {
 
-  selectedCustomer: CustomerModel;
+
+  selectedCustomer = new CustomerModel();
   constructor(private customerService: CustomerService) {
-    if(customerService.customerToModify != null)
-    {
-      this.selectedCustomer = customerService.customerToModify;
-    }
    }
-
+   ngOnInit(): void {
+    this.customerService.events$.forEach(customer=>{
+      this.selectedCustomer = customer;
+    })
+  }
    modifyCustomer()
    {
      this.customerService.updateCustomer(this.selectedCustomer);

@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>
+          <a><mat-icon class="edit" (click)="sidenav.toggle()">close</mat-icon></a><br><br>
+          <h1>Wijzigen Account</h1>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyAccount()">
+        <mat-form-field class="" style="margin-top: 20px">
+          <input matInput #employeeFirstname name="employeeFirstname" placeholder="Voornaam" [value]="selectedEmployee.employeeFirstname"  required [(ngModel)]="selectedEmployee.employeeFirstname" #employeeFirstname="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="employeeLastname"  #employeeLastname placeholder="Achternaam" [value]="selectedEmployee.employeeLastname"required [(ngModel)]="selectedEmployee.employeeLastname" #employeeLastname="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+            <input matInput name="employeeRole"  #employeeRole placeholder="Role" [value]="selectedEmployee.employeeRole"required [(ngModel)]="selectedEmployee.employeeRole" #employeeRole="ngModel">
+          </mat-form-field><br>
+          <mat-form-field class="">
+              <input matInput name="employeeEmail"  #employeeEmail placeholder="Email" [value]="selectedEmployee.employeeEmail"required [(ngModel)]="selectedEmployee.employeeEmail" #employeeEmail="ngModel">
+            </mat-form-field><br>
+            <mat-form-field class="">
+                <input matInput name="employeePassword" placeholder="Wachtwoord"  #employeePassword [value]="selectedEmployee.employeePassword"required [(ngModel)]="selectedEmployee.employeePassword" #employeePassword="ngModel">
+              </mat-form-field><br>
+              <br>
+          <button mat-raised-button type="submit" class="btn btn-sm btn-primary" >Wijzigen</button>
+      </form>
+  </mat-card-content>
+</mat-card>

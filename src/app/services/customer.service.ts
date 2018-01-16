@@ -5,16 +5,23 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Headers, Http, Response } from '@angular/http';
 import { CustomerModel } from '../models/CustomerModel';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CustomerService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
   readonly INSERT_PROJECT = '/api/projects/create/';
   customerToModify: CustomerModel;
+  private subject = new Subject<any>();
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router
   ,private httpN: Http) { this.getAllCustomers(); }
-
+  newEvent(customer: CustomerModel){
+    this.subject.next(customer);
+}
+get events$ (){
+    return this.subject.asObservable();
+}
   public removeCustomer(sp: CustomerModel)
   {
     let headers = this.auth.createAuthHttpHeader(

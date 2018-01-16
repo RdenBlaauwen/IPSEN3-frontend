@@ -5,13 +5,24 @@ import { Router } from '@angular/router';
 import { Employee } from '../models/Employee';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class EmployeeService {
     readonly UPDATE_EMPLOYEE_URL = 'http://localhost:8080/api/login/update';
 
     naam: string = null;
+    private subject = new Subject<any>();
+
+    newEvent(employee: Employee){
+        this.subject.next(employee);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
     constructor(private auth: AuthService, private router: Router, private http: Http, private httpN: HttpClient, private snackBar: MatSnackBar) {}
+
+
 
     public createEmployee(employee: Employee){
         const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
