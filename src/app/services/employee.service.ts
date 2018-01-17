@@ -58,12 +58,7 @@ export class EmployeeService {
         return this.httpN.get<Employee[]>(`http://localhost:8080/api/users`, {headers:headers});
     }
 
-<<<<<<< HEAD
     public goHome() {
-=======
-
-    private goHome() {
->>>>>>> 324077878e31bceb7b4bd7841f06c7f8661d66fa
         this.router.navigate(['hour-management']);
         location.reload(false);
     }
