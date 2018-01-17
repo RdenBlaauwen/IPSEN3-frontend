@@ -1,3 +1,39 @@
-<p>
-  edit-sprints works!
-</p>
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>
+          <h1>Wijzigen Category</h1>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyCategory()">
+        <mat-form-field class="" style="margin-top: 20px">
+          <input matInput #categoryName name="categoryName" [value]="selectedCategory.categoryName"  required [(ngModel)]="selectedCategory.categoryName" #categoryName="ngModel">
+        </mat-form-field><br>
+        <mat-form-field class="">
+          <input matInput name="categoryDescription"  #categoryDescription [value]="selectedCategory.categoryDescription"required [(ngModel)]="selectedCategory.categoryDescription" #categoryDescription="ngModel">
+        </mat-form-field><br>
+
+        <mat-form-field class="">
+          <input matInput name="projectName"  #projectName [value]="selectedCategory.projectName"required [(ngModel)]="selectedCategory.projectName" #projectName="ngModel">
+        </mat-form-field><br>
+
+        <mat-form-field class="">
+          <input matInput type="date" name="categoryEndDate"  #categoryEndDate [value]="selectedCategory.categoryEndDate"required [(ngModel)]="selectedCategory.categoryEndDate" #categoryEndDate="ngModel">
+        </mat-form-field><br>
+
+        <mat-form-field class="">
+          <input matInput type="date" name="categoryStartDate"  #categoryStartDate [value]="selectedCategory.categoryStartDate"required [(ngModel)]="selectedCategory.categoryStartDate" #categoryStartDate="ngModel">
+        </mat-form-field><br>
+
+        <!-- <mat-form-field>
+          <mat-select [(ngModel)]="selectedCustomer" [formControl]="fillCustomer"  placeholder="Kies een klant" name="customer">
+            <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
+              {{ customer.customer_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br> -->
+              <br>
+          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Wijzigen</button>
+      </form>
+  </mat-card-content>
+</mat-card>

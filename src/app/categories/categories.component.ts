@@ -16,15 +16,15 @@ import { DialogService } from '../services/DialogService'
 export class CategoryComponent implements OnInit {
 
   private dataSource: MatTableDataSource<Category>;
-  displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK'];
+  displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK', 'categoryModify', 'categoryDelete'];
   selectedCategory: Category = new Category();
   loggedEmployeeModel: Employee;
   projects: Project[];
   constructor(private categoryService: CategoryService, auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.loadData().then((data) => {
-      this.dataSource = new MatTableDataSource<Category>(data);
+    this.categoryService.getAllCategories().subscribe( categories=>{
+      this.dataSource = new MatTableDataSource<Category>(categories);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
 
@@ -35,36 +35,17 @@ export class CategoryComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  //  Return promise to use to fill data
-  //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<Category[]> {
-    return this.categoryService.getAllCategories()
-      .toPromise()
-      .then(res => res)
-      .then(categories => categories.map(category => {
-        return new Category(
-          category.categoryId,
-          category.categoryIsDeleted,
-          category.categoryName,
-          category.categoryStartDate,
-          category.categoryEndDate,
-          category.categoryDescription,
-          category.projectFK,
-          category.projectName);
-      }));
-  }
   selectRow(row) {
     this.selectedCategory = row;
+    this.categoryService.newEvent(row);
   }
-
-  modifyCategory() {
-    this.categoryService.setCategoryToModify(this.selectedCategory);
-  }
-
   deleteCategory() {
     this.categoryService.removeCategory(this.selectedCategory);
   }
 
+  openCreateDialog(){
+    this.dialogService.createCategory();
+  }
   openDialog() {
     this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze categorie wilt verwijderen? ')
     .subscribe(res => {

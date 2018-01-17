@@ -50,6 +50,7 @@ import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
 import { CreateAccountComponent } from './accounts/create-account/create-account.component';
 import { ModifyComponent } from './accounts/modify/modify.component';
+import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
 
 
 
@@ -77,7 +78,8 @@ import { ModifyComponent } from './accounts/modify/modify.component';
     FooterComponent,
     DialogContentComponent,
     CreateAccountComponent,
-    ModifyComponent
+    ModifyComponent,
+    EditCategoryComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [
