@@ -16,6 +16,7 @@ import { EditProjectComponent } from '../projects/edit-project/edit-project.comp
 import { LogoutComponent } from '../logout/logout.component';
 import { ModifyCustomerComponent } from '../customers/modify-customer/modify-customer.component';
 import { CreateCustomerComponent } from '../customers/create-customer/create-customer.component';
+import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'account-management', component: AccountsComponent },
   { path: 'customer-management', component: CustomersComponent },
   { path: 'data-management', component: DataComponent },
+  { path: 'account-management/create', component: CreateAccountComponent },
 ];
 
 @NgModule({

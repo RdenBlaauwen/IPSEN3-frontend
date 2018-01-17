@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-header',
@@ -9,20 +10,23 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private employeeService: EmployeeService) { }
 
   public isAuthenticated(): boolean {
     return this.authService.isAuthorized();
   }
 
   public getCurrentUser(): string {
-    return this.authService.getEmployeeModel().employeeFirstName + ' ' + this.authService.getEmployeeModel().employeeLastName;
+    return this.authService.getEmployeeModel().employeeFirstname + ' ' + this.authService.getEmployeeModel().employeeLastname;
   }
 
   public getCurrentPage(): string {
     return this.router.url;
   }
 
+  public logout(){
+    this.employeeService.removeSessions();
+  }
   ngOnInit() {
   }
 

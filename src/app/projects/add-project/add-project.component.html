@@ -1,16 +1,16 @@
 <mat-card>
   <mat-card-header>
       <mat-card-title>
-          <h1>Aanmaken project</h1>
+          <h1>Aanmaken Project</h1>
       </mat-card-title>
   </mat-card-header>
   <mat-card-content>
       <form name="createForm" #registerForm="ngForm" (ngSubmit)="insertNewProject()">
         <mat-form-field class="" style="margin-top: 20px">
-          <input matInput #projectName name="projectName"  required [(ngModel)]="project.projectName" #projectName="ngModel">
+          <input matInput #projectName name="projectName" placeholder="Project Naam" required [(ngModel)]="project.projectName" #projectName="ngModel">
         </mat-form-field><br>
         <mat-form-field class="">
-          <input matInput name="projectDescription" required [(ngModel)]="project.projectDescription" #projectDescription="ngModel">
+          <input matInput name="projectDescription" placeholder="Project beschrijving"  required [(ngModel)]="project.projectDescription" #projectDescription="ngModel">
         </mat-form-field><br>
         <mat-form-field>
           <mat-select [(ngModel)]="selectdCustomer" placeholder="Kies een klant" name="customer">
@@ -19,7 +19,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field><br><br>
-          <button mat-raised-button type="submit" class="mat-primary" >Toevoegen</button>
+          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
       </form>
   </mat-card-content>
 </mat-card>

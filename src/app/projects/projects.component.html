@@ -1,29 +1,50 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
-  </div>
-  <mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="projectName">
-      <mat-header-cell *matHeaderCellDef> Project Name </mat-header-cell>
-      <mat-cell *matCellDef="let Project"> {{Project.projectName}} </mat-cell>
-    </ng-container>
+<div class="row">
+  <div class="col">
+    <mat-sidenav-container class="example-container">
+    <mat-sidenav-content class="hoofd">
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+            <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw project toevoegen</button>
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          </mat-form-field>
+        </div>
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="projectName">
+            <mat-header-cell *matHeaderCellDef> Project Name </mat-header-cell>
+            <mat-cell *matCellDef="let Project"> {{Project.projectName}} </mat-cell>
+          </ng-container>
 
-    <ng-container matColumnDef="projectDescription">
-      <mat-header-cell *matHeaderCellDef> Project Description </mat-header-cell>
-      <mat-cell *matCellDef="let Project"> {{Project.projectDescription}} </mat-cell>
-    </ng-container>
+          <ng-container matColumnDef="projectDescription">
+            <mat-header-cell *matHeaderCellDef> Project Description </mat-header-cell>
+            <mat-cell *matCellDef="let Project"> {{Project.projectDescription}} </mat-cell>
+          </ng-container>
 
-    <ng-container matColumnDef="customerName">
-      <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
-      <mat-cell *matCellDef="let Project"> {{Project.customerName}} </mat-cell>
-    </ng-container>
+          <ng-container matColumnDef="customerName">
+            <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
+            <mat-cell *matCellDef="let Project"> {{Project.customerName}} </mat-cell>
+          </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedProject  == row}"></mat-row>
-  </mat-table>
-</div>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="modifyProject()" >Wijzigen</button>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" (click)="deleteProject()" >Verwijderen</button>
-<button *ngIf="loggedEmployeeModel.employeeRole == 'manager'" mat-raised-button type="submit" class="mat-primary" routerLink="/add_project" >Toevoegen</button>
+          <ng-container matColumnDef="projectModify">
+              <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+              <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="projectDelete">
+                <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+                <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+              </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedProject  == row}"></mat-row>
+        </mat-table>
+      </div>
+    </mat-sidenav-content>
+    <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
+        <div class="col-3 wijzig">
+          <app-edit-project></app-edit-project>
+        </div>
+      </mat-sidenav>
+      </mat-sidenav-container>
+      </div>
+    </div>
