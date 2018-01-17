@@ -53,6 +53,7 @@ import { CreateAccountComponent } from './accounts/create-account/create-account
 import { ModifyComponent } from './accounts/modify/modify.component';
 import { EditEntryComponent } from './hours/edit-entry/edit-entry.component';
 import { AddEntryComponent } from './hours/add-entry/add-entry.component';
+import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
 
 
 
@@ -82,7 +83,8 @@ import { AddEntryComponent } from './hours/add-entry/add-entry.component';
     FooterComponent,
     DialogContentComponent,
     CreateAccountComponent,
-    ModifyComponent
+    ModifyComponent,
+    EditCategoryComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [

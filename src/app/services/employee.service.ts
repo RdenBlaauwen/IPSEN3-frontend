@@ -58,10 +58,13 @@ export class EmployeeService {
         return this.httpN.get<Employee[]>(`http://localhost:8080/api/users`, {headers:headers});
     }
 
-
-    private goHome() {
+    public goHome() {
         this.router.navigate(['hour-management']);
         location.reload(false);
+    }
+
+    public goLogin() {
+        this.router.navigate(['']);
     }
 
     public login(email: string, password: string) {
@@ -92,5 +95,5 @@ export class EmployeeService {
     /**
      * Update employee
      */
-    
+
 }

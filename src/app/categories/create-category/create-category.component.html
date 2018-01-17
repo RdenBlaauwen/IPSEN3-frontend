@@ -1,58 +1,36 @@
 <mat-card>
-
-  <mat-card-header>
-      <mat-card-title>
-          <h1>Maak een nieuwe Sprint</h1>
-      </mat-card-title>
-  </mat-card-header>
-
-  <mat-card-content>
-
-      <form name="registerForm" #registerForm="ngForm" (ngSubmit)="createSprint()">
-
-          <mat-form-field class="full-width">
-              <input matInput type="text" name="sprintName" placeholder="sprintName" required [(ngModel)]="sprint.sprintName" #sprintName="ngModel" />
-
-          </mat-form-field>
-          <!-- <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="Angular forms" [formControl]="date">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-<br>
-          <mat-form-field>
-            <input matInput [matDatepicker]="picker3" placeholder="Value binding" [value]="date.value" [(ngModel)]="startDate" name="startDate">
-            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-          </mat-form-field>
-          <br>
-          {{startDate}} -->
-          <mat-form-field class="full-width">
-              <input matInput type="date" name="email" placeholder="sprintStartDate" required [(ngModel)]="sprint.sprintStartDate" #sprintStartDate="ngModel"/>
-
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-              <input matInput type="date" name="startDate" placeholder="sprintEndDate" required [(ngModel)]="sprint.sprintEndDate" #sprintEndDate="ngModel" />
-
-          </mat-form-field>          
-          <mat-form-field class="full-width">
-            <input matInput type="text" name="endDate" placeholder="sprintDescription" required [(ngModel)]="sprint.sprintDescription" #sprintDescription="ngModel" />
-
-        </mat-form-field>
-          <mat-form-field>
-                <mat-select [(ngModel)]="selectedProject" placeholder="Kies het project" name="project">
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Aanmaken nieuw Category</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form name="updateForm" #registerForm="ngForm" (ngSubmit)="createCategory()">
+              <mat-form-field class="" style="margin-top: 20px">
+                <input matInput #categoryName name="categoryName"  required [(ngModel)]="selectedCategory.categoryName" #categoryName="ngModel">
+              </mat-form-field><br>
+              <mat-form-field class="">
+                <input matInput name="categoryDescription"  #categoryDescription required [(ngModel)]="selectedCategory.categoryDescription" #categoryDescription="ngModel">
+              </mat-form-field><br>
+      
+      
+              <mat-form-field class="">
+                <input matInput type="date" name="categoryEndDate"  #categoryEndDate required [(ngModel)]="selectedCategory.categoryEndDate" #categoryEndDate="ngModel">
+              </mat-form-field><br>
+      
+              <mat-form-field class="">
+                <input matInput type="date" name="categoryStartDate"  #categoryStartDate required [(ngModel)]="selectedCategory.categoryStartDate" #categoryStartDate="ngModel">
+              </mat-form-field><br>
+      
+              <mat-form-field>
+                <mat-select [(ngModel)]="selectedProject"  placeholder="Kies een project" name="customer">
                   <mat-option *ngFor="let project of projects" [value]="project.projectId">
                     {{ project.projectName }}
                   </mat-option>
                 </mat-select>
-              </mat-form-field>
-              <br>
-          <button mat-raised-button type="submit" class="mat-primary" >Toevoegen</button>
-
-      </form>
-
-  </mat-card-content>
-
-
-</mat-card>
+              </mat-form-field><br>
+                    <br>
+                <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
+            </form>
+        </mat-card-content>
+      </mat-card>

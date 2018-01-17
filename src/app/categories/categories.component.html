@@ -1,43 +1,66 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
+<div class="row">
+  <div class="col">
+    <mat-sidenav-container class="example-container">
+    <mat-sidenav-content class="hoofd">
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+            <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Category Aanmaken</button>
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          </mat-form-field>
+        </div>
+        <mat-table #table [dataSource]="dataSource">
+
+          <!-- categoryName Column -->  
+          <ng-container matColumnDef="categoryName">
+            <mat-header-cell *matHeaderCellDef> Categorie naam </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.categoryName}} </mat-cell>
+          </ng-container>
+
+          <!-- Project_name Column -->
+          <ng-container matColumnDef="categoryDescription">
+            <mat-header-cell *matHeaderCellDef> Categorie beschrijving </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.categoryDescription}} </mat-cell>
+          </ng-container>
+
+          <!-- Sprint_description Column -->
+          <ng-container matColumnDef="categoryStartDate">
+            <mat-header-cell *matHeaderCellDef> Startdatum </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.categoryStartDate}} </mat-cell>
+          </ng-container>
+
+          <!-- sprint_start_date Column -->
+          <ng-container matColumnDef="categoryEndDate">
+            <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.categoryEndDate}} </mat-cell>
+          </ng-container>
+
+          <!-- Sprint_end_date Column -->
+          <ng-container matColumnDef="projectFK">
+            <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.projectName}} </mat-cell>
+          </ng-container> 
+          
+          <ng-container matColumnDef="categoryModify">
+            <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
+            <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="categoryDelete">
+              <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
+              <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+            </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedCategory  == row}"></mat-row>
+        </mat-table>
+      </div>
+    </mat-sidenav-content>
+    <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
+    <div class="col-3 wijzig">
+      <app-edit-category></app-edit-category>
+    </div>
+  </mat-sidenav>
+  </mat-sidenav-container>
   </div>
-  <mat-table #table [dataSource]="dataSource">
-
-    <!-- categoryName Column -->  
-    <ng-container matColumnDef="categoryName">
-      <mat-header-cell *matHeaderCellDef> Categorie naam </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.categoryName}} </mat-cell>
-    </ng-container>
-
-    <!-- Project_name Column -->
-    <ng-container matColumnDef="categoryDescription">
-      <mat-header-cell *matHeaderCellDef> Categorie beschrijving </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.categoryDescription}} </mat-cell>
-    </ng-container>
-
-    <!-- Sprint_description Column -->
-    <ng-container matColumnDef="categoryStartDate">
-      <mat-header-cell *matHeaderCellDef> Startdatum </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.categoryStartDate}} </mat-cell>
-    </ng-container>
-
-    <!-- sprint_start_date Column -->
-    <ng-container matColumnDef="categoryEndDate">
-      <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.categoryEndDate}} </mat-cell>
-    </ng-container>
-
-    <!-- Sprint_end_date Column -->
-    <ng-container matColumnDef="projectFK">
-      <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.projectFK}} </mat-cell>
-    </ng-container>    
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
 </div>
-<button  mat-raised-button type="submit" class="mat-primary" routerLink="/create_sprint" >Toevoegen</button>

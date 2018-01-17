@@ -6,6 +6,7 @@ import { DialogContentComponent } from '../admin/dialog-content/dialog-content.c
 import { CreateCustomerComponent } from '../customers/create-customer/create-customer.component';
 import { AddProjectComponent } from '../projects/add-project/add-project.component';
 import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
+import { CreateCategoryComponent } from '../categories/create-category/create-category.component';
 
 /**
  * Slim idee Reza ;)
@@ -49,16 +50,10 @@ export class DialogService {
         return dialogRef.afterClosed();
     }
 
-    // public createCategorie():Observable<boolean>{
-    //     let dialogRef: MatDialogRef<CreateCategorieComponent>;
-    //     dialogRef = this.dialog.open(CreateCategorieComponent);
+    public createCategory():Observable<boolean>{
+        let dialogRef: MatDialogRef<CreateCategoryComponent>;
+        dialogRef = this.dialog.open(CreateCategoryComponent);
 
-    //     return dialogRef.afterClosed();
-    // }
-    // public createUser(): Observable<boolean>{
-    //     let dialogRef: MatDialogRef<CreateUserComponent>;
-    //     dialogRef = this.dialog.open(CreateUserComponent);
-
-    //     return dialogRef.afterClosed();
-    // }
+        return dialogRef.afterClosed();
+    }
 }
