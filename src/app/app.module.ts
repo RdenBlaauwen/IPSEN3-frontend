@@ -18,6 +18,8 @@ import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CategoryComponent } from './categories/categories.component';
 import { UserStoryComponent } from './userstories/userstories.component';
+import { AddUserStoryComponent } from './userstories/add-userstory/add-userstory.component'
+import { EditUserStoryComponent } from './userstories/edit-userstory/edit-userstory.component'
 import { AccountsComponent } from './accounts/accounts.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DataComponent } from './data/data.component';
@@ -41,7 +43,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { CustomerService } from './services/customer.service';
 import { ModifyCustomerComponent } from './customers/modify-customer/modify-customer.component';
 import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
-
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { ExportComponent } from './export/export.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -72,6 +73,8 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
     ManualComponent,
     AccountSelfComponent,
     LoginComponent,
+    AddUserStoryComponent,
+    EditUserStoryComponent,
     AddProjectComponent,
     EditProjectComponent,
     CreateCategoryComponent,
@@ -114,14 +117,15 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
     MatSelectModule,
     RouterModule,
     MatSidenavModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [ProjectService,
     AddEntryComponent,
     AuthService,
     EditEntryComponent,
     EmployeeService,
-    HoursService, CategoryService,
+    HoursService, 
+    CategoryService,
     CustomerService,
     DialogService,
     UserStoryService,

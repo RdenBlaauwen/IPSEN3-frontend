@@ -17,6 +17,7 @@ import { LogoutComponent } from '../logout/logout.component';
 import { ModifyCustomerComponent } from '../customers/modify-customer/modify-customer.component';
 import { CreateCustomerComponent } from '../customers/create-customer/create-customer.component';
 import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
+import { AddUserStoryComponent } from '../userstories/add-userstory/add-userstory.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -35,11 +36,14 @@ const routes: Routes = [
   { path: 'account-management', component: AccountsComponent },
   { path: 'customer-management', component: CustomersComponent },
   { path: 'data-management', component: DataComponent },
-  { path: 'account-management/create', component: CreateAccountComponent },
+  { path: 'account-management/create', component: CreateAccountComponent},
+  { path: 'add_userstory', component: AddUserStoryComponent},
 ];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes)],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  entryComponents:[ AddUserStoryComponent ]
+
 })
 export class RoutingModule { }

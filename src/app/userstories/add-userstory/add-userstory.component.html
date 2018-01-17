@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>
+          <h1>Aanmaken Taak</h1>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyUserStory()">
+      <mat-form-field class="" style="margin-top: 20px">
+        <input matInput #userStoryName name="userStoryName" required [(ngModel)]="selectedUserStory.userStoryName" #userStoryName="ngModel">
+      </mat-form-field><br>
+      <mat-form-field class="">
+        <input matInput name="userStoryDescription"  #userStoryDescription required [(ngModel)]="selectedUserStory.userStoryDescription" #userStoryDescription="ngModel">
+      </mat-form-field><br>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedCategory" placeholder="Kies een categorie" name="selectedCategory">
+            <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+              {{ category.categoryName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br><br>
+          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
+      </form>
+  </mat-card-content>
+</mat-card>

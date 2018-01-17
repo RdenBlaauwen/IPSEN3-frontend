@@ -41,7 +41,10 @@ export class CategoryService
         let headers = this.auth.createAuthHttpHeader(
             this.auth.emailAddress, this.auth.password);
         this.http.post(`http://localhost:8080/api/categories/create/`, category,{headers:headers}).subscribe(res => {
-            this.snackBar.open('Category succesvol toegevoegd.', '', {duration:1000});
+            if(res == true){
+                this.snackBar.open('Category succesvol toegevoegd.', '', {duration:1000});
+            }
+            else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
         }, error=>{
             this.snackBar.open('Aanmaken category mislukt.', '',{duration: 1000});
         })

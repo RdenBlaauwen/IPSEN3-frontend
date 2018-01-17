@@ -68,7 +68,17 @@ export class AddEntryComponent implements OnInit {
     );
   }
   public updateUserStories(){
-    this.userStoryService.getAllUserStories().then((data) =>{
+    this.userStoryService.getAllUserStories()
+    .toPromise()
+    .then(res => res)
+    .then(userstories => userstories.map(userstory => {
+      return new UserStory(
+        userstory.userStoryID,
+        userstory.userStoryName,
+        userstory.userStoryDescription,
+        userstory.userStoryIsDeleted,
+        userstory.isCurrent);
+    })).then((data) =>{
       this.userStoryList=data;
       console.log('Hier is de userStory data: '+this.userStoryList);
     })
