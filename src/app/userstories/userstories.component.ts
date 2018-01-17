@@ -79,7 +79,7 @@ export class UserStoryComponent implements OnInit {
   }
   openCreateDialog(){
     this.dialogService.createUserStory();
-    console.log()
+    console.log();
   }
   ngOnInit() {}
 }

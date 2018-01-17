@@ -43,15 +43,15 @@ export class UserStoryService
         };
         let headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
-        this.http.post(`'http://localhost:8080/api/userstories/create/`, data,).subscribe
+        this.http.post(`http://localhost:8080/api/userstories/create/`, data,).subscribe
         (
             data =>
             {
-                alert('Category succesvol aangemaakt');
+                alert('Taak succesvol aangemaakt');
             },
             error =>
             {
-                alert('Aanmaken category mislukt');
+                alert('Aanmaken taak mislukt');
             }
         );
     }

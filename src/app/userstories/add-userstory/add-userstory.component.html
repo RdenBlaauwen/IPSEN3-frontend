@@ -5,12 +5,12 @@
       </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyUserStory()">
+    <form name="updateForm" #registerForm="ngForm" (ngSubmit)="insertNewUserStory()">
       <mat-form-field class="" style="margin-top: 20px">
-        <input matInput #userStoryName name="userStoryName" required [(ngModel)]="selectedUserStory.userStoryName" #userStoryName="ngModel">
+        <input matInput #userStoryName name="userStoryName" placeholder="Taak" required [(ngModel)]="userStory.userStoryName" #userStoryName="ngModel">
       </mat-form-field><br>
       <mat-form-field class="">
-        <input matInput name="userStoryDescription"  #userStoryDescription required [(ngModel)]="selectedUserStory.userStoryDescription" #userStoryDescription="ngModel">
+        <input matInput #userStoryDescription name="userStoryDescription" placeholder="Taakbeschrijving" required [(ngModel)]="userStory.userStoryDescription" #userStoryDescription="ngModel">
       </mat-form-field><br>
 
         <mat-form-field>
@@ -19,7 +19,16 @@
               {{ category.categoryName }}
             </mat-option>
           </mat-select>
-        </mat-form-field><br><br>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedProject" placeholder="Kies een project" name="selectedProject">
+            <mat-option *ngFor="let project of projects" [value]="project.projectId">
+              {{ project.projectName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br>
+        <br>
           <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
       </form>
   </mat-card-content>

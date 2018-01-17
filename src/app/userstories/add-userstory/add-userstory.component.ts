@@ -26,7 +26,7 @@ export class AddUserStoryComponent{
     this.categories = userStoryService.getAllCategories();
   }
 
-  insertNewProject() {
+  insertNewUserStory() {
     this.userStory.categoryId = this.selectedCategory;
     this.userStory.projectId = this.selectedProject;
     this.userStoryService.insertNewUserStory(this.userStory);
@@ -40,7 +40,5 @@ export class AddUserStoryComponent{
         duration: 1000
       });
     }
-    openCreateDialog(){
-      this.dialogService.createUserStory();
-    }
+    
 }
