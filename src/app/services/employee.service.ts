@@ -3,38 +3,69 @@ import { AuthService } from './auth.service';
 import { Http, Response, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Employee } from '../models/Employee';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class EmployeeService {
     readonly UPDATE_EMPLOYEE_URL = 'http://localhost:8080/api/login/update';
 
     naam: string = null;
-    constructor(private auth: AuthService, private router: Router, private http: Http) {}
+    private subject = new Subject<any>();
 
-    public register(employee: Employee): void {
-        const data = {
-            employeeId: employee.employeeId,
-            employeeFirstname: employee.employeeFirstName,
-            employeeLastName: employee.employeeLastName,
-            employeePassword: employee.employeePassword,
-            employeeEmail: employee.employeeEmail,
-            employeeIsDeleted: employee.employeeIsDeleted,
-            employeeRole: employee.employeeRole
-        };
+    newEvent(employee: Employee){
+        this.subject.next(employee);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
+    constructor(private auth: AuthService, private router: Router, private http: Http, private httpN: HttpClient, private snackBar: MatSnackBar) {}
 
-        this.http.post('users', data).subscribe
-        (
-            resp => {
-                alert('Employee succesvol aangemaakt');
-            },
-            error => {
-                alert('Aanmaken employee mislukt');
-            }
-        );
+
+
+    public createEmployee(employee: Employee){
+        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        this.httpN.post(`http://localhost:8080/api/users/create`, employee, {headers:headers}).subscribe(
+            res=>{
+                if(res == true){
+                    this.snackBar.open('Account succesvol aangemaakt','',{duration:1000});
+                }else{
+                    this.snackBar.open('Er is iets fout gegaan in de server','',{duration:1000});
+                }
+        }, error=>{
+            this.snackBar.open('Aanmaken account mislukt','',{duration:1000});
+        });
     }
 
+    public modifyEmployee(employee: Employee){
+        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        this.httpN.put(`http://localhost:8080/api/users/update`, employee, {headers:headers}).subscribe
+        (
+            res=>{
+                if(res == true){
+                    this.snackBar.open('Account succesvol aangepast','',{duration:1000});
+                }else{
+                    this.snackBar.open('Er is iets fout gegaan in de server','',{duration:1000});
+                }
+        }, error=>{
+            this.snackBar.open('Aanpassen account mislukt','',{duration:1000});
+        });
+    }
+
+    public getAllEmployees(){
+        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        return this.httpN.get<Employee[]>(`http://localhost:8080/api/users`, {headers:headers});
+    }
+
+<<<<<<< HEAD
     public goHome() {
+=======
+
+    private goHome() {
+>>>>>>> 324077878e31bceb7b4bd7841f06c7f8661d66fa
         this.router.navigate(['hour-management']);
+        location.reload(false);
     }
 
     public goLogin() {
@@ -42,38 +73,28 @@ export class EmployeeService {
     }
 
     public login(email: string, password: string) {
-        const headers = this.auth.createAuthHeader(email, password);
-         this.http.get('http://localhost:8080/api/login/', {headers: headers}).subscribe(
-         (res: Response) => {
-           console.log(res.json());
-         for (const em of res.json()) {
-           if (em.employeeEmail === email && em.employeePassword === password) {
-            const loggedUserObject = new Employee(
-                em.employeeId,
-                em.employeeFirstname,
-                em.employeeLastName,
-                em.employeePassword,
-                em.employeeEmail,
-                em.employeeIsDeleted,
-                em.employeeRole);
-             const authorization = {
-               email,
-               password,
-               loggedUserObject
-             };
-             const auth = JSON.stringify(authorization);
-             const storage = false ? localStorage : sessionStorage;
-             storage.setItem('authorization', auth);
-             this.goHome();
-           }
-         }
-       });
+        const headers = this.auth.createAuthHttpHeader(email, password);
+        let loggedUserObject = new Employee();
+        this.httpN.get<Employee>('http://localhost:8080/api/users/login/', {headers: headers}).subscribe(user=>{
+            const authorization = {
+                email,
+                password,
+                loggedUserObject: user
+              };
+              const auth = JSON.stringify(authorization);
+              const storage = false ? localStorage : sessionStorage;
+              storage.setItem('authorization', auth);
+              this.goHome();
+        });
+             
     }
+    
 
     public removeSessions() {
         const storage = false ? localStorage : sessionStorage;
         storage.removeItem('authorization');
         this.auth.setNullAfterLogout();
+        this.router.navigate(['']);
     }
 
     /**

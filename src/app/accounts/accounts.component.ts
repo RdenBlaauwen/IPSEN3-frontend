@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { EmployeeService } from '../services/employee.service';
+import { Employee } from '../models/Employee';
+import { DialogService } from '../services/DialogService';
 
 @Component({
   selector: 'app-accounts',
@@ -7,17 +10,15 @@ import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/
   styleUrls: ['./accounts.component.css']
 })
 export class AccountsComponent implements OnInit {
+  selectedEmployee: Employee = new Employee();
   displayedColumns: any[];
   dataSource;
-  accountData: Account[];
-  constructor() {
-    this.displayedColumns = ['account_name', 'account_role', 'email'];
-    this.accountData  = [
-      {account_name: 'Kees', account_role: 'Manager', email: "Ikbeenkees@email.com"},
-      {account_name: 'Yue', account_role: 'Employee', email: 'shewhoismadeoflightharbingerofstars@theastraldeity.com'},
-      {account_name: 'Mudgraw', account_role: 'Admin', email: 'Mudgraw@chultanguides.com'}
-    ];
-    this.dataSource = new MatTableDataSource(this.accountData);
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService) {
+    this.displayedColumns = ['account_name', 'account_role', 'email', 'employeeModify', 'employeeDelete'];
+    employeeService.getAllEmployees().subscribe(users =>{
+      this.dataSource = new MatTableDataSource(users);
+      console.log(users);
+    });
    }
 
     applyFilter(filterValue: string) {
@@ -28,12 +29,21 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
   }
+  modifyAccount(){
+    this.employeeService.modifyEmployee(this.selectedEmployee);
+  }
+  openCreateDialog(){
+    this.dialogService.createAccount();
+  }
+  selectRow(row: Employee) {
+    this.selectedEmployee = row;
+    this.employeeService.newEvent(row);
+    
+  }
+  openDialog(){
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze account wilt verwijderen? ');
+  }
 
 }
 
-export interface Account {
-  account_name: string;
-  account_role: string;
-  email: string;
-}
 

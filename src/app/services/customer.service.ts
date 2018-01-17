@@ -5,29 +5,28 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Headers, Http, Response } from '@angular/http';
 import { CustomerModel } from '../models/CustomerModel';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CustomerService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
   readonly INSERT_PROJECT = '/api/projects/create/';
-  customerToModify: CustomerModel;
+  customers: CustomerModel[] = [];
+  private subject = new Subject<any>();
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router
-  ,private httpN: Http) { this.getAllCustomers(); }
-
+  ,private httpN: Http) { }
+    newEvent(customer: CustomerModel){
+        this.subject.next(customer);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
   public removeCustomer(sp: CustomerModel)
   {
-    let data =
-    {
-        customer_id: sp.customer_id,
-        customer_name: sp.customer_name,
-        customer_description: sp.customer_description,
-        customer_isdeleted: sp.customer_isdeleted
-
-    };
-    let headers = this.auth.createAuthHeader(
+    let headers = this.auth.createAuthHttpHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.put(`http://localhost:8080/api/customers/remove/`, data,{headers: headers}).subscribe
+    this.http.put(`http://localhost:8080/api/customers/remove/`, sp,{headers: headers}).subscribe
     (
         data =>
         {
@@ -41,17 +40,11 @@ export class CustomerService {
 
   }
 
-  public insertNewCustomer(sp: CustomerModel): void
+  public insertNewCustomer(customer: CustomerModel): void
   {
-      let data =
-      {
-          customer_name: sp.customer_name,
-          customer_description: sp.customer_description
-
-      };
-      let headers = this.auth.createAuthHeader(
+      let headers = this.auth.createAuthHttpHeader(
           this.auth.emailAddress, this.auth.password);
-      this.httpN.post(`http://localhost:8080/api/customers/createCustomer/`, data,{headers:headers}).subscribe
+      this.http.post(`http://localhost:8080/api/customers/createCustomer/`, customer,{headers:headers}).subscribe
       (
           data =>
           {
@@ -69,25 +62,11 @@ export class CustomerService {
     return this.http.get<CustomerModel[]>(`http://localhost:8080/api/customers/getAll/`, {headers: headers});
   }
 
-  public setCustomerToModify(customer: CustomerModel)
-  {
-    this.customerToModify = customer;
-    this.router.navigate(['modify-customer'])
-  }
-
   public updateCustomer(customer: CustomerModel)
   {
-    let data =
-    {
-        customer_id: customer.customer_id,
-        customer_name: customer.customer_name,
-        customer_description: customer.customer_description,
-        customer_isdeleted: customer.customer_isdeleted
-
-    };
     let headers = this.auth.createAuthHeader(
         this.auth.emailAddress, this.auth.password);
-    this.httpN.put(`http://localhost:8080/api/customers/update/`, data,{headers: headers}).subscribe
+    this.httpN.put(`http://localhost:8080/api/customers/update/`, customer,{headers: headers}).subscribe
     (
         data =>
         {

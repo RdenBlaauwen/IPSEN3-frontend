@@ -17,19 +17,26 @@
             <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projects</a>
             <a class="dropdown-item" routerLink="/userstory-management" routerLinkActive="active">User Stories</a>
             <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categories</a>
+            <a class="dropdown-item" routerLink="/account-management" routerLinkActive="active">Accounts</a>
+            <a class="dropdown-item" routerLink="/customer-management" routerLinkActive="active">Customers</a>
           </div>
       </div>
       <span class="spacer"></span>
       <li *ngIf="!isAuthenticated()" class="nav-item">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
+        <a class="nav-link" routerLink="" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
       </li>
       <small *ngIf="isAuthenticated()" class="text-muted settings">Settings</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
         <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
       </li>
+<<<<<<< HEAD
       <small *ngIf="isAuthenticated()" class="text-muted settings">Logout</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
         <a class="nav-link" (click)="logoutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+=======
+      <li *ngIf="isAuthenticated()" class="nav-item">
+          <a class="nav-link edit" (click)="logout()" routerLinkActive="active"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+>>>>>>> 324077878e31bceb7b4bd7841f06c7f8661d66fa
       </li>
     </ul>
   </div>

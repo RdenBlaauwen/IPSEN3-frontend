@@ -6,14 +6,20 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Headers, Http, Response } from '@angular/http';
 import { CustomerModel } from '../models/CustomerModel';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ProjectService {
   readonly ALL_PROJECT_JSON = 'http://localhost:8080/api/projects/read';
   readonly INSERT_PROJECT = 'http://localhost:8080/api/projects/create/';
-  projectToModify: Project;
+  private subject = new Subject<any>();
   constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
-
+  newEvent(project: Project){
+        this.subject.next(project);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
   public removeProject(sp: Project) {
     const data = {
         projectId: sp.projectId,
@@ -91,11 +97,6 @@ export class ProjectService {
     }));
   }
 
-  public setProjectToModify(project: Project) {
-    this.projectToModify = project;
-    this.router.navigate(['modify-project']);
-  }
-
   public updateProject(project: Project) {
     const data = {
         projectId: project.projectId,
@@ -110,7 +111,11 @@ export class ProjectService {
     this.httpN.put(`http://localhost:8080/api/projects/update/`, data, {headers: headers}).subscribe
     (
         resp => {
-            alert('Project succesvol gewijzigd');
+            if(resp){
+                alert('Project succesvol gewijzigd');
+            }else{
+                alert('Er is iets fout gegaan');
+            }            
         },
         error => {
             alert('Project update mislukt');

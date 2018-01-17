@@ -6,10 +6,9 @@ import { HttpHeaders } from "@angular/common/http";
 export class AuthService {
     password: string = null;
     emailAddress: string = null;
-    loggedUserObject: Employee = null;
+    loggedUserObject: Employee = new Employee();
     constructor() {
         this.getAuthorization();
-        console.log("Dit is het email na verversen pagina: "+this.emailAddress);
     }
 
     public isAdmin(){
@@ -26,11 +25,7 @@ export class AuthService {
 
     public createAuthHttpHeader(email: string, password: string) {
         const loginEncoded =  btoa(email + ':' + password);
-        let headers = new HttpHeaders();
-        if (this.isAuthorized())
-        {
-            headers = headers.set('Authorization', 'Basic ' + loginEncoded);
-        }
+        let headers = new HttpHeaders().set('Authorization', 'Basic ' + loginEncoded);
         return headers;
     }
 
@@ -51,7 +46,6 @@ export class AuthService {
     }
     public getAuthorization(): void {
         let authorizationString = sessionStorage.getItem('authorization');
-        console.log(authorizationString);
         if (authorizationString == null) {
             authorizationString = localStorage.getItem('authorization');
         }
