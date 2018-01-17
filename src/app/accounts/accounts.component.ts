@@ -40,8 +40,15 @@ export class AccountsComponent implements OnInit {
     this.employeeService.newEvent(row);
     
   }
+  deleteEmployee(){
+    this.employeeService.deleteEmployee(this.selectedEmployee.employeeId);
+  }
   openDialog(){
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze account wilt verwijderen? ');
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze account wilt verwijderen? ').subscribe(res=>{
+      if(res == true){
+        this.deleteEmployee();
+      }
+    });
   }
 
 }
