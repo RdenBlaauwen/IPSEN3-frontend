@@ -48,21 +48,9 @@ export class CategoryService
     }
     public getAllProjects()
     {
-        let projects: Project[] = [];
-        let headers = this.auth.createAuthHeader(
+        let headers = this.auth.createAuthHttpHeader(
             this.auth.emailAddress, this.auth.password);
-        this.httpN.get(`http://localhost:8080/api/projects/read`,{headers: headers} ).subscribe(
-            (res: Response) => {
-              console.log(res.json());
-            for(let project of res.json())
-            {
-                let projectContainer = new Project(project.projectId, 
-                    project.projectName, project.projectDescription,
-                    project.projectIsDeleted, project.projectCustomerFk);
-                projects.push(projectContainer);
-            }
-          })
-          return projects;
+        return this.http.get<Project[]>(`http://localhost:8080/api/projects/read`,{headers: headers} );
     }
 
     getAllCategories(): Observable<Category[]> {
@@ -76,26 +64,16 @@ export class CategoryService
         this.router.navigate(['modify-category']);
       }
 
-      public removeCategory(sp: Category) {
-        const data = {
-            categoryId : sp.categoryId,
-            categoryIsDeleted : sp.categoryIsDeleted,
-            categoryName : sp.categoryName,
-            categoryStartDate : sp.categoryStartDate,
-            categoryEndDate : sp.categoryEndDate,
-            categoryDescription : sp.categoryDescription,
-            projectFK : sp.projectFK,
-            projectName : sp.projectName
-        };
-        const headers = this.auth.createAuthHeader(
+      public removeCategory(categoryId: number) {
+        const headers = this.auth.createAuthHttpHeader(
             this.auth.emailAddress, this.auth.password);
-        this.httpN.post(`http://localhost:8080/api/categories/delete/`, data,{headers: headers}).subscribe
+        this.http.delete(`http://localhost:8080/api/categories/delete?catId=${categoryId}`,{headers: headers}).subscribe
         (
             resp => {
-                alert('Project succesvol verwijderd');
+                alert('Category succesvol verwijderd');
             },
             error => {
-                alert('Verwijderen Project mislukt');
+                alert('Verwijderen Category mislukt');
             }
         );
       }

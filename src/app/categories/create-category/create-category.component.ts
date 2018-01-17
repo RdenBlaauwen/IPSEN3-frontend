@@ -17,7 +17,9 @@ export class CreateCategoryComponent {
   projects: Project[];
   selectedProject: number;
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) { 
-    this.projects = categoryService.getAllProjects();
+    categoryService.getAllProjects().subscribe(projects =>{
+      this.projects = projects;
+    });
   }
   
   createCategory() {

@@ -14,10 +14,6 @@
         </mat-form-field><br>
 
         <mat-form-field class="">
-          <input matInput name="projectName"  #projectName [value]="selectedCategory.projectName"required [(ngModel)]="selectedCategory.projectName" #projectName="ngModel">
-        </mat-form-field><br>
-
-        <mat-form-field class="">
           <input matInput type="date" name="categoryEndDate"  #categoryEndDate [value]="selectedCategory.categoryEndDate"required [(ngModel)]="selectedCategory.categoryEndDate" #categoryEndDate="ngModel">
         </mat-form-field><br>
 
@@ -25,13 +21,13 @@
           <input matInput type="date" name="categoryStartDate"  #categoryStartDate [value]="selectedCategory.categoryStartDate"required [(ngModel)]="selectedCategory.categoryStartDate" #categoryStartDate="ngModel">
         </mat-form-field><br>
 
-        <!-- <mat-form-field>
-          <mat-select [(ngModel)]="selectedCustomer" [formControl]="fillCustomer"  placeholder="Kies een klant" name="customer">
-            <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
-              {{ customer.customer_name }}
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedProject" [formControl]="fillProject"  placeholder="Kies een project" name="project">
+            <mat-option *ngFor="let project of projects" [value]="project.projectId">
+              {{ project.projectName }}
             </mat-option>
           </mat-select>
-        </mat-form-field><br> -->
+        </mat-form-field><br>
               <br>
           <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Wijzigen</button>
       </form>

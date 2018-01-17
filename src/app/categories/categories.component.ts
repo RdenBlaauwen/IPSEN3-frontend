@@ -40,7 +40,7 @@ export class CategoryComponent implements OnInit {
     this.categoryService.newEvent(row);
   }
   deleteCategory() {
-    this.categoryService.removeCategory(this.selectedCategory);
+    this.categoryService.removeCategory(this.selectedCategory.categoryId);
   }
 
   openCreateDialog(){
