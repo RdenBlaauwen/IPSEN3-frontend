@@ -29,14 +29,9 @@
       <li *ngIf="isAuthenticated()" class="nav-item">
         <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
       </li>
-<<<<<<< HEAD
       <small *ngIf="isAuthenticated()" class="text-muted settings">Logout</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
-        <a class="nav-link" (click)="logoutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
-=======
-      <li *ngIf="isAuthenticated()" class="nav-item">
-          <a class="nav-link edit" (click)="logout()" routerLinkActive="active"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
->>>>>>> 324077878e31bceb7b4bd7841f06c7f8661d66fa
+        <a class="nav-link edit" (click)="logoutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
       </li>
     </ul>
   </div>
