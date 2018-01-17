@@ -13,6 +13,7 @@ export class EmployeeService {
 
     naam: string = null;
     private subject = new Subject<any>();
+    headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
 
     newEvent(employee: Employee){
         this.subject.next(employee);
@@ -65,6 +66,19 @@ export class EmployeeService {
 
     public goLogin() {
         this.router.navigate(['']);
+    }
+
+    public deleteEmployee(employeeId: number){
+        
+        this.httpN.delete(`http://localhost://8080/api/users/delete?emId=${employeeId}`, {headers: this.headers}).subscribe(res=>{
+                if(res == true){
+                    this.snackBar.open('Account succesvol verwijderd','',{duration:1000});
+                }else{
+                    this.snackBar.open('Er is iets fout gegaan in de server','',{duration:1000});
+                }
+        }, error=>{
+            this.snackBar.open('Verwijderen account mislukt','',{duration:1000});
+        });
     }
 
     public login(email: string, password: string) {
