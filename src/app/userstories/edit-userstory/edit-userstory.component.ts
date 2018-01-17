@@ -43,10 +43,11 @@ export class EditUserStoryComponent implements OnInit{
     this.categories = userStoryService.getAllCategories();
    }
 
-   modifyProject()
+   modifyUserStory()
    {
      this.selectedUserStory.categoryId = this.selectedCategory;
      this.userStoryService.updateUserStory(this.selectedUserStory);
+     console.log(this.selectedUserStory.categoryId)
    }
 
 }

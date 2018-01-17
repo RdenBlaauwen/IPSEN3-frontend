@@ -42,13 +42,14 @@
               </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedProject  == row}"></mat-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedUserStory  == row}"></mat-row>
         </mat-table>
       </div>
     </mat-sidenav-content>
+
     <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
         <div class="col-3 wijzig">
-          <app-edit-project></app-edit-project>
+          <app-edit-userstory></app-edit-userstory>
         </div>
       </mat-sidenav>
       </mat-sidenav-container>

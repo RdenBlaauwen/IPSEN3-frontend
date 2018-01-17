@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { MatDialogRef, MatDialog } from '@angular/material';
@@ -7,7 +6,7 @@ import { CreateCustomerComponent } from '../customers/create-customer/create-cus
 import { AddProjectComponent } from '../projects/add-project/add-project.component';
 import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
 import { CreateCategoryComponent } from '../categories/create-category/create-category.component';
-
+import { AddUserStoryComponent } from '../userstories/add-userstory/add-userstory.component';
 @Injectable()
 export class DialogService {
 
@@ -50,6 +49,15 @@ export class DialogService {
     public createCategory():Observable<boolean>{
         let dialogRef: MatDialogRef<CreateCategoryComponent>;
         dialogRef = this.dialog.open(CreateCategoryComponent);
+
+        return dialogRef.afterClosed();
+    }
+
+    public createUserStory():Observable<boolean>{
+        
+        let dialogRef: MatDialogRef<AddUserStoryComponent>;
+
+        dialogRef = this.dialog.open(AddUserStoryComponent);
 
         return dialogRef.afterClosed();
     }

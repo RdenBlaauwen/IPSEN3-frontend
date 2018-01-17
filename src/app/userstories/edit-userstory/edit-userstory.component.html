@@ -1,24 +1,36 @@
 <mat-card>
   <mat-card-header>
       <mat-card-title>
-          <h1>Wijzigen project</h1>
+          <h1>Wijzigen taak</h1>
       </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-      <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyProject()">
+      <form name="updateForm" #registerForm="ngForm" (ngSubmit)="modifyUserStory()">
         <mat-form-field class="" style="margin-top: 20px">
-          <input matInput #projectName name="projectName" [value]="selectedProject.projectName"  required [(ngModel)]="selectedProject.projectName" #projectName="ngModel">
+          <input matInput #userStoryName name="userStoryName" [value]="selectedUserStory.userStoryName"  required [(ngModel)]="selectedUserStory.userStoryName" #userStoryName="ngModel">
         </mat-form-field><br>
         <mat-form-field class="">
-          <input matInput name="projectDescription"  #projectDescription [value]="selectedProject.projectDescription"required [(ngModel)]="selectedProject.projectDescription" #projectDescription="ngModel">
+          <input matInput name="userStoryDescription"  #userStoryDescription [value]="selectedUserStory.userStoryDescription"required [(ngModel)]="selectedUserStory.userStoryDescription" #userStoryDescription="ngModel">
         </mat-form-field><br>
+        
+
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedCustomer" [formControl]="fillCustomer"  placeholder="Kies een klant" name="customer">
-            <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
-              {{ customer.customer_name }}
+          <mat-select [(ngModel)]="selectedCategory" [formControl]="fillCategory"  placeholder="Kies een categorie" name="category">
+            <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+              {{ category.categoryName }}
             </mat-option>
           </mat-select>
         </mat-form-field><br>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedProject" [formControl]="fillProject"  placeholder="Kies een project" name="project">
+            <mat-option *ngFor="let project of projects" [value]="project.projectId">
+              {{ project.projectName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field><br>
+    
+
               <br>
           <button mat-raised-button type="submit" class="mat-primary" >Wijzigen</button>
       </form>

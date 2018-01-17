@@ -3,6 +3,9 @@ import { ProjectService } from '../../services/project.service';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { CustomerModel } from '../../models/CustomerModel';
 import { Project } from '../../models/ProjectModel';
+import { Category } from '../../models/CategoryModel'
+import { UserStory } from '../../models/UserStoryModel'
+import { UserStoryService } from '../../services/userStory.service';
 
 @Component({
   selector: 'app-add-userstory',
@@ -10,19 +13,25 @@ import { Project } from '../../models/ProjectModel';
   styleUrls: ['./add-userstory.component.css']
 })
 export class AddUserStoryComponent{
-  project: Project = new Project();
-  customers: CustomerModel[];
-  selectdCustomer: number;
+  userStory: UserStory = new UserStory();
+
+  projects: Project[];
+  categories: Category[];
+
+  selectedProject: number;
+  selectedCategory: number;
   
-  constructor(private projectService: ProjectService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>) { 
-    this.customers = projectService.getAllCustomers();
+  constructor(private userStoryService: UserStoryService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>) { 
+    this.projects = userStoryService.getAllProjects();
+    this.categories = userStoryService.getAllCategories();
   }
 
   insertNewProject() {
-    this.project.projectCustomerFk = this.selectdCustomer;
-    this.projectService.insertNewProject(this.project);
+    this.userStory.categoryId = this.selectedCategory;
+    this.userStory.projectId = this.selectedProject;
+    this.userStoryService.insertNewUserStory(this.userStory);
     this.dialog.close();
-    history.pushState(null, '/project-management');
+    history.pushState(null, '/userstory-management');
     this.openSnackBar();
   }
 
@@ -31,5 +40,7 @@ export class AddUserStoryComponent{
         duration: 1000
       });
     }
-    
+    openCreateDialog(){
+      this.dialogService.createUserStory();
+    }
 }

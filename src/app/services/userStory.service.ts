@@ -60,7 +60,7 @@ export class UserStoryService
         let categories: Category[] = [];
         let headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
-        this.httpN.get(`'http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
+        this.httpN.get(`http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
               console.log(res.json());
             for(let category of res.json())
@@ -86,7 +86,7 @@ export class UserStoryService
         let projects: Project[] = [];
         let headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
-        this.httpN.get(`'http://localhost:8080/api/projects/read/`,{headers: headers} ).subscribe(
+        this.httpN.get(`http://localhost:8080/api/projects/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
               console.log(res.json());
             for(let project of res.json())
@@ -145,7 +145,22 @@ export class UserStoryService
             projectName: userStory.projectName,
             categoryName: userStory.categoryName
         };
-    
+        const headers = this.auth.createAuthHeader(
+            this.auth.emailAddress, this.auth.password);
+        this.httpN.put(`http://localhost:8080/api/userstories/update/`, data, {headers: headers}).subscribe
+        (
+            resp => {
+                if(resp){
+                    alert('Taak succesvol gewijzigd');
+                }else{
+                    alert('Er is iets fout gegaan');
+                }            
+            },
+            error => {
+                alert('Taak update mislukt');
+            }
+        );
+      }
 
 }
 
