@@ -17,7 +17,7 @@ import { Employee } from '../models/Employee';
 export class UserStoryComponent implements OnInit {
 
   private dataSource: MatTableDataSource<UserStory>;
-  displayedColumns = ['userStoryName', 'userStoryDescription'];
+  displayedColumns = ['userStoryName', 'userStoryDescription', 'categoryName', 'projectName', 'userStoryModify', 'userStoryDelete'];
   selectedUserStory: UserStory = new UserStory();
 
   loggedEmployeeModel: Employee;
@@ -26,7 +26,7 @@ export class UserStoryComponent implements OnInit {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.loadData().then((data) => {
-      this.dataSource = new MatTableDataSource<Category>(data);
+      this.dataSource = new MatTableDataSource<UserStory>(data);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
 
@@ -39,39 +39,41 @@ export class UserStoryComponent implements OnInit {
 
   //  Return promise to use to fill data
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<Category[]> {
-    return this.userStoryService.getAllCategories()
+  loadData(): Promise<UserStory[]> {
+    return this.userStoryService.getAllUserStories()
       .toPromise()
       .then(res => res)
-      .then(categories => categories.map(category => {
-        return new Category(
-          category.categoryId,
-          category.categoryIsDeleted,
-          category.categoryName,
-          category.categoryStartDate,
-          category.categoryEndDate,
-          category.categoryDescription,
-          category.projectFK,
-          category.projectName);
+      .then(userStories => userStories.map(userstory => {
+        return new UserStory(
+          userstory.userStoryID,
+          userstory.userStoryName,
+          userstory.userStoryDescription,
+          userstory.userStoryIsDeleted,
+          userstory.isCurrent,
+          userstory.projectName,
+          userstory.projectId,
+          userstory.categoryName,
+          userstory.categoryId
+        );
       }));
   }
   selectRow(row) {
     this.selectedUserStory = row;
   }
 
-  modifyCategory() {
-    this.userStoryService.setCategoryToModify(this.selectedUserStory);
+  modifyUserStory() {
+    this.userStoryService.setUserStoryToModify(this.selectedUserStory);
   }
 
-  deleteCategory() {
-    this.userStoryService.removeCategory(this.selectedUserStory);
+  deleteUserStory() {
+    this.userStoryService.removeUserStory(this.selectedUserStory);
   }
 
   openDialog() {
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze categorie wilt verwijderen? ')
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze taak wilt verwijderen? ')
     .subscribe(res => {
       if (res.valueOf()) {
-        this.deleteCategory();
+        this.deleteUserStory();
       }
     });
   }

@@ -4,31 +4,46 @@ import { AuthService } from "./auth.service";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import { Router } from "@angular/router";
+import { UserStory } from "../models/UserStoryModel"
 import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class UserStoryService
 {
-    readonly ALL_CATEGORIES_JSON = 'http://localhost:8080/api/userstories/read';
+    readonly ALL_USERSTORIES_JSON = 'http://localhost:8080/api/userstories/read';
     readonly INSERT_CATEGORY = 'http://localhost:8080/api/userstories/create/';
-    categoryToModify : Category;
-
+    userStoryToModify : UserStory;
+    private subject = new Subject<any>();
+    
     constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
-    public insertNewCategory(sp: Category): void
+    
+    
+    newEvent(userStory: UserStory){
+        this.subject.next(userStory);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
+    
+    
+    public insertNewUserStory(sp: UserStory): void
     {
         let data =
         {
-            categoryName: sp.categoryName,
-            categoryStartDate: sp.categoryStartDate,
-            categoryEndDate: sp.categoryEndDate,
-            categoryDescription: sp.categoryDescription,
-            projectFK: sp.projectFK
+            userStoryID: sp.userStoryID,
+            userStoryName: sp.userStoryName,
+            userStoryDescription: sp.userStoryDescription,
+            userStoryIsDeleted: sp.userStoryIsDeleted,
+            isCurrent: sp.isCurrent,
+            projectName: sp.projectName,
+            categoryName: sp.categoryName
 
         };
         let headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
-        this.http.post(`'http://localhost:8080/api/categories/create/`, data,).subscribe
+        this.http.post(`'http://localhost:8080/api/userstories/create/`, data,).subscribe
         (
             data =>
             {
@@ -40,6 +55,32 @@ export class UserStoryService
             }
         );
     }
+    public getAllCategories()
+    {
+        let categories: Category[] = [];
+        let headers = this.auth.createAuthHeader(
+            this.auth.emailAddress, this.auth.password);
+        this.httpN.get(`'http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
+            (res: Response) => {
+              console.log(res.json());
+            for(let category of res.json())
+            {
+                let categoryContainer = new Category(
+                    category.categoryId, 
+                    category.categoryIsDeleted, 
+                    category.categoryName,
+                    category.categoryStartDate, 
+                    category.categoryEndDate,
+                    category.categoryDescription,
+                    category.projectFK,
+                    category.projectName,
+                    category.isCurrent);
+                 categories.push(categoryContainer);
+            }
+          })
+          return categories;
+    }
+
     public getAllProjects()
     {
         let projects: Project[] = [];
@@ -50,7 +91,8 @@ export class UserStoryService
               console.log(res.json());
             for(let project of res.json())
             {
-                let projectContainer = new Project(project.projectId, 
+                let projectContainer = new Project(
+                    project.projectId, 
                     project.projectName, project.projectDescription,
                     project.projectIsDeleted, project.projectCustomerFk);
                 projects.push(projectContainer);
@@ -59,40 +101,50 @@ export class UserStoryService
           return projects;
     }
 
-    getAllCategories(): Observable<Category[]> {
+    getAllUserStories(): Observable<UserStory[]> {
         const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-      return this.http.get<Category[]>(this.ALL_CATEGORIES_JSON, {headers: headers});
+      return this.http.get<Category[]>(this.ALL_USERSTORIES_JSON, {headers: headers});
     }
 
 
-    public setCategoryToModify(category: Category) {
-        this.categoryToModify = category;
+    public setUserStoryToModify(userStory: UserStory) {
+        this.userStoryToModify = userStory;
         this.router.navigate(['modify-category']);
       }
 
-      public removeCategory(sp: Category) {
+      public removeUserStory(sp: UserStory) {
         const data = {
-            categoryId : sp.categoryId,
-            categoryIsDeleted : sp.categoryIsDeleted,
-            categoryName : sp.categoryName,
-            categoryStartDate : sp.categoryStartDate,
-            categoryEndDate : sp.categoryEndDate,
-            categoryDescription : sp.categoryDescription,
-            projectFK : sp.projectFK,
-            projectName : sp.projectName
+            userStoryID: sp.userStoryID,
+            userStoryName: sp.userStoryName,
+            userStoryDescription: sp.userStoryDescription,
+            userStoryIsDeleted: sp.userStoryIsDeleted,
+            isCurrent: sp.isCurrent,
+            projectName: sp.projectName,
+            categoryName: sp.categoryName
         };
         const headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
         this.httpN.post(`http://localhost:8080/api/categories/delete/`, data,{headers: headers}).subscribe
         (
             resp => {
-                alert('Project succesvol verwijderd');
+                alert('Taak succesvol verwijderd');
             },
             error => {
-                alert('Verwijderen Project mislukt');
+                alert('Verwijderen taak mislukt');
             }
         );
       }
+
+      public updateUserStory(userStory: UserStory) {
+        const data = {
+            userStoryID: userStory.userStoryID,
+            userStoryName: userStory.userStoryName,
+            userStoryDescription: userStory.userStoryDescription,
+            userStoryIsDeleted: userStory.userStoryIsDeleted,
+            isCurrent: userStory.isCurrent,
+            projectName: userStory.projectName,
+            categoryName: userStory.categoryName
+        };
     
 
 }
