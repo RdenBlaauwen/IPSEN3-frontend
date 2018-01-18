@@ -56,6 +56,7 @@ import { EntryService } from './services/entry.service';
 import { TaskService } from './services/task.service';
 import { DateHelper} from './helpers/dateHelper';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -106,6 +107,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
