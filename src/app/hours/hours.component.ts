@@ -54,6 +54,10 @@ export class HoursComponent implements OnInit {
     private userStoryService: UserStoryService, private categoryService: CategoryService,
      private auth: AuthService) {
 
+      hoursService.getAllEntriesBorisTest().subscribe(res=>{
+        this.dataSource = new MatTableDataSource<EntryModel>(res);
+      })
+
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
     } else{
@@ -74,7 +78,7 @@ export class HoursComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.updateData();  
+    //this.updateData();  
   }
 
   tabChange(event: MatTabChangeEvent){
@@ -125,6 +129,15 @@ export class HoursComponent implements OnInit {
   log(x){
     console.log(x);
   }
+
+  goedkeuren(){
+    this.hoursService.approveEntry(this.selectedEntry.entryId);
+  }
+
+  afkeuren(){
+    this.hoursService.rejectEntry(this.selectedEntry.entryId);
+  }
+
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
    }

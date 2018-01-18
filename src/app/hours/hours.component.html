@@ -191,7 +191,7 @@
 
       -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selected': selectedCustomer  == row}"></mat-row>
     </mat-table>
   </div>
   <div class="col-sm-2 cud-bar">
@@ -276,5 +276,7 @@
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit" class="mat-primary" >Wijzigen</button>
     </form>
+    <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="goedkeuren()">Goedkeuren</button>
+          <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="afkeuren()">Afkeuren</button>
   </div>
 </div>
