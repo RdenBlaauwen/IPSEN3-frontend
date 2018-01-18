@@ -29,4 +29,13 @@ export class DateHelper{
         let year = date.getFullYear();
         return new Date(year, month, (day+1)-dayNumber);
     }
+    public getTimeString(date: Date):string{
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        if(minutes<10){
+            return hours+":0"+minutes;
+        }else{
+            return hours+":"+minutes;
+        }
+    }
 }

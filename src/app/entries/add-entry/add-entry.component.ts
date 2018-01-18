@@ -24,7 +24,6 @@ import { DateHelper } from '../../helpers/dateHelper';
 })
 @Injectable()
 export class AddEntryComponent implements OnInit {
-  @ViewChild('projectSelect') projectSelect;
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
@@ -58,8 +57,9 @@ export class AddEntryComponent implements OnInit {
     this.updateCategories();
     let today = new Date();
     this.selectedEntry.entryDate= today.toISOString();
+    this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
     // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
-    // console.log("selectedEntry.entryDate="+this.selectedEntry.entryDate);
+    console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
@@ -122,6 +122,7 @@ export class AddEntryComponent implements OnInit {
   public onSubmit():void{
     console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
       +", date: "+this.selectedEntry.entryDate
+      +", time: "+this.selectedEntry.entryStartTime
       +", project: "+this.selectedEntry.entryProjectFk);
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;

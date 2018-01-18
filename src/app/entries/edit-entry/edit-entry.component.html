@@ -26,7 +26,6 @@
           id="dateField" name="dateField" 
           placeholder="Datum" 
           ngModel 
-          [value]="selectedEntry.entryDate" 
           [(ngModel)]="selectedEntry.entryDate" required>
           <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
           <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
