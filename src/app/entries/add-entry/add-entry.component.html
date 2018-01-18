@@ -40,7 +40,8 @@
             #startTimeField="ngModel"  
             id="startTimeField" name="startTimeField" 
             placeholder="Starttijd" 
-            ngModel type="time" 
+            ngModel type="time" step="300" 
+            (blur)="roundMinutes()" 
             [value]="selectedEntry.entryStartTime"
             [(ngModel)]="selectedEntry.entryStartTime" required>
           <mat-error *ngIf="startTimeField.touched && !startTimeField.valid">Starttijd is verplicht.</mat-error>
@@ -51,7 +52,8 @@
             #endTimeField="ngModel"  
             id="endTimeField" name="endTimeField" 
             placeholder="Eindtijd" 
-            ngModel type="time" 
+            ngModel type="time" step="300" 
+            (blur)="roundMinutes()" 
             [value]="selectedEntry.entryEndTime"
             [(ngModel)]="selectedEntry.entryEndTime" required>
           <mat-error *ngIf="endTimeField.touched && !endTimeField.valid">Eindtijd is verplicht.</mat-error>
