@@ -13,12 +13,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RoutingModule } from './routing/routing.module';
-import { HoursComponent } from './hours/hours.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CategoryComponent } from './categories/categories.component';
-import { UserStoryComponent } from './userstories/userstories.component';
-import { AddUserStoryComponent } from './userstories/add-userstory/add-userstory.component'
-import { EditUserStoryComponent } from './userstories/edit-userstory/edit-userstory.component'
 import { AccountsComponent } from './accounts/accounts.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DataComponent } from './data/data.component';
@@ -34,7 +30,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ProjectService } from './services/project.service';
 import { EmployeeService } from './services/employee.service';
 import { AuthService } from './services/auth.service';
-import { HoursService } from './services/hours.service';
 import { CreateCategoryComponent } from './categories/create-category/create-category.component';
 import { CategoryService } from './services/category.service';
 import { RouterModule } from '@angular/router';
@@ -48,33 +43,37 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { DialogContentComponent } from './admin/dialog-content/dialog-content.component'; 
 import { DialogService } from './services/DialogService';
-import { UserStoryService } from './services/userStory.service';
 import { CreateAccountComponent } from './accounts/create-account/create-account.component';
 import { ModifyComponent } from './accounts/modify/modify.component';
 import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
-
-import { AddEntryComponent } from './hours/add-entry/add-entry.component';
-import {EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { AddTaskComponent } from './tasks/add-tasks/add-tasks.component';
+import { EditUTaskComponent } from './tasks/edit-tasks/edit-tasks.component';
+import { EntryComponent } from './entries/entries.component';
+import { AddEntryComponent } from './entries/add-entry/add-entry.component';
+import { EditEntryComponent } from './entries/edit-entry/edit-entry.component';
+import { EntryService } from './services/entry.service';
+import { TaskService } from './services/task.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HoursComponent,
+    EntryComponent,
     AddEntryComponent,
     EditEntryComponent,
     ProjectsComponent,
     CategoryComponent,
-    UserStoryComponent,
+    TasksComponent,
     AccountsComponent,
     CustomersComponent,
     DataComponent,
     ManualComponent,
     AccountSelfComponent,
     LoginComponent,
-    AddUserStoryComponent,
-    EditUserStoryComponent,
+    AddTaskComponent,
+    EditUTaskComponent,
     AddProjectComponent,
     EditProjectComponent,
     CreateCategoryComponent,
@@ -121,11 +120,11 @@ import {EditEntryComponent } from './hours/edit-entry/edit-entry.component';
   providers: [ProjectService,
     AuthService,
     EmployeeService,
-    HoursService, 
+    EntryService, 
     CategoryService,
     CustomerService,
     DialogService,
-    UserStoryService,
+    TaskService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })

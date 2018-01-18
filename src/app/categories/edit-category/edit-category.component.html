@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="admin">
   <mat-card-header>
       <mat-card-title>
           <h1>Wijzigen Category</h1>
@@ -22,14 +22,14 @@
         </mat-form-field><br>
 
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedCategory.projectFK" [formControl]="fillProject"  placeholder="Kies een project" name="project">
+          <mat-select [(ngModel)]="selectedCategory.projectFK" [formControl]="fillProject"  placeholder="Kies een project" name="project" required>
             <mat-option *ngFor="let project of projects" [value]="project.projectId">
               {{ project.projectName }}
             </mat-option>
           </mat-select>
         </mat-form-field><br>
               <br>
-          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Wijzigen</button>
+          <button [disabled]="!registerForm.valid"  mat-raised-button type="submit" class="btn btn-primary btn-sm" >Wijzigen</button>
       </form>
   </mat-card-content>
 </mat-card>

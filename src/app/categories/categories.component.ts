@@ -20,12 +20,14 @@ export class CategoryComponent implements OnInit {
   selectedCategory: Category = new Category();
   loggedEmployeeModel: Employee;
   projects: Project[];
-  constructor(private categoryService: CategoryService, auth: AuthService, private dialogService: DialogService) {
+  admin: boolean = false;
+  constructor(private categoryService: CategoryService, private auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.categoryService.getAllCategories().subscribe( categories=>{
       this.dataSource = new MatTableDataSource<Category>(categories);
     }, (error) => console.log(error.SessionNotCreatedError));
+    this.admin = this.auth.isAdmin();
   }
 
   //  MatTableDataSource function

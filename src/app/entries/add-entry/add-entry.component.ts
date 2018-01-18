@@ -7,13 +7,13 @@ import { Project } from '../../models/ProjectModel';
 import { FormsModule } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {NgForm} from '@angular/forms';
-import { UserStoryService } from '../../services/userStory.service';
-import { UserStory } from '../../models/UserStoryModel';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/CategoryModel';
-import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { HoursComponent } from '../hours.component';
+import { Task } from '../../models/TaskModel';
+import { TaskService } from '../../services/task.service';
+import { EntryService } from '../../services/entry.service';
+import { EntryComponent } from '../entries.component';
 
 @Component({
   selector: 'app-add-entry',
@@ -26,7 +26,7 @@ export class AddEntryComponent implements OnInit {
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
-  public userStoryList: UserStory[];
+  public userStoryList: Task[];
 
   public projectListOpen = false;
 
@@ -36,8 +36,8 @@ export class AddEntryComponent implements OnInit {
   minDate: Date;
 
   constructor(private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: HoursService, private hoursComponent: HoursComponent) { 
+    private userStoryService: TaskService, private categoryService: CategoryService,
+    private auth: AuthService, private hoursService: EntryService, private hoursComponent: EntryComponent) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -72,8 +72,8 @@ export class AddEntryComponent implements OnInit {
     .toPromise()
     .then(res => res)
     .then(userstories => userstories.map(userstory => {
-      return new UserStory(
-        userstory.userStoryID,
+      return new Task(
+        userstory.userStoryId,
         userstory.userStoryName,
         userstory.userStoryDescription,
         userstory.userStoryIsDeleted,
@@ -119,11 +119,7 @@ export class AddEntryComponent implements OnInit {
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
-      this.hoursService.createEntry(this.selectedEntry).then((data) => {
-          console.log(data);
-          this.hoursComponent.updateData();
-        }
-      );
+      this.hoursService.createEntry(this.selectedEntry);
   }
 
   log(anything){

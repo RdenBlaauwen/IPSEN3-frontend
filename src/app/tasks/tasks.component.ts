@@ -1,32 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { UserStory } from '../models/UserStoryModel';
 import { Category } from '../models/CategoryModel';
 import { CategoryService } from '../services/category.service';
-import { UserStoryService} from '../services/userStory.service';
 import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/DialogService';
 import { Employee } from '../models/Employee';
+import {  Task } from '../models/TaskModel';
+import { TaskService } from '../services/task.service';
 
 @Component({
-  selector: 'app-userstories',
-  templateUrl: './userstories.component.html',
-  styleUrls: ['./userstories.component.css']
+  selector: 'app-tasks',
+  templateUrl: './tasks.component.html',
+  styleUrls: ['./tasks.component.css']
 })
 
-export class UserStoryComponent implements OnInit {
+export class TasksComponent implements OnInit {
 
-  private dataSource: MatTableDataSource<UserStory>;
+  private dataSource: MatTableDataSource<Task>;
   displayedColumns = ['userStoryName', 'userStoryDescription', 'categoryName', 'projectName', 'userStoryModify', 'userStoryDelete'];
-  selectedUserStory: UserStory = new UserStory();
-
+  selectedUserStory: Task = new Task();
+  admin: boolean = false;
   loggedEmployeeModel: Employee;
   categories: Category[];
-  constructor(private userStoryService: UserStoryService, auth: AuthService, private dialogService: DialogService) {
+  constructor(private userStoryService: TaskService, auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
+    this.admin = auth.isAdmin();
     this.loadData().then((data) => {
-      this.dataSource = new MatTableDataSource<UserStory>(data);
+      this.dataSource = new MatTableDataSource<Task>(data);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
 
@@ -39,13 +40,13 @@ export class UserStoryComponent implements OnInit {
 
   //  Return promise to use to fill data
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<UserStory[]> {
+  loadData(): Promise<Task[]> {
     return this.userStoryService.getAllUserStories()
       .toPromise()
       .then(res => res)
       .then(userStories => userStories.map(userstory => {
-        return new UserStory(
-          userstory.userStoryID,
+        return new Task(
+          userstory.userStoryId,
           userstory.userStoryName,
           userstory.userStoryDescription,
           userstory.userStoryIsDeleted,

@@ -7,14 +7,14 @@ import { Project } from '../../models/ProjectModel';
 import { FormsModule } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {NgForm} from '@angular/forms';
-import { UserStoryService } from '../../services/userStory.service';
-import { UserStory } from '../../models/UserStoryModel';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/CategoryModel';
-import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { HoursComponent } from '../hours.component';
 import { Subject } from 'rxjs/Subject';
+import { Task } from '../../models/TaskModel';
+import { TaskService } from '../../services/task.service';
+import { EntryComponent } from '../entries.component';
+import { EntryService } from '../../services/entry.service';
 
 @Component({
   selector: 'app-edit-entry',
@@ -27,7 +27,7 @@ export class EditEntryComponent implements OnInit {
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
-  public userStoryList: UserStory[];
+  public userStoryList: Task[];
 
   public projectListOpen = false;
 
@@ -37,8 +37,8 @@ export class EditEntryComponent implements OnInit {
   minDate: Date;
 
   constructor(private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: HoursService, private hoursComponent: HoursComponent) { 
+    private userStoryService: TaskService, private categoryService: CategoryService,
+    private auth: AuthService, private hoursService: EntryService, private hoursComponent: EntryComponent) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -82,8 +82,8 @@ export class EditEntryComponent implements OnInit {
     this.userStoryService.getAllUserStories().toPromise()
     .then(res => res)
     .then(userstories => userstories.map(userstory => {
-      return new UserStory(
-        userstory.userStoryID,
+      return new Task(
+        userstory.userStoryId,
         userstory.userStoryName,
         userstory.userStoryDescription,
         userstory.userStoryIsDeleted,

@@ -33,12 +33,12 @@
 
           <ng-container matColumnDef="userStoryModify">
               <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-              <mat-cell *matCellDef="let userStory"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+              <mat-cell *matCellDef="let userStory"> <a *ngIf="admin"><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
             </ng-container>
   
             <ng-container matColumnDef="userStoryDelete">
                 <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-                <mat-cell *matCellDef="let userStory"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+                <mat-cell *matCellDef="let userStory"> <a *ngIf="admin"><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
               </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -49,7 +49,7 @@
 
     <mat-sidenav #sidenav mode="side" position="end" [(opened)]="editClicked">
         <div class="col-3 wijzig">
-          <app-edit-userstory></app-edit-userstory>
+          <app-edit-tasks></app-edit-tasks>
         </div>
       </mat-sidenav>
       </mat-sidenav-container>

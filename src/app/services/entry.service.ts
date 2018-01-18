@@ -6,11 +6,11 @@ import { EntryModel } from '../models/EntryModel';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { WeekModel } from '../models/WeekModel';
-import { HoursComponent } from '../hours/hours.component';
 import { Subject } from 'rxjs/Subject';
+import { error } from 'util';
 
 @Injectable()
-export class HoursService {
+export class EntryService {
   readonly ALL_ENTRIES_JSON = 'http://localhost:8080/api/entries';
   private subject = new Subject<any>();
   public selectedEntry: EntryModel;
@@ -45,10 +45,14 @@ export class HoursService {
     
   // }
 
-  public createEntry(entry: EntryModel): Promise<any> {
+  public createEntry(entry: EntryModel){
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    let result=this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers});
-    return result.toPromise().then(res => {return res});
+    this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers}).subscribe(res=>{
+      alert("gelukt")
+    },error=>{
+      alert("mislukt");
+    });
+    //return result.toPromise().then(res => {return res});
   }
   public updateEntry(entry: EntryModel): Promise<any> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerModel } from '../../models/CustomerModel';
 import { CustomerService } from '../../services/customer.service';
 import { MatDialogRef } from '@angular/material';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-customer',
@@ -10,7 +11,10 @@ import { MatDialogRef } from '@angular/material';
 })
 export class CreateCustomerComponent {
   customer: CustomerModel = new CustomerModel();
-  constructor(private customerService: CustomerService,private dialogRef: MatDialogRef<any>) { }
+  admin: boolean = false;
+  constructor(private customerService: CustomerService,private dialogRef: MatDialogRef<any>, auth: AuthService) { 
+    this.admin = auth.isAdmin();
+  }
 
   insertNewCustomer() {
     this.customerService.insertNewCustomer(this.customer);
