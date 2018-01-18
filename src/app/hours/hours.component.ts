@@ -22,6 +22,7 @@ import { UserStoryService } from '../services/userStory.service';
 import { UserStory } from '../models/UserStoryModel';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/CategoryModel';
+import { ExportService } from '../services/export';
 
 @Component({
   selector: 'app-hours',
@@ -52,7 +53,7 @@ export class HoursComponent implements OnInit {
 
   constructor(private hoursService: HoursService, private projectService: ProjectService, 
     private userStoryService: UserStoryService, private categoryService: CategoryService,
-     private auth: AuthService) {
+     private auth: AuthService, private exportService: ExportService) {
 
       hoursService.getAllEntriesBorisTest().subscribe(res=>{
         this.dataSource = new MatTableDataSource<EntryModel>(res);
@@ -191,5 +192,9 @@ export class HoursComponent implements OnInit {
           }
         );
       }
+  }
+
+  public exportData(){
+    this.exportService.getCSVInfo();
   }
 }

@@ -50,6 +50,7 @@ import { DialogService } from './services/DialogService';
 import { UserStoryService } from './services/userStory.service';
 import { CreateAccountComponent } from './accounts/create-account/create-account.component';
 import { ModifyComponent } from './accounts/modify/modify.component';
+import { ExportService } from './services/export';
 
 
 
@@ -115,6 +116,7 @@ import { ModifyComponent } from './accounts/modify/modify.component';
     CustomerService,
     DialogService,
     UserStoryService,
+    ExportService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })
