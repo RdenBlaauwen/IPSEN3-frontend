@@ -120,10 +120,7 @@ export class AddEntryComponent implements OnInit {
    * 
    */
   public onSubmit():void{
-    console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
-      +", date: "+this.selectedEntry.entryDate
-      +", time: "+this.selectedEntry.entryStartTime
-      +", project: "+this.selectedEntry.entryProjectFk);
+    console.log('onSubmit()! time parsing: '+this.dateHelper.stringToDate(this.selectedEntry.entryStartTime));
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
       if(this.validateData()){
@@ -153,6 +150,12 @@ export class AddEntryComponent implements OnInit {
       return false;
     }else if(this.selectedEntry.entryEndTime==null){
       this.snackBar.open('Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    let parsedStartTime = this.dateHelper.stringToDate(this.selectedEntry.entryStartTime);
+    let parsedEndTime = this.dateHelper.stringToDate(this.selectedEntry.entryEndTime);
+    if(parsedStartTime>=parsedEndTime){
+      this.snackBar.open('Vul alstublieft een begintijd in die minder is dan de starttijd.','Ok',{duration: 3000});
       return false;
     }
     return true;

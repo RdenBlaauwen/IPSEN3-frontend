@@ -16,6 +16,7 @@ import { TaskService } from '../../services/task.service';
 import { EntryComponent } from '../entries.component';
 import { EntryService } from '../../services/entry.service';
 import {MatSnackBar} from '@angular/material';
+import { DateHelper } from '../../helpers/dateHelper';
 
 @Component({
   selector: 'app-edit-entry',
@@ -40,7 +41,7 @@ export class EditEntryComponent implements OnInit {
   constructor(private projectService: ProjectService, 
     private userStoryService: TaskService, private categoryService: CategoryService,
     private auth: AuthService, private hoursService: EntryService, 
-    private hoursComponent: EntryComponent, public snackBar: MatSnackBar) { 
+    private hoursComponent: EntryComponent, public snackBar: MatSnackBar, public dateHelper: DateHelper) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -158,6 +159,12 @@ export class EditEntryComponent implements OnInit {
       return false;
     }else if(this.selectedEntry.entryEndTime==null){
       this.snackBar.open('Mislukt: Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    let parsedStartTime = this.dateHelper.stringToDate(this.selectedEntry.entryStartTime);
+    let parsedEndTime = this.dateHelper.stringToDate(this.selectedEntry.entryEndTime);
+    if(parsedStartTime>=parsedEndTime){
+      this.snackBar.open('Vul alstublieft een begintijd in die minder is dan de starttijd.','Ok',{duration: 3000});
       return false;
     }
     return true;
