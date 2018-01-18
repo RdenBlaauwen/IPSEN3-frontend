@@ -16,6 +16,7 @@ import { EntryService } from '../../services/entry.service';
 import { EntryComponent } from '../entries.component';
 import {MatSnackBar} from '@angular/material';
 import { DateHelper } from '../../helpers/dateHelper';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-add-entry',

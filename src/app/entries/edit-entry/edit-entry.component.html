@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>
-            <h1>Entry bewerken</h1>
+            <h1><mat-icon>edit</mat-icon>Entry bewerken</h1>
         </mat-card-title>
     </mat-card-header>
   <mat-card-content>
@@ -15,7 +15,8 @@
             placeholder="Beschrijving" 
             ngModel type="text" matTextareaAutosize 
             [value]="selectedEntry.entryDescription"
-            [(ngModel)]="selectedEntry.entryDescription" required></textarea>
+            [(ngModel)]="selectedEntry.entryDescription" 
+            autofocus required></textarea>
           <!-- <textarea matInput #descriptionField="ngModel"  (change)="log(test)" name="test" type="text"  placeholder="Beschrijving" required></textarea> -->
           <mat-error *ngIf="descriptionField.touched && !descriptionField.valid">Beschrijving is verplicht.</mat-error>
         </mat-form-field>

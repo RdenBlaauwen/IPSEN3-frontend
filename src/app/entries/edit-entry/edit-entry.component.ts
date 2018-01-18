@@ -17,6 +17,7 @@ import { EntryComponent } from '../entries.component';
 import { EntryService } from '../../services/entry.service';
 import {MatSnackBar} from '@angular/material';
 import { DateHelper } from '../../helpers/dateHelper';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-edit-entry',
@@ -179,6 +180,7 @@ export class EditEntryComponent implements OnInit {
 
   public close():void{
     this.hoursComponent.updateMode=false;
+    this.hoursComponent.createMode=true;
   }
 
   public roundMinutes():void{

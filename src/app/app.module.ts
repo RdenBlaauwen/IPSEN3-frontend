@@ -55,6 +55,7 @@ import { EditEntryComponent } from './entries/edit-entry/edit-entry.component';
 import { EntryService } from './services/entry.service';
 import { TaskService } from './services/task.service';
 import { DateHelper} from './helpers/dateHelper';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -101,6 +102,7 @@ import { DateHelper} from './helpers/dateHelper';
     MatButtonToggleModule,
     MatCheckboxModule,
     MatTableModule,
+    MatExpansionModule,
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
