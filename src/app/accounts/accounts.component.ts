@@ -3,6 +3,7 @@ import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/Employee';
 import { DialogService } from '../services/DialogService';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-accounts',
@@ -13,7 +14,8 @@ export class AccountsComponent implements OnInit {
   selectedEmployee: Employee = new Employee();
   displayedColumns: any[];
   dataSource;
-  constructor(private employeeService: EmployeeService, private dialogService: DialogService) {
+  admin: boolean = false;
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService, private auth: AuthService) {
     this.displayedColumns = ['account_name', 'account_role', 'email', 'employeeModify', 'employeeDelete'];
     employeeService.getAllEmployees().subscribe(users =>{
       this.dataSource = new MatTableDataSource(users);
@@ -28,6 +30,7 @@ export class AccountsComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.admin  =this.auth.isAdmin();
   }
   modifyAccount(){
     this.employeeService.modifyEmployee(this.selectedEmployee);

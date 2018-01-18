@@ -29,14 +29,14 @@
               <mat-cell *matCellDef="let element"> {{element.employeeEmail}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="employeeModify">
+            <ng-container matColumnDef="employeeModify" >
                 <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-                <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+                <mat-cell *matCellDef="let Customer"> <a *ngIf="admin"><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
               </ng-container>
     
               <ng-container matColumnDef="employeeDelete">
                   <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-                  <mat-cell *matCellDef="let Customer"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+                  <mat-cell *matCellDef="let Customer"> <a *ngIf="admin"><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
                 </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

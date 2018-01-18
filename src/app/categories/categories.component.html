@@ -43,12 +43,12 @@
           
           <ng-container matColumnDef="categoryModify">
             <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-            <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+            <mat-cell *matCellDef="let element"> <a *ngIf="admin"><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="categoryDelete">
+          <ng-container matColumnDef="categoryDelete" >
               <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-              <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+              <mat-cell *matCellDef="let element"> <a *ngIf="admin"><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
             </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

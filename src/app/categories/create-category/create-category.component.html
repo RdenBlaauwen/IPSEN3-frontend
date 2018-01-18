@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="admin">
         <mat-card-header>
             <mat-card-title>
                 <h1>Aanmaken nieuw Category</h1>
@@ -7,30 +7,31 @@
         <mat-card-content>
             <form name="updateForm" #registerForm="ngForm" (ngSubmit)="createCategory()">
               <mat-form-field class="" style="margin-top: 20px">
-                <input matInput #categoryName name="categoryName"  required [(ngModel)]="selectedCategory.categoryName" #categoryName="ngModel">
+                <input matInput #categoryName name="categoryName" placeholder="Category naam"  required [(ngModel)]="selectedCategory.categoryName" #categoryName="ngModel">
               </mat-form-field><br>
               <mat-form-field class="">
-                <input matInput name="categoryDescription"  #categoryDescription required [(ngModel)]="selectedCategory.categoryDescription" #categoryDescription="ngModel">
+                <input matInput name="categoryDescription" placeholder="Category omschrijving"   #categoryDescription required [(ngModel)]="selectedCategory.categoryDescription" #categoryDescription="ngModel">
               </mat-form-field><br>
       
       
               <mat-form-field class="">
-                <input matInput type="date" name="categoryEndDate"  #categoryEndDate required [(ngModel)]="selectedCategory.categoryEndDate" #categoryEndDate="ngModel">
+                <input matInput type="date" name="categoryStartDate" placeholder="Category Startdate"   #categoryStartDate required [(ngModel)]="selectedCategory.categoryStartDate" #categoryStartDate="ngModel">
               </mat-form-field><br>
       
               <mat-form-field class="">
-                <input matInput type="date" name="categoryStartDate"  #categoryStartDate required [(ngModel)]="selectedCategory.categoryStartDate" #categoryStartDate="ngModel">
+                <input matInput type="date" name="categoryEndDate"  placeholder="Category Einddatum"  #categoryEndDate required [(ngModel)]="selectedCategory.categoryEndDate" #categoryEndDate="ngModel">
               </mat-form-field><br>
       
               <mat-form-field>
-                <mat-select [(ngModel)]="selectedProject"  placeholder="Kies een project" name="customer">
+                <mat-select [(ngModel)]="selectedProject"  placeholder="Kies een project" name="project">
                   <mat-option *ngFor="let project of projects" [value]="project.projectId">
                     {{ project.projectName }}
                   </mat-option>
                 </mat-select>
               </mat-form-field><br>
                     <br>
-                <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
+                <button [disabled]="!registerForm.valid"  mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
             </form>
         </mat-card-content>
       </mat-card>
+<div *ngIf="!admin">U bent niet geautoriseerd. </div>

@@ -10,7 +10,11 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) { }
+  admin: boolean = false;
+
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) {
+    this.admin = authService.isAdmin() || authService.isManager();
+   }
 
   public logoutUser() {
     this.employeeService.removeSessions();

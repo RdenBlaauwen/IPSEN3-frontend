@@ -3,6 +3,7 @@ import { ProjectService } from '../../services/project.service';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { CustomerModel } from '../../models/CustomerModel';
 import { Project } from '../../models/ProjectModel';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-project',
@@ -13,9 +14,10 @@ export class AddProjectComponent{
   project: Project = new Project();
   customers: CustomerModel[];
   selectdCustomer: number;
-  
-  constructor(private projectService: ProjectService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>) { 
+  admin: boolean = false;
+  constructor(private projectService: ProjectService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>, auth: AuthService) { 
     this.customers = projectService.getAllCustomers();
+    this.admin = auth.isAdmin();
   }
 
   insertNewProject() {

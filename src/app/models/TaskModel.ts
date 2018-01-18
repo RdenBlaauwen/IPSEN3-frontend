@@ -1,6 +1,6 @@
-export class UserStory{
+export class Task{
     constructor(
-        public userStoryID? : number,
+        public userStoryId? : number,
         public userStoryName? : String,
         public userStoryDescription? : String,
         public userStoryIsDeleted? : boolean,

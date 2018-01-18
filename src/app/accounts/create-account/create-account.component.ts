@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/Employee';
 import { MatDialogRef } from '@angular/material';
+import { Role } from '../../models/Role';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-account',
@@ -11,8 +13,11 @@ import { MatDialogRef } from '@angular/material';
 export class CreateAccountComponent implements OnInit {
 
   employee: Employee = new Employee();
-
-  constructor(private employeeService: EmployeeService, private dialog: MatDialogRef<any>) { }
+  roles: Role[] = [];
+  admin: boolean = false;
+  constructor(private employeeService: EmployeeService, private dialog: MatDialogRef<any>, auth: AuthService) { 
+    this.admin = auth.isAdmin();
+  }
 
 
   createEmployee(){
@@ -21,6 +26,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.roles = this.employeeService.getRoles();
   }
 
 }

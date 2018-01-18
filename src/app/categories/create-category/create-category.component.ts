@@ -16,10 +16,12 @@ export class CreateCategoryComponent {
   selectedCategory: Category = new Category();
   projects: Project[];
   selectedProject: number;
-  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) { 
+  admin: boolean = false;
+  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, private auth: AuthService) { 
     categoryService.getAllProjects().subscribe(projects =>{
       this.projects = projects;
     });
+    this.admin = auth.isAdmin();
   }
   
   createCategory() {

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="admin"> 
   <mat-card-header>
       <mat-card-title>
           <h1>Aanmaken Taak</h1>
@@ -14,7 +14,7 @@
       </mat-form-field><br>
 
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedCategory" placeholder="Kies een categorie" name="selectedCategory">
+          <mat-select [(ngModel)]="selectedCategory" placeholder="Kies een categorie" name="selectedCategory" required>
             <mat-option *ngFor="let category of categories" [value]="category.categoryId">
               {{ category.categoryName }}
             </mat-option>
@@ -22,14 +22,15 @@
         </mat-form-field><br>
 
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedProject" placeholder="Kies een project" name="selectedProject">
+          <mat-select [(ngModel)]="selectedProject" placeholder="Kies een project" name="selectedProject" required>
             <mat-option *ngFor="let project of projects" [value]="project.projectId">
               {{ project.projectName }}
             </mat-option>
           </mat-select>
         </mat-form-field><br>
         <br>
-          <button mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
+          <button [disabled]="!registerForm.valid"  mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>
       </form>
   </mat-card-content>
 </mat-card>
+<p *ngIf="!admin">U bent niet geauthoriseerd</p>

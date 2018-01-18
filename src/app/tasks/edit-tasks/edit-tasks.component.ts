@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStoryService } from '../../services/userStory.service';
-import { UserStory } from '../../models/UserStoryModel'
 import { Project }  from '../../models/ProjectModel'
 import { Category } from '../../models/CategoryModel'
 import { CustomerModel } from '../../models/CustomerModel';
 import { EmployeeService } from '../../services/employee.service';
 import { FormControl } from '@angular/forms';
+import { Task } from '../../models/TaskModel';
+import { TaskService } from '../../services/task.service';
 
 @Component({
-  selector: 'app-edit-userstory',
-  templateUrl: './edit-userstory.component.html',
-  styleUrls: ['./edit-userstory.component.css']
+  selector: 'app-edit-tasks',
+  templateUrl: './edit-tasks.component.html',
+  styleUrls: ['./edit-tasks.component.css']
 })
-export class EditUserStoryComponent implements OnInit{
+export class EditUTaskComponent implements OnInit{
   ngOnInit(): void {
     this.userStoryService.events$.forEach(event =>{
       this.selectedUserStory = event;
@@ -28,7 +28,7 @@ export class EditUserStoryComponent implements OnInit{
       }
     })
   }
-  selectedUserStory: UserStory = new UserStory();
+  selectedUserStory: Task = new Task();
   projects: Project[];
   categories: Category[];
   
@@ -38,7 +38,7 @@ export class EditUserStoryComponent implements OnInit{
   fillProject = new FormControl();
   fillCategory = new FormControl();
 
-  constructor(private userStoryService: UserStoryService) {
+  constructor(private userStoryService: TaskService) {
     this.projects = userStoryService.getAllProjects();
     this.categories = userStoryService.getAllCategories();
    }

@@ -1,5 +1,5 @@
 
-<mat-card>
+<mat-card *ngIf="admin">
 
   <mat-card-header>
       <mat-card-title>
@@ -26,3 +26,4 @@
 
 
 </mat-card>
+<p *ngIf="!admin">U bent niet geauthoriseerd</p>

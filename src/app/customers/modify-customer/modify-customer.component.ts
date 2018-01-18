@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../services/customer.service';
 import { CustomerModel } from '../../models/CustomerModel';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-modify-customer',
@@ -9,9 +10,10 @@ import { CustomerModel } from '../../models/CustomerModel';
 })
 export class ModifyCustomerComponent implements OnInit {
 
-
+  admin: boolean = false;
   selectedCustomer = new CustomerModel();
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, auth: AuthService) {
+    this.admin = auth.isAdmin();
    }
    ngOnInit(): void {
     this.customerService.events$.forEach(customer=>{
