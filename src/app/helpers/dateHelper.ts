@@ -39,8 +39,9 @@ export class DateHelper{
         }
     }
     public stringToDate(input: string): Date{
-        let hours = parseInt(input.substr(0,2));
-        let minutes = parseInt(input.substr(3,5));
+        console.log('dateHelper stringToDate: input='+input);
+        let hours = parseInt(input.split(":")[0]);
+        let minutes = parseInt(input.split(":")[1]);
         let date = new Date();
         date.setHours(hours);
         date.setMinutes(minutes);

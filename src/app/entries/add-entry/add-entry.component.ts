@@ -17,6 +17,7 @@ import { EntryComponent } from '../entries.component';
 import {MatSnackBar} from '@angular/material';
 import { DateHelper } from '../../helpers/dateHelper';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {Time} from '../../helpers/time';
 
 @Component({
   selector: 'app-add-entry',
@@ -61,6 +62,7 @@ export class AddEntryComponent implements OnInit {
     this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
     // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
     console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
+    let time = new Time();
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
@@ -180,6 +182,7 @@ export class AddEntryComponent implements OnInit {
 
   public roundMinutes():void{
     let startTime = this.selectedEntry.entryStartTime;
+    console.log('roundMinutes: '+startTime);
     let shours = parseInt(startTime.substr(0,2));
     let sminutes = parseInt(startTime.substr(3,5));
     let smodulus = sminutes%5;
