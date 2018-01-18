@@ -12,7 +12,11 @@ export class AuthService {
     }
 
     public isAdmin(){
-        return this.getAuthorization() && this.loggedUserObject.employeeRole === 'admin';
+        return this.isAuthorized() && this.loggedUserObject.employeeRole === 'administration';
+    }
+
+    public isManager(){
+        return this.isAuthorized() && this.loggedUserObject.employeeRole === 'manager';
     }
 
     public createAuthHeader(email: string, password: string) {

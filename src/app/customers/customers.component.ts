@@ -16,8 +16,10 @@ export class CustomersComponent implements OnInit {
   displayedColumns = ['customerName', 'customerDescription', 'customerModify','customerDelete'];
   selectedCustomer: CustomerModel = new CustomerModel();
   loggedEmployeeModel: Employee;
+  admin:boolean = false;
   constructor(private customerService: CustomerService, auth: AuthService, private dialogService: DialogService, private snackBar: MatSnackBar) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
+    this.admin = auth.isAdmin();
     this.customerService.getAllCustomers().subscribe( customers=> {
       this.dataSource = new MatTableDataSource<CustomerModel>(customers);
     }, (error) => console.log(error.SessionNotCreatedError));

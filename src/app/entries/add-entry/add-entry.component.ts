@@ -7,13 +7,15 @@ import { Project } from '../../models/ProjectModel';
 import { FormsModule } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {NgForm} from '@angular/forms';
-import { UserStoryService } from '../../services/userStory.service';
-import { UserStory } from '../../models/UserStoryModel';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/CategoryModel';
-import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { HoursComponent } from '../hours.component';
+import { Task } from '../../models/TaskModel';
+import { TaskService } from '../../services/task.service';
+import { EntryService } from '../../services/entry.service';
+import { EntryComponent } from '../entries.component';
+import {MatSnackBar} from '@angular/material';
+import { DateHelper } from '../../helpers/dateHelper';
 
 @Component({
   selector: 'app-add-entry',
@@ -22,11 +24,10 @@ import { HoursComponent } from '../hours.component';
 })
 @Injectable()
 export class AddEntryComponent implements OnInit {
-  @ViewChild('projectSelect') projectSelect;
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
-  public userStoryList: UserStory[];
+  public userStoryList: Task[];
 
   public projectListOpen = false;
 
@@ -36,8 +37,9 @@ export class AddEntryComponent implements OnInit {
   minDate: Date;
 
   constructor(private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: HoursService, private hoursComponent: HoursComponent) { 
+    private userStoryService: TaskService, private categoryService: CategoryService,
+    private auth: AuthService, private entryService: EntryService, 
+    private entryComponent: EntryComponent,public snackBar: MatSnackBar, private dateHelper: DateHelper) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -47,12 +49,17 @@ export class AddEntryComponent implements OnInit {
     // maximum te kiezen datum (vandaag)
     this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    // this.minDate = new Date(yyyy, mm, dd - 7);
+    this.minDate = new Date(yyyy, mm, dd - 7);
   }
 
   ngOnInit() {
     this.updateProjects();
     this.updateCategories();
+    let today = new Date();
+    this.selectedEntry.entryDate= today.toISOString();
+    this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
+    // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
+    console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
@@ -72,8 +79,8 @@ export class AddEntryComponent implements OnInit {
     .toPromise()
     .then(res => res)
     .then(userstories => userstories.map(userstory => {
-      return new UserStory(
-        userstory.userStoryID,
+      return new Task(
+        userstory.userStoryId,
         userstory.userStoryName,
         userstory.userStoryDescription,
         userstory.userStoryIsDeleted,
@@ -115,15 +122,40 @@ export class AddEntryComponent implements OnInit {
   public onSubmit():void{
     console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
       +", date: "+this.selectedEntry.entryDate
+      +", time: "+this.selectedEntry.entryStartTime
       +", project: "+this.selectedEntry.entryProjectFk);
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+      if(this.validateData()){
+        let result = this.entryService.createEntry(this.selectedEntry).then((data)=>{
+          if(data){
+            this.snackBar.open('Nieuwe entry succesvol toegevoegd.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
+          this.entryComponent.updateData();
+        }, (error) => console.log(error.SessionNotCreatedError));
+      }
+  }
 
-      this.hoursService.createEntry(this.selectedEntry).then((data) => {
-          console.log(data);
-          this.hoursComponent.updateData();
-        }
-      );
+  private validateData(): boolean{
+    if(this.selectedEntry.employeeFk==null){
+      this.snackBar.open('Geweigerd: U lijkt niet ingelogd te zijn','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDescription==null){
+      this.snackBar.open('Vul alstublieft een beschrijving in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDate==null){
+      this.snackBar.open('Vul alstublieft een datum in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryStartTime==null){
+      this.snackBar.open('Vul alstublieft een starttijd in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryEndTime==null){
+      this.snackBar.open('Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    return true;
   }
 
   log(anything){
@@ -131,6 +163,11 @@ export class AddEntryComponent implements OnInit {
   }
 
   public close():void{
-    this.hoursComponent.createMode=false;
+    this.entryComponent.createMode=false;
+  }
+
+  public setDate(event){
+    this.selectedEntry.entryDate=event.value;
+    console.log('setDate: '+this.selectedEntry.entryDate);
   }
 }

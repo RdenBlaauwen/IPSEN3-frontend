@@ -7,14 +7,15 @@ import { Project } from '../../models/ProjectModel';
 import { FormsModule } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {NgForm} from '@angular/forms';
-import { UserStoryService } from '../../services/userStory.service';
-import { UserStory } from '../../models/UserStoryModel';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/CategoryModel';
-import {HoursService} from '../../services/hours.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { HoursComponent } from '../hours.component';
 import { Subject } from 'rxjs/Subject';
+import { Task } from '../../models/TaskModel';
+import { TaskService } from '../../services/task.service';
+import { EntryComponent } from '../entries.component';
+import { EntryService } from '../../services/entry.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-edit-entry',
@@ -27,7 +28,7 @@ export class EditEntryComponent implements OnInit {
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
-  public userStoryList: UserStory[];
+  public userStoryList: Task[];
 
   public projectListOpen = false;
 
@@ -37,8 +38,9 @@ export class EditEntryComponent implements OnInit {
   minDate: Date;
 
   constructor(private projectService: ProjectService, 
-    private userStoryService: UserStoryService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: HoursService, private hoursComponent: HoursComponent) { 
+    private userStoryService: TaskService, private categoryService: CategoryService,
+    private auth: AuthService, private hoursService: EntryService, 
+    private hoursComponent: EntryComponent, public snackBar: MatSnackBar) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -82,8 +84,8 @@ export class EditEntryComponent implements OnInit {
     this.userStoryService.getAllUserStories().toPromise()
     .then(res => res)
     .then(userstories => userstories.map(userstory => {
-      return new UserStory(
-        userstory.userStoryID,
+      return new Task(
+        userstory.userStoryId,
         userstory.userStoryName,
         userstory.userStoryDescription,
         userstory.userStoryIsDeleted,
@@ -125,15 +127,40 @@ export class EditEntryComponent implements OnInit {
   public onSubmit():void{
     console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
       +", date: "+this.selectedEntry.entryDate
-      +", project: "+this.selectedEntry.entryProjectFk);
+      +", project: "+this.selectedEntry.entryProjectFk
+      +", starttijd: "+this.selectedEntry.entryStartTime);
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
-
-      this.hoursService.updateEntry(this.selectedEntry).then((data) => {
-          console.log(data);
+      if(this.validateData()){
+        this.hoursService.updateEntry(this.selectedEntry).then((data) => {
+          if(data){
+            this.snackBar.open('Entry succesvol bijgewerkt.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
           this.hoursComponent.updateData();
-        }
-      );
+        }, (error) => console.log(error.SessionNotCreatedError));
+      }
+  }
+  private validateData(): boolean{
+    if(this.selectedEntry.employeeFk==null){
+      this.snackBar.open('Geweigerd: U lijkt niet ingelogd te zijn','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDescription==null
+      ||this.selectedEntry.entryDescription==""){
+      this.snackBar.open('Mislukt: Vul alstublieft een beschrijving in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDate==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een datum in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryStartTime==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een starttijd in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryEndTime==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    return true;
   }
 
   log(anything){

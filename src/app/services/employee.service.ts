@@ -6,6 +6,7 @@ import { Employee } from '../models/Employee';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Subject } from 'rxjs/Subject';
+import { Role } from '../models/Role';
 
 @Injectable()
 export class EmployeeService {
@@ -23,7 +24,14 @@ export class EmployeeService {
     }
     constructor(private auth: AuthService, private router: Router, private http: Http, private httpN: HttpClient, private snackBar: MatSnackBar) {}
 
-
+    public getRoles(){
+        let roles:Role[] = [];
+        let admin = new Role(1, 'administration');
+        let manager = new Role(1, 'manager');
+        let employee = new Role(1, 'employee');
+        roles.push(admin, manager, employee);
+        return roles;
+    }
 
     public createEmployee(employee: Employee){
         const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
@@ -60,7 +68,7 @@ export class EmployeeService {
     }
 
     public goHome() {
-        this.router.navigate(['hour-management']);
+        this.router.navigate(['entry-management']);
         location.reload(false);
     }
 

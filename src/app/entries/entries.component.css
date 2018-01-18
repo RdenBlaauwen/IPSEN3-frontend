@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     min-width: 300px;
-    min-height: 600px;
   }
   
   .example-header {
@@ -21,7 +20,6 @@
     max-height: 500px;
   }
 
-
-.matTable{
-  
-}
+  .mat-header-search{
+    margin: 0 4px 0 4px;
+  }

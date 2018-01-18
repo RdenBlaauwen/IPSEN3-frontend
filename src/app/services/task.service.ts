@@ -4,23 +4,23 @@ import { AuthService } from "./auth.service";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import { Router } from "@angular/router";
-import { UserStory } from "../models/UserStoryModel"
 import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
+import { Task } from "../models/TaskModel";
 
 @Injectable()
-export class UserStoryService
+export class TaskService
 {
     readonly ALL_USERSTORIES_JSON = 'http://localhost:8080/api/userstories/read';
     readonly INSERT_CATEGORY = 'http://localhost:8080/api/userstories/create/';
-    userStoryToModify : UserStory;
+    userStoryToModify : Task;
     private subject = new Subject<any>();
     
     constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
     
     
-    newEvent(userStory: UserStory){
+    newEvent(userStory: Task){
         this.subject.next(userStory);
     }
     get events$ (){
@@ -28,11 +28,11 @@ export class UserStoryService
     }
     
     
-    public insertNewUserStory(sp: UserStory): void
+    public insertNewUserStory(sp: Task): void
     {
         let data =
         {
-            userStoryID: sp.userStoryID,
+            userStoryID: sp.userStoryId,
             userStoryName: sp.userStoryName,
             userStoryDescription: sp.userStoryDescription,
             userStoryIsDeleted: sp.userStoryIsDeleted,
@@ -62,7 +62,6 @@ export class UserStoryService
             this.auth.emailAddress, this.auth.password);
         this.httpN.get(`http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
-              console.log(res.json());
             for(let category of res.json())
             {
                 let categoryContainer = new Category(
@@ -88,7 +87,6 @@ export class UserStoryService
             this.auth.emailAddress, this.auth.password);
         this.httpN.get(`http://localhost:8080/api/projects/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
-              console.log(res.json());
             for(let project of res.json())
             {
                 let projectContainer = new Project(
@@ -101,20 +99,20 @@ export class UserStoryService
           return projects;
     }
 
-    getAllUserStories(): Observable<UserStory[]> {
+    getAllUserStories(): Observable<Task[]> {
         const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
       return this.http.get<Category[]>(this.ALL_USERSTORIES_JSON, {headers: headers});
     }
 
 
-    public setUserStoryToModify(userStory: UserStory) {
+    public setUserStoryToModify(userStory: Task) {
         this.userStoryToModify = userStory;
         this.router.navigate(['modify-category']);
       }
 
-      public removeUserStory(sp: UserStory) {
+      public removeUserStory(sp: Task) {
         const data = {
-            userStoryID: sp.userStoryID,
+            userStoryID: sp.userStoryId,
             userStoryName: sp.userStoryName,
             userStoryDescription: sp.userStoryDescription,
             userStoryIsDeleted: sp.userStoryIsDeleted,
@@ -135,9 +133,9 @@ export class UserStoryService
         );
       }
 
-      public updateUserStory(userStory: UserStory) {
+      public updateUserStory(userStory: Task) {
         const data = {
-            userStoryID: userStory.userStoryID,
+            userStoryID: userStory.userStoryId,
             userStoryName: userStory.userStoryName,
             userStoryDescription: userStory.userStoryDescription,
             userStoryIsDeleted: userStory.userStoryIsDeleted,

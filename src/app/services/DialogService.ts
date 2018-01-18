@@ -6,7 +6,7 @@ import { CreateCustomerComponent } from '../customers/create-customer/create-cus
 import { AddProjectComponent } from '../projects/add-project/add-project.component';
 import { CreateAccountComponent } from '../accounts/create-account/create-account.component';
 import { CreateCategoryComponent } from '../categories/create-category/create-category.component';
-import { AddUserStoryComponent } from '../userstories/add-userstory/add-userstory.component';
+import { AddTaskComponent } from '../tasks/add-tasks/add-tasks.component';
 @Injectable()
 export class DialogService {
 
@@ -55,9 +55,9 @@ export class DialogService {
 
     public createUserStory():Observable<boolean>{
         
-        let dialogRef: MatDialogRef<AddUserStoryComponent>;
+        let dialogRef: MatDialogRef<AddTaskComponent>;
 
-        dialogRef = this.dialog.open(AddUserStoryComponent);
+        dialogRef = this.dialog.open(AddTaskComponent);
 
         return dialogRef.afterClosed();
     }

@@ -4,6 +4,7 @@ import { Project } from '../../models/ProjectModel';
 import { CustomerModel } from '../../models/CustomerModel';
 import { EmployeeService } from '../../services/employee.service';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-edit-project',
@@ -25,8 +26,10 @@ export class EditProjectComponent implements OnInit{
   customers: CustomerModel[];
   selectedCustomer: number;
   fillCustomer = new FormControl();
-  constructor(private projectService: ProjectService) {
+  admin:boolean = false;
+  constructor(private projectService: ProjectService, auth: AuthService) {
     this.customers = projectService.getAllCustomers();
+    this.admin = auth.isAdmin();
    }
 
    modifyProject()

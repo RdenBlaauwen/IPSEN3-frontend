@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     min-width: 300px;
-    min-height: 600px;
   }
   
   .example-header {
@@ -20,8 +19,3 @@
     overflow: auto;
     max-height: 500px;
   }
-
-
-.matTable{
-  
-}

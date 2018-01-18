@@ -3,7 +3,6 @@ import { ProjectService } from './../services/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule, MatSort, MatSortModule } from '@angular/material';
-import {HoursService} from '../services/hours.service';
 import { EntryModel } from '../models/EntryModel';
 import { Project } from '../models/ProjectModel';
 import {FormControl} from '@angular/forms';
@@ -19,8 +18,6 @@ import {MatTab} from '@angular/material/tabs';
 import { DateHelper } from '../helpers/dateHelper';
 import { FormsModule } from '@angular/forms';
 import {NgForm} from '@angular/forms';
-import { UserStoryService } from '../services/userStory.service';
-import { UserStory } from '../models/UserStoryModel';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/CategoryModel';
 import { AddEntryComponent } from './add-entry/add-entry.component';
@@ -28,24 +25,25 @@ import { EditEntryComponent } from './edit-entry/edit-entry.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogService} from '../services/DialogService';
+import { EntryService } from '../services/entry.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
-  selector: 'app-hours',
-  templateUrl: './hours.component.html',
-  styleUrls: ['./hours.component.css']
+  selector: 'app-entries',
+  templateUrl: './entries.component.html',
+  styleUrls: ['./entries.component.css']
 })
 @Injectable()
-export class HoursComponent implements OnInit {
+export class EntryComponent implements OnInit {
   displayedColumns = ['entryDescription', 'entryStatus','entryDate','entryStartTime',
                       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
                       'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
   dataSource: MatTableDataSource<EntryModel>;
   weekFilter: WeekFilter;
   currentWeek = '18-12-2017';
-  availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
+  availableWeeks=[];
   oldVersionsChecked = false;
   public selectedRow: EntryModel;
-  dateHelper = new DateHelper();
   currentRole = 'employee';
 
   public createMode = true;
@@ -53,9 +51,9 @@ export class HoursComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, 
-     private auth: AuthService, private dialogService: DialogService) {
-
+  constructor(private hoursService: EntryService, private dateHelper: DateHelper,
+     private auth: AuthService, private dialogService: DialogService,public snackBar: MatSnackBar) {
+      this.generateWeekDates();
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
     } else{
@@ -67,6 +65,20 @@ export class HoursComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();  
+  }
+  private generateWeekDates():void{
+      // bereken welke datum het is
+      const weekDate = this.dateHelper.getFirstDayOfWeekDate(new Date());
+      this.currentWeek = this.dateHelper.dateToString(weekDate);
+      const dd = weekDate.getDate();
+      const mm =  weekDate.getMonth();
+      const yyyy = weekDate.getFullYear();
+      // maximum te kiezen datum (vandaag)
+
+    for(let i=0; i<140;i+=7){
+      this.availableWeeks.push(this.dateHelper.dateToString(new Date(yyyy,mm,dd-i)));
+      // this.availableWeeks.push(this.dateHelper.dateToString(new Date())); 
+    }
   }
 
   tabChange(event: MatTabChangeEvent){
@@ -96,19 +108,6 @@ export class HoursComponent implements OnInit {
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
    }
-  //  readProjectList(): Promise<Project[]> {
-  //    return this.projectService.getAllProjects().toPromise()
-  //    .then(res => res).then(projects => projects.map(project => {
-  //       return new Project(
-  //         project.projectId,
-  //         project.projectName,
-  //         project.projectDescription,
-  //         project.projectIsDeleted,
-  //         project.projectCustomerFk,
-  //         project.customerName
-  //       );
-  //    }));
-  //  }
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
@@ -122,11 +121,9 @@ export class HoursComponent implements OnInit {
       'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
     }
     // this.filterEntries();
-    console.log($event);
   }
 
   public openEditEntry(row):void{
-    console.log('selectRow(): '+row.entryDescription);
     this.selectedRow=row;
     this.hoursService.selectedEntry=row;
 
@@ -149,7 +146,12 @@ export class HoursComponent implements OnInit {
     .subscribe(res => {
       if (res.valueOf()) {
         this.hoursService.deleteEntry(row).then((data) => {
-            this.updateData();
+          if(data){
+            this.snackBar.open('Nieuwe entry succesvol verwijderd.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
+          this.updateData();
           }, (error) => console.log(error.SessionNotCreatedError));
       }
     });

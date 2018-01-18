@@ -22,10 +22,12 @@ export class ProjectsComponent implements OnInit {
   loggedEmployeeModel: Employee;
   customers: CustomerModel[];
   selectedCustomer = new CustomerModel();
+  admin: boolean = false;
   
   constructor(private projectService: ProjectService, auth: AuthService, private dialogService: DialogService) {
     this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
+    this.admin = auth.isAdmin();
     this.projectService.getAllProjects().then((data) => {
       this.dataSource = new MatTableDataSource<Project>(data);
     }, (error) => console.log(error.SessionNotCreatedError));
