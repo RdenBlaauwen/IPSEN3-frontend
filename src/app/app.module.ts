@@ -55,6 +55,7 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
 
 import { AddEntryComponent } from './hours/add-entry/add-entry.component';
 import {EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+import { DateHelper } from './helpers/dateHelper';
 
 
 
@@ -120,6 +121,7 @@ import {EditEntryComponent } from './hours/edit-entry/edit-entry.component';
   ],
   providers: [ProjectService,
     AuthService,
+    DateHelper,
     EmployeeService,
     HoursService, 
     CategoryService,

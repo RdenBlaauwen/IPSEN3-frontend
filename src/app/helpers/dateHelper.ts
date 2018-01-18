@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class DateHelper{
     /**
      * Veranderd een date in een string van formaat dd-MM-yyyy
@@ -8,6 +11,7 @@ export class DateHelper{
     public dateToString(input: Date): string{
         let day = input.getDate();
         let month = input.getMonth();
+        month++;
         let year = input.getFullYear();
         return day+"-"+month+"-"+year;
     }
@@ -17,5 +21,12 @@ export class DateHelper{
         let month = date.getMonth()+1;
         let year = date.getFullYear();
         return day+"-"+month+"-"+year;
+    }
+    public getFirstDayOfWeekDate(date: Date): Date{
+        let dayNumber = date.getDay();
+        let day = date.getDate();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        return new Date(year, month, (day+1)-dayNumber);
     }
 }

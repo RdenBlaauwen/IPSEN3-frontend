@@ -42,10 +42,9 @@ export class HoursComponent implements OnInit {
   dataSource: MatTableDataSource<EntryModel>;
   weekFilter: WeekFilter;
   currentWeek = '18-12-2017';
-  availableWeeks = ['18-12-2017','11-12-2017','04-12-2017','27-11-2017','20-11-2017','13-11-2017','06-11-2017'];
+  availableWeeks=[];
   oldVersionsChecked = false;
   public selectedRow: EntryModel;
-  dateHelper = new DateHelper();
   currentRole = 'employee';
 
   public createMode = true;
@@ -53,9 +52,9 @@ export class HoursComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private hoursService: HoursService, 
+  constructor(private hoursService: HoursService, private dateHelper: DateHelper,
      private auth: AuthService, private dialogService: DialogService) {
-
+      this.generateWeekDates();
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
     } else{
@@ -67,6 +66,20 @@ export class HoursComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();  
+  }
+  private generateWeekDates():void{
+      // bereken welke datum het is
+      const weekDate = this.dateHelper.getFirstDayOfWeekDate(new Date());
+      this.currentWeek = this.dateHelper.dateToString(weekDate);
+      const dd = weekDate.getDate();
+      const mm =  weekDate.getMonth();
+      const yyyy = weekDate.getFullYear();
+      // maximum te kiezen datum (vandaag)
+
+    for(let i=0; i<140;i+=7){
+      this.availableWeeks.push(this.dateHelper.dateToString(new Date(yyyy,mm,dd-i)));
+      // this.availableWeeks.push(this.dateHelper.dateToString(new Date())); 
+    }
   }
 
   tabChange(event: MatTabChangeEvent){
