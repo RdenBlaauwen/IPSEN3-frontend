@@ -1,9 +1,9 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <h1>Toevoegen Entry</h1>
-        </mat-card-title>
-    </mat-card-header>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4><i class="fa fa-plus-square-o" aria-hidden="true"></i>Toevoegen Entry</h4>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <mat-card-content>
     <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
 
@@ -28,7 +28,7 @@
           (dateInput)="setDate($event)" 
           (dateChange)="setDate($event)" 
           [formControl]="entryDateControl" 
-          required>
+          required autofocus>
           <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
           <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
           <mat-datepicker #entrydatePicker></mat-datepicker>
@@ -40,7 +40,8 @@
             #startTimeField="ngModel"  
             id="startTimeField" name="startTimeField" 
             placeholder="Starttijd" 
-            ngModel type="time" 
+            ngModel type="time" step="300" 
+            (blur)="roundMinutes()" 
             [value]="selectedEntry.entryStartTime"
             [(ngModel)]="selectedEntry.entryStartTime" required>
           <mat-error *ngIf="startTimeField.touched && !startTimeField.valid">Starttijd is verplicht.</mat-error>
@@ -51,7 +52,8 @@
             #endTimeField="ngModel"  
             id="endTimeField" name="endTimeField" 
             placeholder="Eindtijd" 
-            ngModel type="time" 
+            ngModel type="time" step="300" 
+            (blur)="roundMinutes()" 
             [value]="selectedEntry.entryEndTime"
             [(ngModel)]="selectedEntry.entryEndTime" required>
           <mat-error *ngIf="endTimeField.touched && !endTimeField.valid">Eindtijd is verplicht.</mat-error>
@@ -87,4 +89,4 @@
       </div>
     </form>
   </mat-card-content>
-</mat-card>
+</mat-expansion-panel>

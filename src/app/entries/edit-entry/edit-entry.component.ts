@@ -16,6 +16,8 @@ import { TaskService } from '../../services/task.service';
 import { EntryComponent } from '../entries.component';
 import { EntryService } from '../../services/entry.service';
 import {MatSnackBar} from '@angular/material';
+import { DateHelper } from '../../helpers/dateHelper';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-edit-entry',
@@ -40,7 +42,7 @@ export class EditEntryComponent implements OnInit {
   constructor(private projectService: ProjectService, 
     private userStoryService: TaskService, private categoryService: CategoryService,
     private auth: AuthService, private hoursService: EntryService, 
-    private hoursComponent: EntryComponent, public snackBar: MatSnackBar) { 
+    private hoursComponent: EntryComponent, public snackBar: MatSnackBar, public dateHelper: DateHelper) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -160,6 +162,15 @@ export class EditEntryComponent implements OnInit {
       this.snackBar.open('Mislukt: Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
       return false;
     }
+    return this.validateTimeDifference();
+  }
+  private validateTimeDifference(): boolean{
+    let parsedStartTime = this.dateHelper.stringToDate(this.selectedEntry.entryStartTime);
+    let parsedEndTime = this.dateHelper.stringToDate(this.selectedEntry.entryEndTime);
+    if(parsedStartTime>=parsedEndTime){
+      this.snackBar.open('Vul alstublieft een begintijd in die minder is dan de starttijd.','Ok',{duration: 3000});
+      return false;
+    }
     return true;
   }
 
@@ -169,5 +180,29 @@ export class EditEntryComponent implements OnInit {
 
   public close():void{
     this.hoursComponent.updateMode=false;
+    this.hoursComponent.createMode=true;
+  }
+
+  public roundMinutes():void{
+    let startTime = this.selectedEntry.entryStartTime;
+    let shours = parseInt(startTime.substr(0,2));
+    let sminutes = parseInt(startTime.substr(3,5));
+    let smodulus = sminutes%5;
+    if(smodulus<3){
+      this.selectedEntry.entryStartTime=shours+":"+(sminutes-smodulus);
+    }else{
+      this.selectedEntry.entryStartTime=shours+":"+(sminutes+(5-smodulus));
+    }
+    let endTime = this.selectedEntry.entryEndTime;
+    let ehours = parseInt(startTime.substr(0,2));
+    let eminutes = parseInt(startTime.substr(3,5));
+    let emodulus = eminutes%5;
+    if(emodulus<3){
+      this.selectedEntry.entryStartTime=ehours+":"+(eminutes-emodulus);
+    }else{
+      this.selectedEntry.entryStartTime=ehours+":"+(eminutes+(5-emodulus));
+    }
+    console.log('round minute: '+(eminutes%5));
+    this.validateTimeDifference();
   }
 }

@@ -39,7 +39,11 @@ export class DateHelper{
         }
     }
     public stringToDate(input: string): Date{
-        let date = new Date(input);
+        let hours = parseInt(input.substr(0,2));
+        let minutes = parseInt(input.substr(3,5));
+        let date = new Date();
+        date.setHours(hours);
+        date.setMinutes(minutes);
         return date;
     }
 }
