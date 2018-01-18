@@ -126,15 +126,36 @@ export class AddEntryComponent implements OnInit {
       +", project: "+this.selectedEntry.entryProjectFk);
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
+      if(this.validateData()){
+        let result = this.entryService.createEntry(this.selectedEntry).then((data)=>{
+          if(data){
+            this.snackBar.open('Nieuwe entry succesvol toegevoegd.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
+          this.entryComponent.updateData();
+        }, (error) => console.log(error.SessionNotCreatedError));
+      }
+  }
 
-      let result = this.entryService.createEntry(this.selectedEntry).then((data)=>{
-        if(data){
-          this.snackBar.open('Nieuwe entry succesvol toegevoegd.','Ok',{duration: 2000});
-        }else{
-          this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
-        }
-        this.entryComponent.updateData();
-      }, (error) => console.log(error.SessionNotCreatedError));
+  private validateData(): boolean{
+    if(this.selectedEntry.employeeFk==null){
+      this.snackBar.open('Geweigerd: U lijkt niet ingelogd te zijn','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDescription==null){
+      this.snackBar.open('Vul alstublieft een beschrijving in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDate==null){
+      this.snackBar.open('Vul alstublieft een datum in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryStartTime==null){
+      this.snackBar.open('Vul alstublieft een starttijd in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryEndTime==null){
+      this.snackBar.open('Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    return true;
   }
 
   log(anything){

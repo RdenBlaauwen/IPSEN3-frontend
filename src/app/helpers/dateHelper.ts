@@ -38,4 +38,8 @@ export class DateHelper{
             return hours+":"+minutes;
         }
     }
+    public stringToDate(input: string): Date{
+        let date = new Date(input);
+        return date;
+    }
 }

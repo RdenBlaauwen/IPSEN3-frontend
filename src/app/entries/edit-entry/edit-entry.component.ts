@@ -127,11 +127,12 @@ export class EditEntryComponent implements OnInit {
   public onSubmit():void{
     console.log('onSubmit()! description: '+this.selectedEntry.entryDescription
       +", date: "+this.selectedEntry.entryDate
-      +", project: "+this.selectedEntry.entryProjectFk);
+      +", project: "+this.selectedEntry.entryProjectFk
+      +", starttijd: "+this.selectedEntry.entryStartTime);
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
-
-      this.hoursService.updateEntry(this.selectedEntry).then((data) => {
+      if(this.validateData()){
+        this.hoursService.updateEntry(this.selectedEntry).then((data) => {
           if(data){
             this.snackBar.open('Entry succesvol bijgewerkt.','Ok',{duration: 2000});
           }else{
@@ -139,6 +140,27 @@ export class EditEntryComponent implements OnInit {
           }
           this.hoursComponent.updateData();
         }, (error) => console.log(error.SessionNotCreatedError));
+      }
+  }
+  private validateData(): boolean{
+    if(this.selectedEntry.employeeFk==null){
+      this.snackBar.open('Geweigerd: U lijkt niet ingelogd te zijn','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDescription==null
+      ||this.selectedEntry.entryDescription==""){
+      this.snackBar.open('Mislukt: Vul alstublieft een beschrijving in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryDate==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een datum in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryStartTime==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een starttijd in.','Ok',{duration: 3000});
+      return false;
+    }else if(this.selectedEntry.entryEndTime==null){
+      this.snackBar.open('Mislukt: Vul alstublieft een eindtijd in.','Ok',{duration: 3000});
+      return false;
+    }
+    return true;
   }
 
   log(anything){
