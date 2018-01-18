@@ -53,12 +53,17 @@ import { CreateAccountComponent } from './accounts/create-account/create-account
 import { ModifyComponent } from './accounts/modify/modify.component';
 import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
 
+import { AddEntryComponent } from './hours/add-entry/add-entry.component';
+import {EditEntryComponent } from './hours/edit-entry/edit-entry.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HoursComponent,
+    AddEntryComponent,
+    EditEntryComponent,
     ProjectsComponent,
     CategoryComponent,
     UserStoryComponent,

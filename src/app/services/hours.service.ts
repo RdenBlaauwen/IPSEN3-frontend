@@ -7,14 +7,21 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { WeekModel } from '../models/WeekModel';
 import { HoursComponent } from '../hours/hours.component';
-
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class HoursService {
   readonly ALL_ENTRIES_JSON = 'http://localhost:8080/api/entries';
-  constructor(private auth: AuthService, private router: Router, private http: HttpClient) {
-  }
-
+  private subject = new Subject<any>();
+  public selectedEntry: EntryModel;
+  constructor(private auth: AuthService, private router: Router, private http: HttpClient) {}
+  newEvent(entry: EntryModel){
+    console.log('newEvent: '+entry.entryDescription);
+    this.subject.next(entry);
+    }
+    get events$ (){
+        return this.subject.asObservable();
+    }
   // retrieveData(){
   //   let authorization = this.auth.getAuthorization();
   //   let headers = this.auth.createAuthHeader(authorization['email'], authorization['password']);
@@ -40,13 +47,17 @@ export class HoursService {
 
   public createEntry(entry: EntryModel): Promise<any> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    // this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers})
-    // .subscribe(response => {
-    //   hoursComponent.updateData();
-    //   console.log(response);
-    //   return response.;
-    // });
     let result=this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers});
+    return result.toPromise().then(res => {return res});
+  }
+  public updateEntry(entry: EntryModel): Promise<any> {
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    let result=this.http.put(this.ALL_ENTRIES_JSON, entry, {headers: headers});
+    return result.toPromise().then(res => {return res});
+  }
+  public deleteEntry(entry: EntryModel): Promise<any> {
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    let result=this.http.delete(this.ALL_ENTRIES_JSON+'?entryid='+entry.entryId, {headers: headers});
     return result.toPromise().then(res => {return res});
   }
 }
