@@ -68,7 +68,7 @@ export class EmployeeService {
     }
 
     public goHome() {
-        this.router.navigate(['hour-management']);
+        this.router.navigate(['entry-management']);
         location.reload(false);
     }
 

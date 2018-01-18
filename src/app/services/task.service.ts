@@ -62,7 +62,6 @@ export class TaskService
             this.auth.emailAddress, this.auth.password);
         this.httpN.get(`http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
-              console.log(res.json());
             for(let category of res.json())
             {
                 let categoryContainer = new Category(
@@ -88,7 +87,6 @@ export class TaskService
             this.auth.emailAddress, this.auth.password);
         this.httpN.get(`http://localhost:8080/api/projects/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
-              console.log(res.json());
             for(let project of res.json())
             {
                 let projectContainer = new Project(
