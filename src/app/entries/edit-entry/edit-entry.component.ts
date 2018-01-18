@@ -15,6 +15,7 @@ import { Task } from '../../models/TaskModel';
 import { TaskService } from '../../services/task.service';
 import { EntryComponent } from '../entries.component';
 import { EntryService } from '../../services/entry.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-edit-entry',
@@ -38,7 +39,8 @@ export class EditEntryComponent implements OnInit {
 
   constructor(private projectService: ProjectService, 
     private userStoryService: TaskService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: EntryService, private hoursComponent: EntryComponent) { 
+    private auth: AuthService, private hoursService: EntryService, 
+    private hoursComponent: EntryComponent, public snackBar: MatSnackBar) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -130,10 +132,13 @@ export class EditEntryComponent implements OnInit {
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
       this.hoursService.updateEntry(this.selectedEntry).then((data) => {
-          console.log(data);
+          if(data){
+            this.snackBar.open('Entry succesvol bijgewerkt.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
           this.hoursComponent.updateData();
-        }
-      );
+        }, (error) => console.log(error.SessionNotCreatedError));
   }
 
   log(anything){

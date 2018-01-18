@@ -45,14 +45,10 @@ export class EntryService {
     
   // }
 
-  public createEntry(entry: EntryModel){
+  public createEntry(entry: EntryModel): Promise<any>{
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers}).subscribe(res=>{
-      alert("gelukt")
-    },error=>{
-      alert("mislukt");
-    });
-    //return result.toPromise().then(res => {return res});
+    let result = this.http.post(this.ALL_ENTRIES_JSON, entry, {headers: headers});
+    return result.toPromise().then(res => {return res});
   }
   public updateEntry(entry: EntryModel): Promise<any> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);

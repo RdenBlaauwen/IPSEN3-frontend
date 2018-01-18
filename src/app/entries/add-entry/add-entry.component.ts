@@ -14,6 +14,8 @@ import { Task } from '../../models/TaskModel';
 import { TaskService } from '../../services/task.service';
 import { EntryService } from '../../services/entry.service';
 import { EntryComponent } from '../entries.component';
+import {MatSnackBar} from '@angular/material';
+import { DateHelper } from '../../helpers/dateHelper';
 
 @Component({
   selector: 'app-add-entry',
@@ -37,7 +39,8 @@ export class AddEntryComponent implements OnInit {
 
   constructor(private projectService: ProjectService, 
     private userStoryService: TaskService, private categoryService: CategoryService,
-    private auth: AuthService, private hoursService: EntryService, private hoursComponent: EntryComponent) { 
+    private auth: AuthService, private entryService: EntryService, 
+    private entryComponent: EntryComponent,public snackBar: MatSnackBar, private dateHelper: DateHelper) { 
 
       // bereken welke datum het is
     const today = new Date();
@@ -47,12 +50,14 @@ export class AddEntryComponent implements OnInit {
     // maximum te kiezen datum (vandaag)
     this.maxDate = new Date(yyyy, mm, dd);
     // minimum te kiezen datum (week geleden)
-    // this.minDate = new Date(yyyy, mm, dd - 7);
+    this.minDate = new Date(yyyy, mm, dd - 7);
   }
 
   ngOnInit() {
     this.updateProjects();
     this.updateCategories();
+    this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
+    console.log("selectedEntry.entryDate="+this.selectedEntry.entryDate);
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
@@ -119,7 +124,14 @@ export class AddEntryComponent implements OnInit {
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
 
-      this.hoursService.createEntry(this.selectedEntry);
+      let result = this.entryService.createEntry(this.selectedEntry).then((data)=>{
+        if(data){
+          this.snackBar.open('Nieuwe entry succesvol toegevoegd.','Ok',{duration: 2000});
+        }else{
+          this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+        }
+        this.entryComponent.updateData();
+      }, (error) => console.log(error.SessionNotCreatedError));
   }
 
   log(anything){
@@ -127,6 +139,6 @@ export class AddEntryComponent implements OnInit {
   }
 
   public close():void{
-    this.hoursComponent.createMode=false;
+    this.entryComponent.createMode=false;
   }
 }

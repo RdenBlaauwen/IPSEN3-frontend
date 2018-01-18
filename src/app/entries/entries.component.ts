@@ -26,6 +26,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogService} from '../services/DialogService';
 import { EntryService } from '../services/entry.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-entries',
@@ -51,7 +52,7 @@ export class EntryComponent implements OnInit {
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: EntryService, private dateHelper: DateHelper,
-     private auth: AuthService, private dialogService: DialogService) {
+     private auth: AuthService, private dialogService: DialogService,public snackBar: MatSnackBar) {
       this.generateWeekDates();
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -107,19 +108,6 @@ export class EntryComponent implements OnInit {
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
    }
-  //  readProjectList(): Promise<Project[]> {
-  //    return this.projectService.getAllProjects().toPromise()
-  //    .then(res => res).then(projects => projects.map(project => {
-  //       return new Project(
-  //         project.projectId,
-  //         project.projectName,
-  //         project.projectDescription,
-  //         project.projectIsDeleted,
-  //         project.projectCustomerFk,
-  //         project.customerName
-  //       );
-  //    }));
-  //  }
 
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
@@ -158,7 +146,12 @@ export class EntryComponent implements OnInit {
     .subscribe(res => {
       if (res.valueOf()) {
         this.hoursService.deleteEntry(row).then((data) => {
-            this.updateData();
+          if(data){
+            this.snackBar.open('Nieuwe entry succesvol verwijderd.','Ok',{duration: 2000});
+          }else{
+            this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+          }
+          this.updateData();
           }, (error) => console.log(error.SessionNotCreatedError));
       }
     });
