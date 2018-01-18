@@ -22,12 +22,14 @@
         
         <mat-form-field class="col-sm-1">
           <input matInput 
-          #dateField="ngModel" [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" 
+          #dateField [min]="minDate" [max]="maxDate" [matDatepicker]="entrydatePicker" 
           id="dateField" name="dateField" 
           placeholder="Datum" 
-          ngModel 
-          [value]="selectedEntry.entryDate" 
-          [(ngModel)]="selectedEntry.entryDate" required>
+          
+          (dateInput)="setDate($event)" 
+          (dateChange)="setDate($event)" 
+          [formControl]="entryDateControl" 
+          required>
           <!-- dit hoort bij input, maar doet het nog niet: [formControl]="entryDateControl"  -->
           <mat-datepicker-toggle matSuffix [for]="entrydatePicker"></mat-datepicker-toggle>
           <mat-datepicker #entrydatePicker></mat-datepicker>

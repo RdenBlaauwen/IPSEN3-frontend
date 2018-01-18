@@ -56,8 +56,10 @@ export class AddEntryComponent implements OnInit {
   ngOnInit() {
     this.updateProjects();
     this.updateCategories();
-    this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
-    console.log("selectedEntry.entryDate="+this.selectedEntry.entryDate);
+    let today = new Date();
+    this.selectedEntry.entryDate= today.toISOString();
+    // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
+    // console.log("selectedEntry.entryDate="+this.selectedEntry.entryDate);
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
@@ -140,5 +142,10 @@ export class AddEntryComponent implements OnInit {
 
   public close():void{
     this.entryComponent.createMode=false;
+  }
+
+  public setDate(event){
+    this.selectedEntry.entryDate=event.value;
+    console.log('setDate: '+this.selectedEntry.entryDate);
   }
 }
