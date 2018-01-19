@@ -63,7 +63,7 @@ export class AddEntryComponent implements OnInit {
     // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
     // console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
     let time = new Time();
-    time.setFormat('HH:ss:mm');
+    time.setFormat('HH:mm:ss');
     console.log(' h: '+time.getHours()+' m: '+time.getMinutes()+' s: '+time.getSeconds()+' S: '+time.getMillisecond());
   }
   /**

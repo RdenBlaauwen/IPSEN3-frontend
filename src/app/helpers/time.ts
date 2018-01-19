@@ -42,6 +42,60 @@ export class Time{
         this.validateFormatString(formatString);
         let formatValues = formatString.split(":");
         let newValueList: TimeValue[] = [];
+        formatValues.forEach(newValue=>{
+            let valueToBeRemoved: TimeValue[] = [];
+            if(newValue.indexOf('H')>=0){
+
+                for(let i=0;i<this.valueList.length;i++){
+                    if(this.valueList[i].type.type==TimeValueTypeName.Hours){
+                        this.valueList[i].length=newValue.length;
+                        this.valueList[i].isIncluded=true;
+                        newValueList.push(this.valueList[i]);
+                        valueToBeRemoved.push(this.valueList[i]);
+                    }else{
+                        this.valueList[i].isIncluded=false;
+                    }
+                }
+                
+            } else if(newValue.indexOf('m')>=0){
+                for(let i=0;i<this.valueList.length;i++){
+                    if(this.valueList[i].type.type==TimeValueTypeName.Minutes){
+                        this.valueList[i].length=newValue.length;
+                        newValueList.push(this.valueList[i]);
+                        valueToBeRemoved.push(this.valueList[i]);
+                    }else{
+                        this.valueList[i].isIncluded=false;
+                    }
+                }
+                
+            } else if(newValue.indexOf('s')>=0){
+                for(let i=0;i<this.valueList.length;i++){
+                    if(this.valueList[i].type.type==TimeValueTypeName.Seconds){
+                        this.valueList[i].length=newValue.length;
+                        newValueList.push(this.valueList[i]);
+                        valueToBeRemoved.push(this.valueList[i]);
+                    }else{
+                        this.valueList[i].isIncluded=false;
+                    }
+                }
+                
+            } else if(newValue.indexOf('S')>=0){
+                for(let i=0;i<this.valueList.length;i++){
+                    if(this.valueList[i].type.type==TimeValueTypeName.Milliseconds){
+                        this.valueList[i].length=newValue.length;
+                        newValueList.push(this.valueList[i]);
+                        valueToBeRemoved.push(this.valueList[i]);
+                    }else{
+                        this.valueList[i].isIncluded=false;
+                    }
+                }
+            }
+            
+        });
+        for(let i=0;i<newValueList.length;i++){
+                console.log('time setFormat result: '+newValueList[i].type.type);
+        }
+        this.valueList=newValueList;
     }
 
     private validateFormatString(formatString: string): boolean{
@@ -93,10 +147,18 @@ export class Time{
     }
 
     public setByDate(date: Date){
-        this.valueList.push(new TimeValue(TimeValueTypeName.Hours,date.getHours()));
-        this.valueList.push(new TimeValue(TimeValueTypeName.Minutes,date.getMinutes()));
-        this.valueList.push(new TimeValue(TimeValueTypeName.Seconds,date.getSeconds()));
-        this.valueList.push(new TimeValue(TimeValueTypeName.Milliseconds,date.getMilliseconds()));
+        let timeValue =  new TimeValue(TimeValueTypeName.Hours);
+        timeValue.value=date.getHours();
+        this.valueList.push(timeValue);
+        let timeValue2 =  new TimeValue(TimeValueTypeName.Minutes);
+        timeValue2.value=date.getMinutes();
+        this.valueList.push(timeValue2);
+        let timeValue3 =  new TimeValue(TimeValueTypeName.Seconds);
+        timeValue3.value=date.getSeconds();
+        this.valueList.push(timeValue3);
+        let timeValue4 =  new TimeValue(TimeValueTypeName.Milliseconds);
+        timeValue4.value=date.getMilliseconds();
+        this.valueList.push(timeValue4);
     }
     public setByString(date: Date){
         
@@ -184,9 +246,8 @@ class TimeValue{
     public isIncluded = true;
     private _length: number;
 
-    constructor(typeName: TimeValueTypeName, value: number){
+    constructor(typeName: TimeValueTypeName){
         this.type = new TimeValueType(typeName);
-        this.value = value;
         this._length = this.type.maxLength;
     }
 
@@ -205,10 +266,11 @@ class TimeValue{
     }
 
     public set length(length:number){
-        if(length<this.type.maxLength&&length>=0){
+        if(length<=this.type.maxLength&&length>=0){
             this._length = length;
         }else{
-            throw this.constructor.name+': set format length failed; out of bounds (0-'+this.type.maxLength+')';
+            throw this.constructor.name+': set format length failed; out of bounds (0-'+this.type.maxLength+')'
+            +' got '+length;
         }
     }
 }
