@@ -61,8 +61,10 @@ export class AddEntryComponent implements OnInit {
     this.selectedEntry.entryDate= today.toISOString();
     this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
     // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
-    console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
+    // console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
     let time = new Time();
+    time.setFormat('HH:ss:mm');
+    console.log(' h: '+time.getHours()+' m: '+time.getMinutes()+' s: '+time.getSeconds()+' S: '+time.getMillisecond());
   }
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
