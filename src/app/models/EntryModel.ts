@@ -1,3 +1,6 @@
+
+import {Time, TimeUnit, Direction} from '../helpers/time';
+
 export class EntryModel {
     // isVisible = true;
     constructor(
@@ -17,5 +20,6 @@ export class EntryModel {
         public entryUserstoryName?: string,
         public isDeleted?: boolean,
         public isCurrent?: true,
-        public entryEmployeeName?: string) {}
+        public entryEmployeeName?: string) {
+        }
 }

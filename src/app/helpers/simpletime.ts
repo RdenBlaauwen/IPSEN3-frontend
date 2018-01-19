@@ -1,4 +1,4 @@
-export class Time {
+export class SimpleTime {
     private hours = new TimeUnitValue(TimeUnit.Hours);
     private minutes = new TimeUnitValue(TimeUnit.Minutes);
     private seconds = new TimeUnitValue(TimeUnit.Seconds);
@@ -142,11 +142,9 @@ export class Time {
         return timeString;
     }
 }
-
 export enum Direction {
     Up, Down, Standard,
 }
-
 class TimeUnitValue{
     public type: TimeUnitSettings;
     private _value: number;
@@ -205,7 +203,6 @@ class TimeUnitValue{
         this.round();
     }
 }
-
 class TimeUnitSettings{
     public type: TimeUnit;
     private _maxSize: number;
@@ -248,10 +245,12 @@ class TimeUnitSettings{
         }
     }
 }
-
 export enum TimeUnit{
     Hours='H',
     Minutes='m',
     Seconds='s',
     Milliseconds='S',
 }
+
+
+

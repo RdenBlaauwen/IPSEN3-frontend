@@ -17,7 +17,7 @@ import { EntryComponent } from '../entries.component';
 import {MatSnackBar} from '@angular/material';
 import { DateHelper } from '../../helpers/dateHelper';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {Time} from '../../helpers/time';
+import {Time, TimeUnit, Direction} from '../../helpers/time';
 
 @Component({
   selector: 'app-add-entry',
@@ -62,10 +62,17 @@ export class AddEntryComponent implements OnInit {
     this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
     // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
     // console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
-    let time = new Time();
-    time.setFormat('HH:mm:ss');
-    console.log(' h: '+time.getHours()+' m: '+time.getMinutes()+' s: '+time.getSeconds()+' S: '+time.getMillisecond());
+
+    // let time = new SimpleTime();
+    // time.setFormat('H:m:s');
+    // time.roundTimeUnit(TimeUnit.Minutes,5,Direction.Standard);
+    // time.setByString('5:11:5');
+    // time.setFormat('HH:mm');
+    // console.log('toString output is: '+time.toString());
+
+    // console.log(' h: '+time.getHours()+' m: '+time.getMinutes()+' s: '+time.getSeconds()+' S: '+time.getMillisecond());
   }
+
   /**
    * Haalt projecten uit database en zet ze in projectList voor in de drop down list.
    * 
@@ -183,26 +190,14 @@ export class AddEntryComponent implements OnInit {
   }
 
   public roundMinutes():void{
-    let startTime = this.selectedEntry.entryStartTime;
-    console.log('roundMinutes: '+startTime);
-    let shours = parseInt(startTime.substr(0,2));
-    let sminutes = parseInt(startTime.substr(3,5));
-    let smodulus = sminutes%5;
-    if(smodulus<3){
-      this.selectedEntry.entryStartTime=shours+":"+(sminutes-smodulus);
-    }else{
-      this.selectedEntry.entryStartTime=shours+":"+(sminutes+(5-smodulus));
-    }
-    let endTime = this.selectedEntry.entryEndTime;
-    let ehours = parseInt(startTime.substr(0,2));
-    let eminutes = parseInt(startTime.substr(3,5));
-    let emodulus = eminutes%5;
-    if(emodulus<3){
-      this.selectedEntry.entryStartTime=ehours+":"+(eminutes-emodulus);
-    }else{
-      this.selectedEntry.entryStartTime=ehours+":"+(eminutes+(5-emodulus));
-    }
-    console.log('round minute: '+(eminutes%5));
+    let time = new Time();
+    time.setFormat('HH:mm');
+    time.setByString(this.selectedEntry.entryStartTime);
+    time.roundTimeUnit(TimeUnit.Minutes,5,Direction.Standard);
+    this.selectedEntry.entryStartTime=time.toString();
+    time.setByString(this.selectedEntry.entryEndTime);
+    this.selectedEntry.entryEndTime=time.toString();
+    console.log('roundMinutes: '+this.selectedEntry.entryStartTime);
     this.validateTimeDifference();
   }
 }
