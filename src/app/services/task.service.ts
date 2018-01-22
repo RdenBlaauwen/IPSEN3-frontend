@@ -32,13 +32,15 @@ export class TaskService
     {
         let data =
         {
-            userStoryID: sp.userStoryId,
+            userStoryId: sp.userStoryId,
             userStoryName: sp.userStoryName,
             userStoryDescription: sp.userStoryDescription,
             userStoryIsDeleted: sp.userStoryIsDeleted,
             isCurrent: sp.isCurrent,
             projectName: sp.projectName,
-            categoryName: sp.categoryName
+            projectId: sp.projectId,
+            categoryName: sp.categoryName,
+            categoryId: sp.categoryId
 
         };
         let headers = this.auth.createAuthHeader(
@@ -135,13 +137,15 @@ export class TaskService
 
       public updateUserStory(userStory: Task) {
         const data = {
-            userStoryID: userStory.userStoryId,
+            userStoryId: userStory.userStoryId,
             userStoryName: userStory.userStoryName,
             userStoryDescription: userStory.userStoryDescription,
             userStoryIsDeleted: userStory.userStoryIsDeleted,
             isCurrent: userStory.isCurrent,
             projectName: userStory.projectName,
-            categoryName: userStory.categoryName
+            projectId: userStory.projectId,
+            categoryName: userStory.categoryName,
+            categoryId: userStory.categoryId
         };
         const headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);

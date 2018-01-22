@@ -60,6 +60,7 @@ export class TasksComponent implements OnInit {
   }
   selectRow(row) {
     this.selectedUserStory = row;
+    this.userStoryService.newEvent(row);
   }
 
   modifyUserStory() {

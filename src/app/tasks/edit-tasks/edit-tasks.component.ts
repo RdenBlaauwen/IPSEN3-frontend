@@ -6,6 +6,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { FormControl } from '@angular/forms';
 import { Task } from '../../models/TaskModel';
 import { TaskService } from '../../services/task.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-edit-tasks',
@@ -14,6 +15,7 @@ import { TaskService } from '../../services/task.service';
 })
 export class EditUTaskComponent implements OnInit{
   ngOnInit(): void {
+    this.admin = this.auth.isAdmin();
     this.userStoryService.events$.forEach(event =>{
       this.selectedUserStory = event;
       for(let cus of this.projects){
@@ -34,11 +36,11 @@ export class EditUTaskComponent implements OnInit{
   
   selectedProject: number;
   selectedCategory: number;
-
+  admin: boolean = false;
   fillProject = new FormControl();
   fillCategory = new FormControl();
 
-  constructor(private userStoryService: TaskService) {
+  constructor(private userStoryService: TaskService, private auth: AuthService) {
     this.projects = userStoryService.getAllProjects();
     this.categories = userStoryService.getAllCategories();
    }
@@ -47,7 +49,6 @@ export class EditUTaskComponent implements OnInit{
    {
      this.selectedUserStory.categoryId = this.selectedCategory;
      this.userStoryService.updateUserStory(this.selectedUserStory);
-     console.log(this.selectedUserStory.categoryId)
    }
 
 }
