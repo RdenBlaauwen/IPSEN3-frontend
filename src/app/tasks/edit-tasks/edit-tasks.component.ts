@@ -33,7 +33,7 @@ export class EditUTaskComponent implements OnInit{
   selectedUserStory: Task = new Task();
   projects: Project[];
   categories: Category[];
-  
+  admin: boolean = false;
   selectedProject: number;
   selectedCategory: number;
   admin: boolean = false;

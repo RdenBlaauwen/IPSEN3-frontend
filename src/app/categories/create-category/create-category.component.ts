@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/CategoryModel';
 import { CategoryService } from '../../services/category.service';
 import { FormControl } from '@angular/forms';
-import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS, MatDialogRef } from '@angular/material';
 import { Project } from '../../models/ProjectModel';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -17,7 +17,7 @@ export class CreateCategoryComponent {
   projects: Project[];
   selectedProject: number;
   admin: boolean = false;
-  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, private auth: AuthService) { 
+  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, private auth: AuthService, private dialog: MatDialogRef<any>) { 
     categoryService.getAllProjects().subscribe(projects =>{
       this.projects = projects;
     });
@@ -27,6 +27,7 @@ export class CreateCategoryComponent {
   createCategory() {
     this.selectedCategory.projectFK = this.selectedProject;
     this.categoryService.insertNewCategory(this.selectedCategory);
+    this.dialog.close();
   }
 
 }
