@@ -114,17 +114,19 @@ export class TaskService
 
       public removeUserStory(sp: Task) {
         const data = {
-            userStoryID: sp.userStoryId,
+            userStoryId: sp.userStoryId,
             userStoryName: sp.userStoryName,
             userStoryDescription: sp.userStoryDescription,
             userStoryIsDeleted: sp.userStoryIsDeleted,
             isCurrent: sp.isCurrent,
             projectName: sp.projectName,
-            categoryName: sp.categoryName
+            projectId: sp.projectId,
+            categoryName: sp.categoryName,
+            categoryId: sp.categoryId
         };
         const headers = this.auth.createAuthHeader(
             this.auth.emailAddress, this.auth.password);
-        this.httpN.post(`http://localhost:8080/api/categories/delete/`, data,{headers: headers}).subscribe
+        this.httpN.post(`http://localhost:8080/api/userstories/delete/`, data,{headers: headers}).subscribe
         (
             resp => {
                 alert('Taak succesvol verwijderd');

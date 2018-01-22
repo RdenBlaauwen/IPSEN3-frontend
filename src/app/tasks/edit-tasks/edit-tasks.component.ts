@@ -36,7 +36,6 @@ export class EditUTaskComponent implements OnInit{
   admin: boolean = false;
   selectedProject: number;
   selectedCategory: number;
-  admin: boolean = false;
   fillProject = new FormControl();
   fillCategory = new FormControl();
 

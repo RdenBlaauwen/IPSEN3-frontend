@@ -21,14 +21,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field><br>
-
-        <mat-form-field>
-          <mat-select [(ngModel)]="selectedProject" [formControl]="fillProject"  placeholder="Kies een project" name="project" required>
-            <mat-option *ngFor="let project of projects" [value]="project.projectId">
-              {{ project.projectName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field><br>
     
 
               <br>
