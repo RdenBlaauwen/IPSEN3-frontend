@@ -27,8 +27,7 @@ export class CategoryService
     }
 
     public modifyCategory(category: Category){
-        let headers = this.auth.createAuthHttpHeader(
-            this.auth.emailAddress, this.auth.password);
+        let headers = this.auth.createAuthHttpHeader();
         this.http.put(`http://localhost:8080/api/categories/update/`, category,{headers:headers}).subscribe(res => {
             this.snackBar.open('Category succesvol gewijzigd..', '', {duration:1000});
         }, error=>{
@@ -38,8 +37,7 @@ export class CategoryService
 
     public insertNewCategory(category: Category)
     {
-        let headers = this.auth.createAuthHttpHeader(
-            this.auth.emailAddress, this.auth.password);
+        let headers = this.auth.createAuthHttpHeader();
         this.http.post(`http://localhost:8080/api/categories/create/`, category,{headers:headers}).subscribe(res => {
             if(res == true){
                 this.snackBar.open('Category succesvol toegevoegd.', '', {duration:1000});
@@ -51,13 +49,12 @@ export class CategoryService
     }
     public getAllProjects()
     {
-        let headers = this.auth.createAuthHttpHeader(
-            this.auth.emailAddress, this.auth.password);
+        let headers = this.auth.createAuthHttpHeader();
         return this.http.get<Project[]>(`http://localhost:8080/api/projects/read`,{headers: headers} );
     }
 
     getAllCategories(): Observable<Category[]> {
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
       return this.http.get<Category[]>(this.ALL_CATEGORIES_JSON, {headers: headers});
     }
 
@@ -73,10 +70,14 @@ export class CategoryService
         this.http.delete(`http://localhost:8080/api/categories/delete?catId=${categoryId}`,{headers: headers}).subscribe
         (
             resp => {
-                alert('Category succesvol verwijderd');
+                if(resp == true){
+                    this.snackBar.open('Category succesvol verwijderd.', '', {duration:1000});
+                }
+                else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
             },
             error => {
-                alert('Verwijderen Category mislukt');
+                this.snackBar.open('Verwijderen category mislukt.', '',{duration: 1000});
+
             }
         );
       }

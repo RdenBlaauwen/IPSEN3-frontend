@@ -8,6 +8,7 @@ import { Project } from "../models/ProjectModel";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { Task } from "../models/TaskModel";
+import { MatSnackBar } from "@angular/material";
 
 @Injectable()
 export class TaskService
@@ -17,7 +18,7 @@ export class TaskService
     userStoryToModify : Task;
     private subject = new Subject<any>();
     
-    constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http) {}
+    constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http, private snackBar: MatSnackBar) {}
     
     
     newEvent(userStory: Task){
@@ -28,65 +29,31 @@ export class TaskService
     }
     
     
-    public insertNewUserStory(sp: Task): void
+    public insertNewUserStory(task: Task): void
     {
-        let data =
-        {
-            userStoryId: sp.userStoryId,
-            userStoryName: sp.userStoryName,
-            userStoryDescription: sp.userStoryDescription,
-            userStoryIsDeleted: sp.userStoryIsDeleted,
-            isCurrent: sp.isCurrent,
-            projectName: sp.projectName,
-            projectId: sp.projectId,
-            categoryName: sp.categoryName,
-            categoryId: sp.categoryId
-
-        };
-        let headers = this.auth.createAuthHeader(
-            this.auth.emailAddress, this.auth.password);
-        this.http.post(`http://localhost:8080/api/userstories/create/`, data,).subscribe
+        let headers = this.auth.createAuthHttpHeader();
+        this.http.post(`http://localhost:8080/api/userstories/create/`, task,{headers: headers}).subscribe
         (
             data =>
             {
-                alert('Taak succesvol aangemaakt');
-            },
-            error =>
-            {
-                alert('Aanmaken taak mislukt');
-            }
-        );
+                if(data == true){
+                    this.snackBar.open('Taak succesvol toegevoegd.', '', {duration:1000});
+                }
+                else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
+            }, error=>{
+                this.snackBar.open('Aanmaken taak mislukt.', '',{duration: 1000});
+            })
     }
     public getAllCategories()
     {
-        let categories: Category[] = [];
-        let headers = this.auth.createAuthHeader(
-            this.auth.emailAddress, this.auth.password);
-        this.httpN.get(`http://localhost:8080/api/categories/read/`,{headers: headers} ).subscribe(
-            (res: Response) => {
-            for(let category of res.json())
-            {
-                let categoryContainer = new Category(
-                    category.categoryId, 
-                    category.categoryIsDeleted, 
-                    category.categoryName,
-                    category.categoryStartDate, 
-                    category.categoryEndDate,
-                    category.categoryDescription,
-                    category.projectFK,
-                    category.projectName,
-                    category.isCurrent);
-                 categories.push(categoryContainer);
-            }
-          })
-          return categories;
+        let headers = this.auth.createAuthHttpHeader();
+        return this.http.get<Category[]>(`http://localhost:8080/api/categories/read/`,{headers: headers});
     }
 
     public getAllProjects()
     {
         let projects: Project[] = [];
-        let headers = this.auth.createAuthHeader(
-            this.auth.emailAddress, this.auth.password);
+        let headers = this.auth.createAuthHeader();
         this.httpN.get(`http://localhost:8080/api/projects/read/`,{headers: headers} ).subscribe(
             (res: Response) => {
             for(let project of res.json())
@@ -102,7 +69,7 @@ export class TaskService
     }
 
     getAllUserStories(): Observable<Task[]> {
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
       return this.http.get<Category[]>(this.ALL_USERSTORIES_JSON, {headers: headers});
     }
 
@@ -124,17 +91,17 @@ export class TaskService
             categoryName: sp.categoryName,
             categoryId: sp.categoryId
         };
-        const headers = this.auth.createAuthHeader(
-            this.auth.emailAddress, this.auth.password);
-        this.httpN.post(`http://localhost:8080/api/userstories/delete/`, data,{headers: headers}).subscribe
+        const headers = this.auth.createAuthHttpHeader();
+        this.http.post(`http://localhost:8080/api/userstories/delete/`, data,{headers: headers}).subscribe
         (
             resp => {
-                alert('Taak succesvol verwijderd');
-            },
-            error => {
-                alert('Verwijderen taak mislukt');
-            }
-        );
+                if(resp == true){
+                    this.snackBar.open('Taak succesvol verwijderd.', '', {duration:1000});
+                }
+                else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
+            }, error=>{
+                this.snackBar.open('Verwijderen taak mislukt.', '',{duration: 1000});
+            })
       }
 
       public updateUserStory(userStory: Task) {
@@ -149,22 +116,28 @@ export class TaskService
             categoryName: userStory.categoryName,
             categoryId: userStory.categoryId
         };
-        const headers = this.auth.createAuthHeader(
-            this.auth.emailAddress, this.auth.password);
-        this.httpN.put(`http://localhost:8080/api/userstories/update/`, data, {headers: headers}).subscribe
+        const headers = this.auth.createAuthHttpHeader();
+        this.http.put(`http://localhost:8080/api/userstories/update/`, data, {headers: headers}).subscribe
         (
             resp => {
-                if(resp){
-                    alert('Taak succesvol gewijzigd');
-                }else{
-                    alert('Er is iets fout gegaan');
-                }            
-            },
-            error => {
-                alert('Taak update mislukt');
-            }
-        );
+                if(resp == true){
+                    this.snackBar.open('Category succesvol gewijzigd.', '', {duration:1000});
+                }
+                else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
+            }, error=>{
+                this.snackBar.open('Wijzigen taak mislukt.', '',{duration: 1000});
+            })
       }
+      getCategoriesProject(projectId: number){
+        const headers = this.auth.createAuthHttpHeader();
+      return this.http.get<Category[]>(`http://localhost:8080/api/userstories/getCategoriesByProject?pId=${projectId}`, {headers: headers});
+    }
+
+    getTasksCategory(categoryId: number){
+        const headers = this.auth.createAuthHttpHeader();
+      return this.http.get<Task[]>(`http://localhost:8080/api/userstories/getTasksByCategory?catId=${categoryId}`, {headers: headers});
+    }
+      
 
 }
 

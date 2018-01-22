@@ -19,7 +19,9 @@ export class AuthService {
         return this.isAuthorized() && this.loggedUserObject.employeeRole === 'manager';
     }
 
-    public createAuthHeader(email: string, password: string) {
+    public createAuthHeader(emailSend?: string, passwordSend?: string) {
+        let email = emailSend || this.emailAddress;
+        let password = passwordSend || this.password;
         const loginEncoded =  btoa(email + ':' + password);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -27,7 +29,9 @@ export class AuthService {
         return headers;
     }
 
-    public createAuthHttpHeader(email: string, password: string) {
+    public createAuthHttpHeader(emailSend?: string, passwordSend?: string) {
+        let email = emailSend || this.emailAddress;
+        let password = passwordSend || this.password;
         const loginEncoded =  btoa(email + ':' + password);
         let headers = new HttpHeaders().set('Authorization', 'Basic ' + loginEncoded);
         return headers;

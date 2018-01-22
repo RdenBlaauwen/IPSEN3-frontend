@@ -14,7 +14,7 @@ export class EmployeeService {
 
     naam: string = null;
     private subject = new Subject<any>();
-    headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    headers = this.auth.createAuthHttpHeader();
 
     newEvent(employee: Employee){
         this.subject.next(employee);
@@ -34,7 +34,7 @@ export class EmployeeService {
     }
 
     public createEmployee(employee: Employee){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         this.httpN.post(`http://localhost:8080/api/users/create`, employee, {headers:headers}).subscribe(
             res=>{
                 if(res == true){
@@ -48,7 +48,7 @@ export class EmployeeService {
     }
 
     public modifyEmployee(employee: Employee){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         this.httpN.put(`http://localhost:8080/api/users/update`, employee, {headers:headers}).subscribe
         (
             res=>{
@@ -63,7 +63,7 @@ export class EmployeeService {
     }
 
     public getAllEmployees(){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         return this.httpN.get<Employee[]>(`http://localhost:8080/api/users`, {headers:headers});
     }
 

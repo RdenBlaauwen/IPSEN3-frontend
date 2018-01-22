@@ -41,8 +41,10 @@ export class EditUTaskComponent implements OnInit{
 
   constructor(private userStoryService: TaskService, private auth: AuthService) {
     this.projects = userStoryService.getAllProjects();
-    this.categories = userStoryService.getAllCategories();
-   }
+     userStoryService.getAllCategories().subscribe(categories=>{
+      this.categories = categories;
+   });
+  }
 
    modifyUserStory()
    {

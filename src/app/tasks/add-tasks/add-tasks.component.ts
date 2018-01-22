@@ -24,13 +24,16 @@ export class AddTaskComponent{
   
   constructor(private userStoryService: TaskService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>, auth: AuthService) { 
     this.projects = userStoryService.getAllProjects();
-    this.categories = userStoryService.getAllCategories();
     this.admin  =auth.isAdmin();
   }
 
+  checkCategories(projectId: number){
+      this.userStoryService.getCategoriesProject(projectId).subscribe(categoriesObservable =>{
+        this.categories = categoriesObservable;
+      })
+  }
+
   insertNewUserStory() {
-    this.userStory.categoryId = this.selectedCategory;
-    this.userStory.projectId = this.selectedProject;
     this.userStoryService.insertNewUserStory(this.userStory);
     this.dialog.close();
   }

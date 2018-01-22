@@ -20,6 +20,9 @@ export class CustomersComponent implements OnInit {
   constructor(private customerService: CustomerService, auth: AuthService, private dialogService: DialogService, private snackBar: MatSnackBar) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.admin = auth.isAdmin();
+  }
+
+  loadData(){
     this.customerService.getAllCustomers().subscribe( customers=> {
       this.dataSource = new MatTableDataSource<CustomerModel>(customers);
     }, (error) => console.log(error.SessionNotCreatedError));
@@ -40,6 +43,7 @@ export class CustomersComponent implements OnInit {
     this.customerService.removeCustomer(this.selectedCustomer);
   }
   ngOnInit() {
+    this.loadData();
   }
   openDialog(){
     this.dialogService.confirm('Bevestigen','Weet u zeker dat u deze klant wilt verwijderen?').subscribe(res=>{
