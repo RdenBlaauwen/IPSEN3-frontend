@@ -33,14 +33,6 @@ export class AddTaskComponent{
     this.userStory.projectId = this.selectedProject;
     this.userStoryService.insertNewUserStory(this.userStory);
     this.dialog.close();
-    history.pushState(null, '/userstory-management');
-    this.openSnackBar();
   }
-
-  openSnackBar() {
-      this.snackBar.open('Nieuwe taak toegevoegd!', '', {
-        duration: 1000
-      });
-    }
     
 }
