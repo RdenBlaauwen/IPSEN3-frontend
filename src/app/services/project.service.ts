@@ -15,6 +15,15 @@ export class ProjectService {
   readonly INSERT_PROJECT = 'http://localhost:8080/api/projects/create/';
   private subject = new Subject<any>();
   constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http, private snackBar: MatSnackBar) {}
+  private loadTrigger = new Subject<any>();
+
+  loadEvent(event: boolean){
+      this.loadTrigger.next(event);
+  }
+
+  get loadTrigger$ (){
+      return this.loadTrigger.asObservable();
+  }
   newEvent(project: Project){
         this.subject.next(project);
     }

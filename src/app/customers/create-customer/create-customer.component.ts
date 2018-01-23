@@ -19,5 +19,6 @@ export class CreateCustomerComponent {
   insertNewCustomer() {
     this.customerService.insertNewCustomer(this.customer);
     this.dialogRef.close();
+    this.customerService.loadEvent(true);
   }
 }

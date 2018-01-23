@@ -16,8 +16,19 @@ export class CategoryService
     readonly INSERT_CATEGORY = 'http://localhost:8080/api/categories/create/';
     categoryToModify : Category;
     private subject = new Subject<any>();
+    
 
     constructor(private auth: AuthService, private http: HttpClient, private router: Router, private httpN: Http, private snackBar: MatSnackBar) {}
+    
+    private loadTrigger = new Subject<any>();
+
+    loadEvent(event: boolean){
+        this.loadTrigger.next(event);
+    }
+
+    get loadTrigger$ (){
+        return this.loadTrigger.asObservable();
+    }
 
     newEvent(category: Category){
         this.subject.next(category);

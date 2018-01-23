@@ -50,6 +50,7 @@ export class EditUTaskComponent implements OnInit{
    {
      this.selectedUserStory.categoryId = this.selectedCategory;
      this.userStoryService.updateUserStory(this.selectedUserStory);
+     this.userStoryService.loadEvent(true);
    }
 
 }

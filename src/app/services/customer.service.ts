@@ -17,6 +17,15 @@ export class CustomerService {
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router
   ,private httpN: Http, private snackBar: MatSnackBar) { }
+  private loadTrigger = new Subject<any>();
+
+  loadEvent(event: boolean){
+      this.loadTrigger.next(event);
+  }
+
+  get loadTrigger$ (){
+      return this.loadTrigger.asObservable();
+  }
     newEvent(customer: CustomerModel){
         this.subject.next(customer);
     }
@@ -62,11 +71,9 @@ export class CustomerService {
   public updateCustomer(customer: CustomerModel)
   {
     let headers = this.auth.createAuthHttpHeader();
-    this.http.put(`http://localhost:8080/api/customers/update/`, customer,{headers: headers}).subscribe
-    (
+    this.http.put(`http://localhost:8080/api/customers/update/`, customer,{headers: headers}).subscribe(
         data =>
-        {
-            if(data == true){
+        {if(data == true){
                 this.snackBar.open('Klant succesvol gewijzigd.', '', {duration:1000});
             }
             else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}

@@ -20,6 +20,7 @@ export class CustomersComponent implements OnInit {
   constructor(private customerService: CustomerService, auth: AuthService, private dialogService: DialogService, private snackBar: MatSnackBar) {
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.admin = auth.isAdmin();
+    this.loadData();
   }
 
   loadData(){
@@ -43,12 +44,17 @@ export class CustomersComponent implements OnInit {
     this.customerService.removeCustomer(this.selectedCustomer);
   }
   ngOnInit() {
-    this.loadData();
+    this.customerService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    })
   }
   openDialog(){
     this.dialogService.confirm('Bevestigen','Weet u zeker dat u deze klant wilt verwijderen?').subscribe(res=>{
       if(res.valueOf()){
         this.deleteCustomer();
+        setTimeout(()=>{ this.loadData();},100);
       }
     });
   }

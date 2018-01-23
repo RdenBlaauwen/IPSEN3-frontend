@@ -36,6 +36,7 @@ export class AddTaskComponent{
   insertNewUserStory() {
     this.userStoryService.insertNewUserStory(this.userStory);
     this.dialog.close();
+    this.userStoryService.loadEvent(true);
   }
     
 }

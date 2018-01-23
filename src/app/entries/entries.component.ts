@@ -60,7 +60,6 @@ export class EntryComponent implements OnInit {
       console.log('HoursComponent: employeeRole was Null!');
     }
     
-    console.log(this.currentRole);
    }
 
   ngOnInit() {
@@ -88,7 +87,6 @@ export class EntryComponent implements OnInit {
   } 
 
   updateData(): void{
-    console.log('updateData: ');
     this.hoursService.getAllEntries(this.currentWeek).then((data) => {
       // this.entryData = data;
       // this.filterEntries();
@@ -99,11 +97,9 @@ export class EntryComponent implements OnInit {
   }
 
   dataToTable(): void{
-    console.log("dataToTable()");
     this.dataSource.data=this.weekFilter.entryData;
   }
   log(x){
-    console.log(x);
   }
    testEn(beginDate): String{
      return beginDate = '2017-12-18';

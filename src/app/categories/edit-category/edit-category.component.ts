@@ -31,6 +31,7 @@ export class EditCategoryComponent implements OnInit {
 
   modifyCategory(){
     this.categoryService.modifyCategory(this.selectedCategory);
+    this.categoryService.loadEvent(true);
   }
 
 }

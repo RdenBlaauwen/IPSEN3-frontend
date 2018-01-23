@@ -28,6 +28,7 @@ export class CreateCategoryComponent {
     this.selectedCategory.projectFK = this.selectedProject;
     this.categoryService.insertNewCategory(this.selectedCategory);
     this.dialog.close();
+    this.categoryService.loadEvent(true);
   }
 
 }

@@ -23,6 +23,7 @@ export class CreateAccountComponent implements OnInit {
   createEmployee(){
     this.employeeService.createEmployee(this.employee);
     this.dialog.close();
+    this.employeeService.loadEvent(true);
   }
 
   ngOnInit() {
