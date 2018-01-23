@@ -48,7 +48,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ')
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ', 'LET OP: Alle categorieën en taken die gekoppeld zijn aan dit project worden ook verwijderd. ')
     .subscribe(res => {
       if (res.valueOf()) {
         this.deleteProject();
