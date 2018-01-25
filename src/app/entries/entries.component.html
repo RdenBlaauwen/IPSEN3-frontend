@@ -4,12 +4,14 @@
   <app-edit-entry *ngIf="updateMode"></app-edit-entry>
   <div class="example-container">
     <div class="example-header">
-        <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"
-          #versionsCheckBox
-          [value]="" [checked]="oldVersionsChecked"
-          (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
-          >Laat oude of verwijderde versies zien
-        </mat-checkbox>
+        <span matTooltip="Klik hier om oudere versies te tonen" matTooltipShowDelay="750">
+          <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"
+            #versionsCheckBox
+            [value]="" [checked]="oldVersionsChecked"
+            (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
+            >Laat oude of verwijderde versies zien
+          </mat-checkbox>
+        </span>
         <!-- <button mat-raised-button color="primary" (click)="openAddEntry()">Nieuwe Entry</button> -->
       <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"> 

@@ -4,7 +4,9 @@
     <mat-sidenav-content class="hoofd">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
-            <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Klant Aanmaken</button>
+            <span matTooltip="Klik hier om nieuwe klant toe te voegen" matTooltipShowDelay="750">
+              <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Klant Aanmaken</button>
+            </span>
           <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Zoeken">
           </mat-form-field>

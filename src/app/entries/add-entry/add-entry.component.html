@@ -1,8 +1,10 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
-    <mat-panel-title>
-      <h4><i class="fa fa-plus-square-o" aria-hidden="true"></i>Toevoegen Entry</h4>
-    </mat-panel-title>
+    <span matTooltip="Klik hier om nieuwe entry toe te voegen" matTooltipShowDelay="750">
+      <mat-panel-title>
+        <h4><i class="fa fa-plus-square-o" aria-hidden="true"></i>Toevoegen Entry</h4>
+      </mat-panel-title>
+    </span>
   </mat-expansion-panel-header>
   <mat-card-content>
     <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
@@ -84,8 +86,8 @@
         </mat-form-field>
       </div>
       <div class="row">
-          <button mat-raised-button color="primary" type="submit" class="mat-primary">Opslaan</button>
-          <button mat-raised-button (click)="close()">Sluiten</button>
+          <button class="btn btn-success" type="submit">Opslaan</button>
+          <button class="btn btn-success" (click)="close()">Sluiten</button>
       </div>
     </form>
   </mat-card-content>
