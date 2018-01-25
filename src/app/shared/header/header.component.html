@@ -8,7 +8,9 @@
     <p *ngIf="isAuthenticated()" class="text-muted justify-content-center">{{ getCurrentUser() }}</p>
     <ul class="nav justify-content-end">
       <div *ngIf="isAuthenticated()" class="dropdown">
-          <small class="text-muted">Overzichten / CRUD</small>
+          <span matTooltip="Klik hier om de beheer pagina's te bekijken" matTooltipShowDelay="750">
+            <small class="text-muted">Overzichten / CRUD</small>
+          </span>
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-table" aria-hidden="true"></i>
           </button>
@@ -27,7 +29,9 @@
       </li>
       <small *ngIf="isAuthenticated()" class="text-muted settings">Settings</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
-        <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        <span matTooltip="Klik hier om je account te wijzigen" matTooltipShowDelay="750">
+          <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        </span>
       </li>
       <small *ngIf="isAuthenticated()" class="text-muted settings">Logout</small>
       <li *ngIf="isAuthenticated()" class="nav-item">

@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatTooltipModule} from '@angular/material/tooltip';
 // import {FormControl} from '@angular/forms';
 
 import { ProjectService } from './services/project.service';
@@ -122,6 +123,7 @@ import { ExportService } from './services/export';
     RouterModule,
     MatSidenavModule,
     MatDialogModule,
+    MatTooltipModule
   ],
   providers: [ProjectService,
     AuthService,

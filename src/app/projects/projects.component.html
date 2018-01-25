@@ -4,10 +4,12 @@
     <mat-sidenav-content class="hoofd">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
-            <button mat-raised-button type="submit" 
-              class="btn btn-outline-primary btn-sm" 
-              (click)="openCreateDialog()"
-              *ngIf="admin">Nieuw project toevoegen</button>
+            <span matTooltip="Klik hier om nieuwe project toe te voegen" matTooltipShowDelay="750">
+              <button mat-raised-button type="submit" 
+                class="btn btn-outline-primary btn-sm" 
+                  (click)="openCreateDialog()"
+                  *ngIf="admin">Nieuw project toevoegen</button>
+            </span>
           <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
           </mat-form-field>
