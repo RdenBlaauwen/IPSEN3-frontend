@@ -21,18 +21,10 @@
             </mat-option>
           </mat-select>
         </mat-form-field><br>
-
-        <mat-form-field>
-          <mat-select [(ngModel)]="selectedProject" [formControl]="fillProject"  placeholder="Kies een project" name="project" required>
-            <mat-option *ngFor="let project of projects" [value]="project.projectId">
-              {{ project.projectName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field><br>
     
 
               <br>
-          <button [disabled]="!registerForm.valid"  mat-raised-button type="submit" class="mat-primary" >Wijzigen</button>
+          <button [disabled]="!registerForm.valid"  mat-raised-button type="submit" class="btn btn-primary btn-sm" >Wijzigen</button>
       </form>
   </mat-card-content>
 </mat-card>

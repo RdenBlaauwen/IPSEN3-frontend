@@ -26,9 +26,8 @@ export class TasksComponent implements OnInit {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.admin = auth.isAdmin();
-    this.loadData().then((data) => {
-      this.dataSource = new MatTableDataSource<Task>(data);
-    }, (error) => console.log(error.SessionNotCreatedError));
+    this.loadData();
+    
   }
 
   //  MatTableDataSource function
@@ -40,26 +39,14 @@ export class TasksComponent implements OnInit {
 
   //  Return promise to use to fill data
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
-  loadData(): Promise<Task[]> {
-    return this.userStoryService.getAllUserStories()
-      .toPromise()
-      .then(res => res)
-      .then(userStories => userStories.map(userstory => {
-        return new Task(
-          userstory.userStoryId,
-          userstory.userStoryName,
-          userstory.userStoryDescription,
-          userstory.userStoryIsDeleted,
-          userstory.isCurrent,
-          userstory.projectName,
-          userstory.projectId,
-          userstory.categoryName,
-          userstory.categoryId
-        );
-      }));
+  loadData() {
+    this.userStoryService.getAllUserStories().subscribe(data => {
+      this.dataSource = new MatTableDataSource<Task>(data);
+    }, (error) => console.log(error.SessionNotCreatedError));
   }
   selectRow(row) {
     this.selectedUserStory = row;
+    this.userStoryService.newEvent(row);
   }
 
   modifyUserStory() {
@@ -75,12 +62,18 @@ export class TasksComponent implements OnInit {
     .subscribe(res => {
       if (res.valueOf()) {
         this.deleteUserStory();
+        setTimeout(()=>{ this.loadData();},100);
       }
     });
   }
   openCreateDialog(){
     this.dialogService.createUserStory();
-    console.log();
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.userStoryService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    })
+  }
 }

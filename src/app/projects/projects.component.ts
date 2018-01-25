@@ -28,9 +28,7 @@ export class ProjectsComponent implements OnInit {
     this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.admin = auth.isAdmin();
-    this.projectService.getAllProjects().then((data) => {
-      this.dataSource = new MatTableDataSource<Project>(data);
-    }, (error) => console.log(error.SessionNotCreatedError));
+   this.loadData();
   }
 
   //  MatTableDataSource function
@@ -50,10 +48,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ')
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u dit project wilt verwijderen? ', 'LET OP: Alle categorieën en taken die gekoppeld zijn aan dit project worden ook verwijderd. ')
     .subscribe(res => {
       if (res.valueOf()) {
         this.deleteProject();
+        setTimeout(()=>{ this.loadData();},100);
       }
     });
   }
@@ -61,5 +60,16 @@ export class ProjectsComponent implements OnInit {
   openCreateDialog(){
     this.dialogService.createProject();
   }
-  ngOnInit() {}
+  loadData(){
+    this.projectService.getAllProjects().then((data) => {
+      this.dataSource = new MatTableDataSource<Project>(data);
+    }, (error) => console.log(error.SessionNotCreatedError));
+  }
+  ngOnInit() {
+    this.projectService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    })
+  }
 }

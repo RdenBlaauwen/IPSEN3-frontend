@@ -29,7 +29,7 @@ export class AddEntryComponent implements OnInit {
   public selectedEntry: EntryModel = new EntryModel();
   public projectList: Project[];
   public categoryList: Category[];
-  public userStoryList: Task[];
+  public userStoryList: Task[] = [];
 
   public projectListOpen = false;
 
@@ -56,7 +56,6 @@ export class AddEntryComponent implements OnInit {
 
   ngOnInit() {
     this.updateProjects();
-    this.updateCategories();
     let today = new Date();
     this.selectedEntry.entryDate= today.toISOString();
     this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
@@ -79,60 +78,29 @@ export class AddEntryComponent implements OnInit {
    * @author Robert
    */
   public updateProjects(){
-    console.log('PROJECTS GONNA GIT LOADED');
     this.projectService.getAllProjects().then((data) => {
         this.projectList = data;
-        console.log('Hier is de project data: '+this.projectList);
-      }
-    );
+      });
+      this.userStoryList = null;
   }
-  public updateUserStories(){
-    this.userStoryService.getAllUserStories()
-    .toPromise()
-    .then(res => res)
-    .then(userstories => userstories.map(userstory => {
-      return new Task(
-        userstory.userStoryId,
-        userstory.userStoryName,
-        userstory.userStoryDescription,
-        userstory.userStoryIsDeleted,
-        userstory.isCurrent);
-    })).then((data) =>{
-      this.userStoryList=data;
-      console.log('Hier is de userStory data: '+this.userStoryList);
+
+  loadCategoriesProject(projectId: number){
+    this.userStoryService.getCategoriesProject(projectId).subscribe(categoriesObservable =>{
+      this.categoryList = categoriesObservable;
     })
   }
-  /**
-   * Haalt categorieen uit database en zet ze in categoryList voor in de drop down list.
-   * 
-   * @author Robert
-   */
-  public updateCategories(){
-    this.categoryService.getAllCategories()
-    .toPromise()
-    .then(res => res)
-    .then(categories => categories.map(category => {
-        return new Category(
-          category.categoryId,
-          category.categoryIsDeleted,
-          category.categoryName,
-          category.categoryStartDate,
-          category.categoryEndDate,
-          category.categoryDescription,
-          category.projectFK,
-          category.projectName);
-      })).then((data) => {
-      this.categoryList = data;
-      console.log('Hier is de category data: '+this.categoryList);
-    }
-  );
+
+  loadTasksCategory(categoryId: number){
+      this.userStoryService.getTasksCategory(categoryId).subscribe(tasksObservable =>{
+        this.userStoryList = tasksObservable;
+      })
+
   }
   /**
    * Deze methode geeft de service de opdracht om een nieuw project toe te voegen of er een te editen.
    * 
    */
   public onSubmit():void{
-    console.log('onSubmit()! time parsing: '+this.dateHelper.stringToDate(this.selectedEntry.entryStartTime));
 
       this.selectedEntry.employeeFk=this.auth.getEmployeeModel().employeeId;
       if(this.validateData()){
@@ -177,7 +145,6 @@ export class AddEntryComponent implements OnInit {
   }
 
   log(anything){
-    console.log('log: '+anything);
   }
 
   public close():void{
@@ -186,7 +153,6 @@ export class AddEntryComponent implements OnInit {
 
   public setDate(event){
     this.selectedEntry.entryDate=event.value;
-    console.log('setDate: '+this.selectedEntry.entryDate);
   }
 
   public roundMinutes():void{
@@ -197,7 +163,6 @@ export class AddEntryComponent implements OnInit {
     this.selectedEntry.entryStartTime=time.toString();
     time.setByString(this.selectedEntry.entryEndTime);
     this.selectedEntry.entryEndTime=time.toString();
-    console.log('roundMinutes: '+this.selectedEntry.entryStartTime);
     this.validateTimeDifference();
   }
 }

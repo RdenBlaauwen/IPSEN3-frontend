@@ -14,7 +14,16 @@ export class EmployeeService {
 
     naam: string = null;
     private subject = new Subject<any>();
-    headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    headers = this.auth.createAuthHttpHeader();
+    private loadTrigger = new Subject<any>();
+
+    loadEvent(event: boolean){
+        this.loadTrigger.next(event);
+    }
+
+    get loadTrigger$ (){
+        return this.loadTrigger.asObservable();
+    }
 
     newEvent(employee: Employee){
         this.subject.next(employee);
@@ -34,7 +43,7 @@ export class EmployeeService {
     }
 
     public createEmployee(employee: Employee){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         this.httpN.post(`http://localhost:8080/api/users/create`, employee, {headers:headers}).subscribe(
             res=>{
                 if(res == true){
@@ -48,7 +57,7 @@ export class EmployeeService {
     }
 
     public modifyEmployee(employee: Employee){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         this.httpN.put(`http://localhost:8080/api/users/update`, employee, {headers:headers}).subscribe
         (
             res=>{
@@ -63,7 +72,7 @@ export class EmployeeService {
     }
 
     public getAllEmployees(){
-        const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+        const headers = this.auth.createAuthHttpHeader();
         return this.httpN.get<Employee[]>(`http://localhost:8080/api/users`, {headers:headers});
     }
 
@@ -77,14 +86,16 @@ export class EmployeeService {
     }
 
     public deleteEmployee(employeeId: number){
-        
-        this.httpN.delete(`http://localhost://8080/api/users/delete?emId=${employeeId}`, {headers: this.headers}).subscribe(res=>{
+        console.log(employeeId)
+        const headers = this.auth.createAuthHttpHeader();
+        this.httpN.delete(`http://localhost:8080/api/users/delete?emId=${employeeId}`, {headers: headers}).subscribe(res=>{
                 if(res == true){
                     this.snackBar.open('Account succesvol verwijderd','',{duration:1000});
                 }else{
                     this.snackBar.open('Er is iets fout gegaan in de server','',{duration:1000});
                 }
         }, error=>{
+            console.log(error)
             this.snackBar.open('Verwijderen account mislukt','',{duration:1000});
         });
     }

@@ -24,14 +24,7 @@ export class AddProjectComponent{
     this.project.projectCustomerFk = this.selectdCustomer;
     this.projectService.insertNewProject(this.project);
     this.dialog.close();
-    history.pushState(null, '/project-management');
-    this.openSnackBar();
+    this.projectService.loadEvent(true);
   }
-
-  openSnackBar() {
-      this.snackBar.open('New Project Inserted!', '', {
-        duration: 1000
-      });
-    }
     
 }

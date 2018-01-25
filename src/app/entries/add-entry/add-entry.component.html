@@ -60,23 +60,23 @@
         </mat-form-field>
 
         <mat-form-field class="col-sm-2">
-          <mat-select #projectSelect (click)="updateProjects()" 
+          <mat-select #projectSelect 
             placeholder="Project" [(ngModel)]="selectedEntry.entryProjectFk" 
             name="projectSelect">
-            <mat-option *ngFor="let project of projectList" [value]="project.projectId">{{project.projectName}}</mat-option>
+            <mat-option *ngFor="let project of projectList" [value]="project.projectId" (click)="loadCategoriesProject(project.projectId)" >{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="col-sm-2">
-          <mat-select #categorySelect (click)="updateCategories()" 
+          <mat-select #categorySelect [disabled]="!categoryList"
             placeholder="Categorie" [(ngModel)]="selectedEntry.entrySprintFk" 
             name="categorySelect">
-            <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.categoryName}}</mat-option>
+            <mat-option *ngFor="let category of categoryList" [value]="category.categoryId" (click)="loadTasksCategory(category.categoryId)">{{category.categoryName}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="col-sm-2">
-            <mat-select #userStorySelect (click)="updateUserStories()" 
+            <mat-select #userStorySelect [disabled]="!userStoryList"
             placeholder="UserStory" [(ngModel)]="selectedEntry.entryUserstoryFk" 
             name="userStorySelect">
             <mat-option *ngFor="let userStory of userStoryList" [value]="userStory.userStoryId">{{userStory.userStoryName}}</mat-option>

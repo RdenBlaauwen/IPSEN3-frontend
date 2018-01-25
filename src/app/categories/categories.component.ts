@@ -21,15 +21,18 @@ export class CategoryComponent implements OnInit {
   loggedEmployeeModel: Employee;
   projects: Project[];
   admin: boolean = false;
+  closeSidenav: boolean = false;
   constructor(private categoryService: CategoryService, private auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.categoryService.getAllCategories().subscribe( categories=>{
-      this.dataSource = new MatTableDataSource<Category>(categories);
-    }, (error) => console.log(error.SessionNotCreatedError));
     this.admin = this.auth.isAdmin();
   }
 
+  loadData(){
+    this.categoryService.getAllCategories().subscribe( categories=>{
+      this.dataSource = new MatTableDataSource<Category>(categories);
+    }, (error) => console.log(error.SessionNotCreatedError));
+  }
   //  MatTableDataSource function
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -43,18 +46,31 @@ export class CategoryComponent implements OnInit {
   }
   deleteCategory() {
     this.categoryService.removeCategory(this.selectedCategory.categoryId);
+    setTimeout(()=>{ this.loadData();},100);
   }
 
   openCreateDialog(){
     this.dialogService.createCategory();
+    
   }
   openDialog() {
-    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze categorie wilt verwijderen? ')
+    this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze categorie wilt verwijderen? ', 'LET OP: Alle taken die gekoppeld zijn aan deze category worden ook verwijderd')
     .subscribe(res => {
       if (res.valueOf()) {
         this.deleteCategory();
       }
     });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadData();
+    this.loadAfterChanges();
+  }
+
+  loadAfterChanges(){
+    this.categoryService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    })
+  }
 }

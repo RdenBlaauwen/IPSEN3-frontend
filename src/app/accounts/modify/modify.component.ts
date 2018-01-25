@@ -26,6 +26,7 @@ export class ModifyComponent implements OnInit {
 
   modifyAccount(){
     this.employeeService.modifyEmployee(this.selectedEmployee);
+    this.employeeService.loadEvent(true);
   }
 
 }

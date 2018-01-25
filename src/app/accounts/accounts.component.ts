@@ -17,10 +17,7 @@ export class AccountsComponent implements OnInit {
   admin: boolean = false;
   constructor(private employeeService: EmployeeService, private dialogService: DialogService, private auth: AuthService) {
     this.displayedColumns = ['account_name', 'account_role', 'email', 'employeeModify', 'employeeDelete'];
-    employeeService.getAllEmployees().subscribe(users =>{
-      this.dataSource = new MatTableDataSource(users);
-      console.log(users);
-    });
+    this.loadData();
    }
 
     applyFilter(filterValue: string) {
@@ -28,15 +25,26 @@ export class AccountsComponent implements OnInit {
      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
      this.dataSource.filter = filterValue;
    }
-
+   loadData(){
+      this.employeeService.getAllEmployees().subscribe(users =>{
+      this.dataSource = new MatTableDataSource(users);
+      console.log(users);
+    });
+  }
   ngOnInit() {
     this.admin  =this.auth.isAdmin();
+    this.employeeService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    })
   }
   modifyAccount(){
     this.employeeService.modifyEmployee(this.selectedEmployee);
   }
   openCreateDialog(){
     this.dialogService.createAccount();
+    
   }
   selectRow(row: Employee) {
     this.selectedEmployee = row;
@@ -50,6 +58,7 @@ export class AccountsComponent implements OnInit {
     this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze account wilt verwijderen? ').subscribe(res=>{
       if(res == true){
         this.deleteEmployee();
+        setTimeout(()=>{ this.loadData();},100);
       }
     });
   }

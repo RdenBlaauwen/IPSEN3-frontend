@@ -36,6 +36,7 @@ export class EditProjectComponent implements OnInit{
    {
      this.selectedProject.projectCustomerFk = this.selectedCustomer;
      this.projectService.updateProject(this.selectedProject);
+     this.projectService.loadEvent(true);
    }
 
 }

@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 export class ModifyCustomerComponent implements OnInit {
 
   admin: boolean = false;
-  selectedCustomer = new CustomerModel();
+  selectedCustomer:CustomerModel = new CustomerModel();
   constructor(private customerService: CustomerService, auth: AuthService) {
     this.admin = auth.isAdmin();
    }
@@ -23,6 +23,7 @@ export class ModifyCustomerComponent implements OnInit {
    modifyCustomer()
    {
      this.customerService.updateCustomer(this.selectedCustomer);
+     this.customerService.loadEvent(true);
    }
 
 }
