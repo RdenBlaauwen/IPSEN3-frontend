@@ -105,11 +105,11 @@ export class EntryComponent implements OnInit {
   }
 
   goedkeuren(){
-    this.hoursService.approveEntry(this.selectedEntry.entryId);
+    this.hoursService.approveEntry(this.selectedRow.entryId);
   }
 
   afkeuren(){
-    this.hoursService.rejectEntry(this.selectedEntry.entryId);
+    this.hoursService.rejectEntry(this.selectedRow.entryId);
   }
 
    testEn(beginDate): String{
