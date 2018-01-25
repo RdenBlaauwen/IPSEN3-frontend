@@ -23,3 +23,7 @@
   .mat-header-search{
     margin: 0 4px 0 4px;
   }
+  .selected{
+    color: white;
+    background: #009fdf ;
+  }

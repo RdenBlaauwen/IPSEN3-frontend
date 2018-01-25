@@ -57,6 +57,7 @@ import { TaskService } from './services/task.service';
 import { DateHelper} from './helpers/dateHelper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ExportService } from './services/export';
 
 
 
@@ -131,6 +132,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CustomerService,
     DialogService,
     TaskService,
+    ExportService,
     {provide: MAT_DATE_LOCALE, useValue: 'nl-NL'},],
   bootstrap: [AppComponent]
 })

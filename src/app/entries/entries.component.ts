@@ -27,6 +27,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogService} from '../services/DialogService';
 import { EntryService } from '../services/entry.service';
 import {MatSnackBar} from '@angular/material';
+import { ExportService } from '../services/export';
 
 @Component({
   selector: 'app-entries',
@@ -52,7 +53,8 @@ export class EntryComponent implements OnInit {
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private hoursService: EntryService, private dateHelper: DateHelper,
-     private auth: AuthService, private dialogService: DialogService,public snackBar: MatSnackBar) {
+     private auth: AuthService, private dialogService: DialogService,public snackBar: MatSnackBar,
+     private exportService: ExportService) {
       this.generateWeekDates();
     if(this.auth.getEmployeeModel!=null){
       this.currentRole = this.auth.getEmployeeModel().employeeRole;
@@ -63,7 +65,7 @@ export class EntryComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.updateData();  
+    //this.updateData();  
   }
   private generateWeekDates():void{
       // bereken welke datum het is
@@ -101,6 +103,15 @@ export class EntryComponent implements OnInit {
   }
   log(x){
   }
+
+  goedkeuren(){
+    this.hoursService.approveEntry(this.selectedEntry.entryId);
+  }
+
+  afkeuren(){
+    this.hoursService.rejectEntry(this.selectedEntry.entryId);
+  }
+
    testEn(beginDate): String{
      return beginDate = '2017-12-18';
    }
@@ -151,5 +162,9 @@ export class EntryComponent implements OnInit {
           }, (error) => console.log(error.SessionNotCreatedError));
       }
     });
+  }
+
+  public exportData(){
+    this.exportService.getCSVInfo();
   }
 }

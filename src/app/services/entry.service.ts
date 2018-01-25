@@ -60,4 +60,26 @@ export class EntryService {
     let result=this.http.delete(this.ALL_ENTRIES_JSON+'?entryid='+entry.entryId, {headers: headers});
     return result.toPromise().then(res => {return res});
   }
+
+  public getAllEntriesBorisTest(){
+    return this.http.get<EntryModel[]>('http://localhost:8080/api/entries/boris');
+  }
+
+  public approveEntry(entryId: number){
+    const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    this.http.put(`http://localhost:8080/api/entries/approve?entryId=${entryId}`,{headers:headers}).subscribe(res=>{
+      alert("gelukt")
+    }, error=>{
+      alert("Niet gelukt");
+  });
+  }
+
+  public rejectEntry(entryId: number){
+    const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    this.http.put(`http://localhost:8080/api/entries/reject?entryId=${entryId}`,{headers:headers}).subscribe(res=>{
+      alert("gelukt")
+    },error=>{
+      alert("niet gelukt")
+    });
+  }
 }
