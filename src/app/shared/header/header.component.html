@@ -12,12 +12,12 @@
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-table" aria-hidden="true"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="admin">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
             <a class="dropdown-item" routerLink="/entry-management" routerLinkActive="active">Entries</a>
             <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projects</a>
             <a class="dropdown-item" routerLink="/task-management" routerLinkActive="active">Taken</a>
             <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categories</a>
-            <a class="dropdown-item" routerLink="/account-management" routerLinkActive="active">Accounts</a>
+            <a class="dropdown-item" routerLink="/account-management" routerLinkActive="active" *ngIf="admin">Accounts</a>
             <a class="dropdown-item" routerLink="/customer-management" routerLinkActive="active">Customers</a>
           </div>
       </div>
