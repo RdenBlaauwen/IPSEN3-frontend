@@ -18,6 +18,7 @@ import { CreateAccountComponent } from '../accounts/create-account/create-accoun
 import { TasksComponent } from '../tasks/tasks.component';
 import { AddTaskComponent } from '../tasks/add-tasks/add-tasks.component';
 import { EntryComponent } from '../entries/entries.component';
+import { EntryApprovalComponent } from '../entry-approval/entry-approval.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'account-self', component: AccountSelfComponent },
   { path: 'manual', component: ManualComponent },
   { path: 'entry-management', component: EntryComponent },
+  { path: 'entry-approval', component: EntryApprovalComponent },
   { path: 'project-management', component: ProjectsComponent },
   { path: 'sprint-management', component: CategoryComponent },
   { path: 'task-management', component: TasksComponent },

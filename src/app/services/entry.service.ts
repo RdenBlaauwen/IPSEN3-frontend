@@ -33,11 +33,36 @@ export class EntryService {
 
   public getAllEntries(week: string): Promise<WeekModel> {
     let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-    let params = new URLSearchParams();
-    params.append('startdate', week);
     let result = this.http.get<WeekModel>(this.ALL_ENTRIES_JSON + '?startdate='+week, {headers: headers});
     console.log("service: result "+result);
     return result.toPromise().then(weeks => {return weeks});
+  }
+
+  public getAllEntriesQueued(): Promise<EntryModel[]> {
+    let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    return this.http.get<EntryModel[]>(this.ALL_ENTRIES_JSON + '/queued', {headers: headers}).toPromise()
+    .then(res => res)
+    .then(entries => entries.map(entry => {
+      return new EntryModel(
+        entry.entryId,
+        entry.entryDescription,
+        entry.entryStatus,
+        entry.entryDate,
+        entry.entryStartTime,
+        entry.entryEndTime,
+        entry.entryIsLocked,
+        entry.employeeFk,
+        entry.entryProjectFk,
+        entry.entryProjectName,
+        entry.entrySprintFk,
+        entry.entrySprintName,
+        entry.entryUserstoryFk,
+        entry.entryUserstoryName,
+        entry.isDeleted,
+        entry.isCurrent,
+        entry.entryEmployeeName);
+    }));
+    // return result.toPromise().then(weeks => {return weeks});
   }
 
   // public createEntry(description: string, date: Date, projectId: number, sprintId: number, 
@@ -65,7 +90,7 @@ export class EntryService {
     return this.http.get<EntryModel[]>('http://localhost:8080/api/entries/boris');
   }
 
-  public approveEntry(entryId: number){
+  /*public approveEntry(entryId: number){
     const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
     this.http.put(`http://localhost:8080/api/entries/approve?entryId=${entryId}`,{headers:headers}).subscribe(res=>{
       alert("gelukt")
@@ -81,5 +106,17 @@ export class EntryService {
     },error=>{
       alert("niet gelukt")
     });
+  }*/
+
+  public approveEntries(entryIds: number[]): Promise<any>{
+    const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    let result=this.http.put(this.ALL_ENTRIES_JSON+'/approve', entryIds, {headers: headers});
+    return result.toPromise().then(res => {return res});
+  }
+
+  public rejectEntries(entryIds: number[]): Promise<any>{
+    const headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
+    let result=this.http.put(this.ALL_ENTRIES_JSON+'/reject', entryIds, {headers: headers});
+    return result.toPromise().then(res => {return res});
   }
 }

@@ -26,6 +26,7 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
 import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSliderModule} from '@angular/material/slider';
 // import {FormControl} from '@angular/forms';
 
 import { ProjectService } from './services/project.service';
@@ -59,6 +60,8 @@ import { DateHelper} from './helpers/dateHelper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ExportService } from './services/export';
+import { EntryApprovalComponent } from './entry-approval/entry-approval.component';
+
 
 
 
@@ -91,7 +94,9 @@ import { ExportService } from './services/export';
     DialogContentComponent,
     CreateAccountComponent,
     ModifyComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    ExportComponent,
+    EntryApprovalComponent
   ],
   entryComponents: [DialogContentComponent],
   imports: [
@@ -110,6 +115,7 @@ import { ExportService } from './services/export';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatSliderModule,
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,

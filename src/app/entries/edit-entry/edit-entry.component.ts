@@ -18,6 +18,7 @@ import { EntryService } from '../../services/entry.service';
 import {MatSnackBar} from '@angular/material';
 import { DateHelper } from '../../helpers/dateHelper';
 import { MatInput } from '@angular/material';
+import {Time, TimeUnit, Direction} from '../../helpers/time';
 
 @Component({
   selector: 'app-edit-entry',
@@ -184,25 +185,13 @@ export class EditEntryComponent implements OnInit {
   }
 
   public roundMinutes():void{
-    let startTime = this.selectedEntry.entryStartTime;
-    let shours = parseInt(startTime.substr(0,2));
-    let sminutes = parseInt(startTime.substr(3,5));
-    let smodulus = sminutes%5;
-    if(smodulus<3){
-      this.selectedEntry.entryStartTime=shours+":"+(sminutes-smodulus);
-    }else{
-      this.selectedEntry.entryStartTime=shours+":"+(sminutes+(5-smodulus));
-    }
-    let endTime = this.selectedEntry.entryEndTime;
-    let ehours = parseInt(startTime.substr(0,2));
-    let eminutes = parseInt(startTime.substr(3,5));
-    let emodulus = eminutes%5;
-    if(emodulus<3){
-      this.selectedEntry.entryStartTime=ehours+":"+(eminutes-emodulus);
-    }else{
-      this.selectedEntry.entryStartTime=ehours+":"+(eminutes+(5-emodulus));
-    }
-    console.log('round minute: '+(eminutes%5));
+    let time = new Time();
+    time.setFormat('HH:mm');
+    time.setByString(this.selectedEntry.entryStartTime);
+    time.roundTimeUnit(TimeUnit.Minutes,5,Direction.Standard);
+    this.selectedEntry.entryStartTime=time.toString();
+    time.setByString(this.selectedEntry.entryEndTime);
+    this.selectedEntry.entryEndTime=time.toString();
     this.validateTimeDifference();
   }
 }
