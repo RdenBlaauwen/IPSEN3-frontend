@@ -147,10 +147,6 @@ export class AddEntryComponent implements OnInit {
   log(anything){
   }
 
-  public close():void{
-    this.entryComponent.createMode=false;
-  }
-
   public setDate(event){
     this.selectedEntry.entryDate=event.value;
   }

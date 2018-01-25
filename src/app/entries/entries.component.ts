@@ -103,19 +103,6 @@ export class EntryComponent implements OnInit {
   }
   log(x){
   }
-
-  goedkeuren(){
-    this.hoursService.approveEntry(this.selectedRow.entryId);
-  }
-
-  afkeuren(){
-    this.hoursService.rejectEntry(this.selectedRow.entryId);
-  }
-
-   testEn(beginDate): String{
-     return beginDate = '2017-12-18';
-   }
-
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
     if(this.oldVersionsChecked){

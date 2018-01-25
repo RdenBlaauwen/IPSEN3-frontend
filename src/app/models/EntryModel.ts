@@ -22,4 +22,17 @@ export class EntryModel {
         public isCurrent?: true,
         public entryEmployeeName?: string) {
         }
+        public changeStatus($event){
+            switch($event.value){
+                case 0:
+                    this.entryStatus='rejected';
+                    break;
+                case 1:
+                    this.entryStatus='queued';
+                    break;
+                case 2:
+                    this.entryStatus='approved';
+                    break;
+            }
+        }
 }

@@ -1,24 +1,8 @@
   
-  
-  <app-add-entry *ngIf="createMode"></app-add-entry>
-  <app-edit-entry *ngIf="updateMode"></app-edit-entry>
   <div class="example-container">
     <div class="example-header">
-      <span matTooltip="Klik hier om oudere versies te tonen" matTooltipShowDelay="750">
-        <mat-checkbox class="col-sm-4" *ngIf="currentRole!='employee'"
-          #versionsCheckBox
-          [value]="" [checked]="oldVersionsChecked"
-          (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
-          >Laat oude of verwijderde versies zien
-        </mat-checkbox>
-        <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="exportData()">Exporteren</button>
-        </span>
-        <div class="row">
-          <mat-tab-group class="col-sm-12" (selectedTabChange)="tabChange($event)">
-            <mat-tab *ngFor="let week of availableWeeks" label="{{week}}">
-            </mat-tab>
-          </mat-tab-group>
-        </div>
+      <h1>Uren goedkeuren</h1>
+      <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="onSubmit()">Versturen</button>
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -31,18 +15,6 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
             <div class="">{{element.entryDescription}}</div>
-        </mat-cell>
-      </ng-container>
-      
-      <!-- sprint_name Column -->
-      <ng-container matColumnDef="entryStatus">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <mat-form-field class="mat-header-search">
-              <input type="text" (input)="weekFilter.statusArg =  $event.target.value; dataToTable()" matTextareaAutosize matInput placeholder="Status">
-            </mat-form-field>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <div class="">{{element.entryStatus}}</div>
         </mat-cell>
       </ng-container>
       
@@ -160,44 +132,15 @@
           </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isDeleted">
+      <!-- Checkbox Column -->
+    <ng-container matColumnDef="entryApproval">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <div class="">Verwijderd?</div>
-                <mat-checkbox class="mat-header-search"
-                #isDeletedCheckBox
-                [value]="" 
-                (change)="weekFilter.isDeletedArg=$event.checked; dataToTable()" 
-                [checked]="true" 
-                ></mat-checkbox>
+          Goed/af-keuren
         </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-          {{(element.isDeleted ? 'Ja' : 'Nee')}} 
+        <mat-cell *matCellDef="let element">
+            <mat-slider min="0" max="2" value="1" invert
+            (change)="element.changeStatus($event)"></mat-slider>
         </mat-cell>
-      </ng-container>
-
-      <ng-container *ngIf="oldVersionsChecked" matColumnDef="isCurrent">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <div class="">Huidige versie?</div>
-                <mat-checkbox class="mat-header-search"
-                #isNotCurrentCheckBox
-                [value]="" 
-                (change)="weekFilter.isCurrentArg=$event.checked; dataToTable()" 
-                [checked]="true"
-                ></mat-checkbox>         
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-              {{(element.isCurrent ? 'Ja' : 'Nee')}} 
-          </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="entryUpdate">
-        <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openEditEntry(element)">edit</mat-icon></a></mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="entryDelete">
-        <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-        <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="deleteEntry(element)">delete</mat-icon></a></mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
