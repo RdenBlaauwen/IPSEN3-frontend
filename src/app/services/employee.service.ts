@@ -77,7 +77,7 @@ export class EmployeeService {
     }
 
     public goHome() {
-        this.router.navigate(['entry-management']);
+        this.router.navigate(['Uren']);
         location.reload(false);
     }
 

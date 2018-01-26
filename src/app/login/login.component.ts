@@ -29,7 +29,7 @@ export class LoginComponent  {
     //  is de gebruiker al ingelogd?
     //  dan wordt die doorverwezen naar homepagina
     if (this.auth.isAuthorized()) {
-      this.router.navigate(['entry-management']);
+      this.router.navigate(['Uren']);
     }
     iconRegistry.addSvgIcon('password_visible',
     sanitizer.bypassSecurityTrustResourceUrl('assets/password_visible.svg'));
