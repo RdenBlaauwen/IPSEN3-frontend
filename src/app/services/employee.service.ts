@@ -114,9 +114,7 @@ export class EmployeeService {
               storage.setItem('authorization', auth);
               this.goHome();
         });
-             
     }
-    
 
     public removeSessions() {
         const storage = false ? localStorage : sessionStorage;

@@ -62,9 +62,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ExportService } from './services/export';
 import { EntryApprovalComponent } from './entry-approval/entry-approval.component';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,7 +95,7 @@ import { EntryApprovalComponent } from './entry-approval/entry-approval.componen
     ExportComponent,
     EntryApprovalComponent
   ],
-  entryComponents: [DialogContentComponent],
+  entryComponents: [DialogContentComponent, ManualComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
+import { MatDialog } from '@angular/material';
+import { ManualComponent } from '../../manual/manual.component';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,8 @@ export class HeaderComponent implements OnInit {
 
   admin: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) {
+  constructor(private employeeService: EmployeeService, private authService: AuthService, 
+    private router: Router, private dialog: MatDialog) {
     this.admin = authService.isAdmin() || authService.isManager();
    }
 
@@ -33,9 +36,16 @@ export class HeaderComponent implements OnInit {
     return this.router.url;
   }
 
+  openHandleiding(){
+    const dialogRef = this.dialog.open(ManualComponent, {
+      width: '650px'
+    });
+  }
+
   public logout(){
     this.employeeService.removeSessions();
   }
+
   ngOnInit() {
   }
 

@@ -1,3 +1,63 @@
-<p>
-  manual works!
-</p>
+<div class="container">
+  <h3 class="display-3"><i class="fa fa-question-circle-o" aria-hidden="true"></i></h3>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Navigeren
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe navigeer ik
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    <!-- information here -->
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Toevoegen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe declareer ik mijn uren
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- information here -->
+    </mat-expansion-panel>
+    <hr>
+    <!-- Administrator expansion panel -->
+    <mat-expansion-panel *ngIf="!getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Wijzigen en verwijderen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe wijzig en verwijder ik taken, categorien, etc.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    <!-- information here -->
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="!getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Goedkeuren
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe controleer ik uren
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    <!-- information here -->
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="!getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Rollen toedelen en wijzigen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe ga ik met permissies om
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    <!-- information here -->
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

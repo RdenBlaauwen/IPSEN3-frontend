@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-code"></i> WebEdu </a>
+  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-terminal"></i> WebEdu </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -25,6 +25,10 @@
           </div>
       </div>
       <span class="spacer"></span>
+      <small class="text-muted settings">Help</small>
+      <li class="nav-item">
+        <a class="nav-link helpLink" (click)="openHandleiding()"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+      </li>
       <li *ngIf="!isAuthenticated()" class="nav-item">
         <a class="nav-link" routerLink="" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
       </li>
