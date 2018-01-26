@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http,Response } from "@angular/http";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import {CSVModel} from '../models/CSVModel';
 
 @Injectable()
 export class ExportService {
@@ -13,10 +14,10 @@ export class ExportService {
   
     getCSVInfo(){
       let headers = this.auth.createAuthHttpHeader(this.auth.emailAddress, this.auth.password);
-      let result = this.http.get<string>('http://localhost:8080/api/export', {headers: headers});
-      result.toPromise().then(weeks => {return weeks}).then((data)=>{
-        console.log("EXPORT RESULT!: ");
-        // this.JSONToCSV(data.toString(), "Mijn export", true);
+      let result = this.http.get<CSVModel>('http://localhost:8080/api/export', {headers: headers});
+      result.toPromise().then(csv => {return csv}).then((data)=>{
+        console.log("EXPORT RESULT!: "+data.content);
+        this.JSONToCSV(data.content, "Mijn export", true);
       }, (error) => console.log(error.SessionNotCreatedError));
     }
   
