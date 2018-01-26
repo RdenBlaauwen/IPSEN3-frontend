@@ -26,7 +26,7 @@
     </mat-expansion-panel>
     <hr>
     <!-- Administrator expansion panel -->
-    <mat-expansion-panel *ngIf="!getUserRole()">
+    <mat-expansion-panel *ngIf="getUserRole()">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Wijzigen en verwijderen
@@ -37,7 +37,7 @@
       </mat-expansion-panel-header>
     <!-- information here -->
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="!getUserRole()">
+    <mat-expansion-panel *ngIf="getUserRole()">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Goedkeuren
@@ -48,7 +48,7 @@
       </mat-expansion-panel-header>
     <!-- information here -->
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="!getUserRole()">
+    <mat-expansion-panel *ngIf="getUserRole()">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Rollen toedelen en wijzigen
