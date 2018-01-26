@@ -2,7 +2,11 @@
   <div class="example-container">
     <div class="example-header">
       <h1>Uren goedkeuren</h1>
-      <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="onSubmit()">Versturen</button>
+      <div class="row">
+        <div class="col-sm-1 col-sm-offset-2">
+          <button mat-raised-button type="submit" class=" btn btn-outline-primary btn-sm" (click)="onSubmit()">Versturen</button>
+        </div>
+      </div>
     </div>
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -138,8 +142,13 @@
           Goed/af-keuren
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <mat-slider min="0" max="2" value="1" invert
-            (change)="element.changeStatus($event)"></mat-slider>
+          <div class="row">
+            <i class="col-sm-2 fa fa-check" aria-hidden="true"></i>
+            <div class="col-sm-6"></div>
+            <i class="col-sm-2 fa fa-times" aria-hidden="true"></i>
+          </div>
+          <mat-slider  min="0" max="2" value="1" invert
+          (change)="element.changeStatus($event)"></mat-slider>
         </mat-cell>
       </ng-container>
 

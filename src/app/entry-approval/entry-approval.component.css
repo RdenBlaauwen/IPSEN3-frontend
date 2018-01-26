@@ -27,10 +27,13 @@
     color: white;
     background: #009fdf ;
   }
-  /deep/ .mat-slider-track-fill::ng-deep{
+  /deep/ .mat-slider{
+    padding: 0px !important;
+  }
+  /deep/ .mat-slider-track-fill{
     background-color:green !important;
   }
-  /deep/ .mat-slider-track-background::ng-deep{
+  /deep/ .mat-slider-track-background{
     background-color:red !important;
   }
   /deep/ .mat-slider-thumb{
