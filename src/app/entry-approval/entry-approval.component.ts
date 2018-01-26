@@ -77,6 +77,7 @@ export class EntryApprovalComponent implements OnInit {
   }
   log(x){
   }
+  
   public onSubmit():void{
     let approved: number[] = [];
     let rejected: number[] = [];

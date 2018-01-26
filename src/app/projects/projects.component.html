@@ -11,22 +11,22 @@
                   *ngIf="admin">Nieuw project toevoegen</button>
             </span>
           <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filteren">
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSource">
           <ng-container matColumnDef="projectName">
-            <mat-header-cell *matHeaderCellDef> Project Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
             <mat-cell *matCellDef="let Project"> {{Project.projectName}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="projectDescription">
-            <mat-header-cell *matHeaderCellDef> Project Description </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Projectbeschrijving </mat-header-cell>
             <mat-cell *matCellDef="let Project"> {{Project.projectDescription}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="customerName">
-            <mat-header-cell *matHeaderCellDef> Klant naam </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Klantnaam </mat-header-cell>
             <mat-cell *matCellDef="let Project"> {{Project.customerName}} </mat-cell>
           </ng-container>
 

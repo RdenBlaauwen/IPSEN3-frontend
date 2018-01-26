@@ -1,7 +1,7 @@
 <mat-card *ngIf="admin">
   <mat-card-header>
       <mat-card-title>
-          <h1>Wijzigen Account</h1>
+          <h1>Medewerker Wijzigen</h1>
       </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -13,7 +13,7 @@
           <input matInput name="employeeLastname"  #employeeLastname placeholder="Achternaam" [value]="selectedEmployee.employeeLastname"required [(ngModel)]="selectedEmployee.employeeLastname" #employeeLastname="ngModel">
         </mat-form-field><br>
         <mat-form-field>
-            <mat-select [(ngModel)]="selectedEmployee.employeeRole" placeholder="Kies een role" name="employeeRole" required>
+            <mat-select [(ngModel)]="selectedEmployee.employeeRole" placeholder="Kies een rol" name="employeeRole" required>
               <mat-option *ngFor="let role of roles" [value]="role.roleName">
                 {{ role.roleName }}
               </mat-option>

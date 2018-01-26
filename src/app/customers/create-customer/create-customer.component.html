@@ -3,7 +3,7 @@
 
   <mat-card-header>
       <mat-card-title>
-          <h1>Aanmaken Klant</h1>
+          <h1>Klant Aanmaken</h1>
       </mat-card-title>
   </mat-card-header>
 
@@ -12,10 +12,10 @@
       <form name="createForm" #registerForm="ngForm" (ngSubmit)="insertNewCustomer()">
 
         <mat-form-field class="" style="margin-top: 20px">
-          <input matInput #customerName name="customerName" placeholder="Klant naam"  required [(ngModel)]="customer.customer_name" #customerName="ngModel">
+          <input matInput #customerName name="customerName" placeholder="Klant"  required [(ngModel)]="customer.customer_name" #customerName="ngModel">
         </mat-form-field><br>
         <mat-form-field class="">
-          <input matInput name="customerDescription" placeholder="Klant omschrijving"  required [(ngModel)]="customer.customer_description" #customerDescription="ngModel">
+          <input matInput name="customerDescription" placeholder="Klantomschrijving"  required [(ngModel)]="customer.customer_description" #customerDescription="ngModel">
         </mat-form-field><br>
               <br>
           <button [disabled]="!registerForm.valid" mat-raised-button type="submit" class="btn btn-primary btn-sm" >Toevoegen</button>

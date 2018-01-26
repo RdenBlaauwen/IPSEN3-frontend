@@ -1,7 +1,6 @@
   
   <div class="example-container">
     <div class="example-header">
-      <h1>Uren goedkeuren</h1>
       <div class="row">
         <div class="col-sm-1 col-sm-offset-2">
           <button mat-raised-button type="submit" class=" btn btn-outline-primary btn-sm" (click)="onSubmit()">Versturen</button>
@@ -102,7 +101,7 @@
                 <mat-form-field class="mat-header-search">
                   <input type="text" matTextareaAutosize matInput 
                   (input)="weekFilter.projectNameArg =  $event.target.value; dataToTable()" 
-                  placeholder="Project" required>
+                  placeholder="Project">
                 </mat-form-field>
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
