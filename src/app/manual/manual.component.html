@@ -1,3 +1,67 @@
-<p>
-  manual works!
-</p>
+<div class="container">
+  <h3 class="display-3"><i class="fa fa-question-circle-o" aria-hidden="true"></i></h3>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Navigeren
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe navigeer ik
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      U kunt navigeren door bovenin de balk, naast het kopje “Navigeren” op het rooster te klikken. Daarna kiest u een overzicht waar u naartoe wilt gaan.
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Toevoegen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe declareer ik mijn uren
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      Als u linksbovenin op het WebEdu logo klikt, of via de navigatiebalk, komt u op het Uren Invullen scherm uit. Om een entry toe te voegen klikt u op de grote balk “Declareer nieuwe uren” boven de tabel.
+    </mat-expansion-panel>
+    <hr>
+    <!-- Administrator expansion panel -->
+    <mat-expansion-panel *ngIf="getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Wijzigen en verwijderen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe wijzig en verwijder ik taken, categorien, etc.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      Als u als administrator of manager ingelogd bent, worden bij elke tabel automatisch de nieuwe rijen “Wijzigen” en “Verwijderen” toegevoegd. Per taak, categorie, etc. is er een knop waarmee u de desbetreffende kolom kan wijzigen of verwijderen.
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Goedkeuren
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe controleer ik uren
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      Dit doet u door via navigeren naar het “Uren Goedkeuren” scherm te gaan. Vervolgens ziet u in de tabel de uren verschijnen,  met aan de rechterzijde een extra kolom “Goed-/Afkeuren” met “sliders”. 
+      
+      Als u een uur wilt goedkeuren, kunt u de slider naar het vinkje te bewegen. Deze zal dan groen worden. Als u een uur niet wilt goedkeuren kunt u de slider naar het kruisje bewegen. Deze zal dan rood worden.
+      Als alle uren zijn gekeurd drukt u op de “Versturen” knop linksbovenin om uw acties te bevestigen.
+      
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="getUserRole()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Rollen toedelen en wijzigen
+        </mat-panel-title>
+        <mat-panel-description>
+          Hoe ga ik met permissies om
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      Als u rollen wilt toedelen en wijzigen, is dat mogelijk in het “Medewerkers”-scherm. In dit scherm staan ook de rollen toegewezen, en deze kunnen hier dus gewijzigd worden.
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

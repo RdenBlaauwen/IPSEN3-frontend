@@ -77,7 +77,7 @@ export class EmployeeService {
     }
 
     public goHome() {
-        this.router.navigate(['entry-management']);
+        this.router.navigate(['Uren']);
         location.reload(false);
     }
 
@@ -114,9 +114,7 @@ export class EmployeeService {
               storage.setItem('authorization', auth);
               this.goHome();
         });
-             
     }
-    
 
     public removeSessions() {
         const storage = false ? localStorage : sessionStorage;

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-code"></i> WebEdu </a>
+  <a class="navbar-brand" routerLink="/" routerLinkActive="active" ><i class="fa fa-terminal"></i> WebEdu </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,32 +9,36 @@
     <ul class="nav justify-content-end">
       <div *ngIf="isAuthenticated()" class="dropdown">
           <span matTooltip="Klik hier om de beheer pagina's te bekijken" matTooltipShowDelay="750">
-            <small class="text-muted">Overzichten / CRUD</small>
+            <small class="text-muted">Navigeren</small>
           </span>
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-table" aria-hidden="true"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-            <a class="dropdown-item" routerLink="/entry-management" routerLinkActive="active">Uren</a>
-            <a class="dropdown-item" routerLink="/entry-approval" routerLinkActive="active" *ngIf="admin||manager">uren goedkeuren</a>
-            <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projecten</a>
-            <a class="dropdown-item" routerLink="/task-management" routerLinkActive="active">Taken</a>
-            <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categorieen</a>
-            <a class="dropdown-item" routerLink="/account-management" routerLinkActive="active" *ngIf="admin">Medewerkers</a>
-            <a class="dropdown-item" routerLink="/customer-management" routerLinkActive="active">Klanten</a>
+            <a class="dropdown-item" routerLink="/Uren" routerLinkActive="active">Uren</a>
+            <a class="dropdown-item" routerLink="/UrenGoedkeuren" routerLinkActive="active" *ngIf="admin||manager">Uren goedkeuren</a>
+            <a class="dropdown-item" routerLink="/Projecten" routerLinkActive="active">Projecten</a>
+            <a class="dropdown-item" routerLink="/Taken" routerLinkActive="active">Taken</a>
+            <a class="dropdown-item" routerLink="/Categorieen" routerLinkActive="active">Categorieën</a>
+            <a class="dropdown-item" routerLink="/Medewerkers" routerLinkActive="active" *ngIf="admin">Medewerkers</a>
+            <a class="dropdown-item" routerLink="/Klanten" routerLinkActive="active">Klanten</a>
           </div>
       </div>
       <span class="spacer"></span>
+      <small class="text-muted settings">Help</small>
+      <li class="nav-item">
+        <a class="nav-link helpLink" (click)="openHandleiding()"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+      </li>
       <li *ngIf="!isAuthenticated()" class="nav-item">
         <a class="nav-link" routerLink="" routerLinkActive="active"><i class="fa fa-user-o"></i></a>
       </li>
-      <small *ngIf="isAuthenticated()" class="text-muted settings">Settings</small>
+      <small *ngIf="isAuthenticated()" class="text-muted settings">Mijn Account</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
         <span matTooltip="Klik hier om je account te wijzigen" matTooltipShowDelay="750">
           <a class="nav-link" routerLink="/account-self" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i></a>
         </span>
       </li>
-      <small *ngIf="isAuthenticated()" class="text-muted settings">Logout</small>
+      <small *ngIf="isAuthenticated()" class="text-muted settings">Uitloggen</small>
       <li *ngIf="isAuthenticated()" class="nav-item">
         <a class="nav-link edit" (click)="logoutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
       </li>

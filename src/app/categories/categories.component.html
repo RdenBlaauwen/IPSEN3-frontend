@@ -8,20 +8,20 @@
               <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Category Aanmaken</button>
             </span>
           <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filteren">
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSource">
 
           <!-- categoryName Column -->  
           <ng-container matColumnDef="categoryName">
-            <mat-header-cell *matHeaderCellDef> Categorie naam </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Categorie </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.categoryName}} </mat-cell>
           </ng-container>
 
           <!-- Project_name Column -->
           <ng-container matColumnDef="categoryDescription">
-            <mat-header-cell *matHeaderCellDef> Categorie beschrijving </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Categoriebeschrijving </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.categoryDescription}} </mat-cell>
           </ng-container>
 

@@ -5,10 +5,10 @@
         <div class="example-container mat-elevation-z8">
           <div class="example-header">
               <span matTooltip="Klik hier om nieuwe gebruiker toe te voegen" matTooltipShowDelay="750">
-                <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Account Aanmaken</button>
+                <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuwe Medewerker</button>
               </span>
             <mat-form-field>
-              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filteren">
             </mat-form-field>
           </div>
           <mat-table #table [dataSource]="dataSource">
