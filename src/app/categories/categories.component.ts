@@ -16,16 +16,23 @@ import { DialogService } from '../services/DialogService'
 export class CategoryComponent implements OnInit {
 
   private dataSource: MatTableDataSource<Category>;
-  displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK', 'categoryModify', 'categoryDelete'];
+  displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK'];
   selectedCategory: Category = new Category();
   loggedEmployeeModel: Employee;
   projects: Project[];
-  admin: boolean = false;
+  currentRole: string = 'employee';
   closeSidenav: boolean = false;
   constructor(private categoryService: CategoryService, private auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.admin = this.auth.isAdmin();
+    // this.admin = this.auth.isAdmin();
+    this.currentRole=this.auth.getEmployeeModel().employeeRole;
+
+    if(this.currentRole=='administration'){
+      this.displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK', 'categoryModify', 'categoryDelete'];
+    } else{
+      this.displayedColumns = ['categoryName', 'categoryDescription', 'categoryStartDate', 'categoryEndDate', 'projectFK'];
+    }
   }
 
   loadData(){

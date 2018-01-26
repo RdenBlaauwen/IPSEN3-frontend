@@ -92,7 +92,7 @@ export class ProjectService {
   }
 
   getAllProjects(): Promise<Project[]> {
-      const headers = this.auth.createAuthHttpHeader();
+    const headers = this.auth.createAuthHttpHeader();
     return this.http.get<Project[]>(this.ALL_PROJECT_JSON, {headers: headers})
     .toPromise()
     .then(res => res)

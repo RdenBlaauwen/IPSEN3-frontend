@@ -17,7 +17,7 @@ import { EmployeeService } from '../services/employee.service';
 
 export class ProjectsComponent implements OnInit {
   private dataSource: MatTableDataSource<Project>;
-  displayedColumns = ['projectName', 'projectDescription', 'customerName', 'projectModify', 'projectDelete'];
+  displayedColumns;
   selectedProject: Project = new Project();
   loggedEmployeeModel: Employee;
   customers: CustomerModel[];
@@ -28,6 +28,11 @@ export class ProjectsComponent implements OnInit {
     this.customers = this.projectService.getAllCustomers();
     this.loggedEmployeeModel = auth.getEmployeeModel();
     this.admin = auth.isAdmin();
+    if(this.admin){
+      this.displayedColumns = ['projectName', 'projectDescription', 'customerName', 'projectModify', 'projectDelete'];
+    }else{
+      this.displayedColumns = ['projectName', 'projectDescription', 'customerName'];
+    }
    this.loadData();
   }
 

@@ -7,6 +7,8 @@ import { Category } from '../../models/CategoryModel'
 import { Task } from '../../models/TaskModel';
 import { TaskService } from '../../services/task.service';
 import { AuthService } from '../../services/auth.service';
+import { CategoryService } from '../../services/category.service';
+import { TasksComponent} from '../tasks.component';
 
 @Component({
   selector: 'app-add-tasks',
@@ -22,21 +24,28 @@ export class AddTaskComponent{
   selectedProject: number;
   selectedCategory: number;
   
-  constructor(private userStoryService: TaskService, public snackBar: MatSnackBar, private dialog: MatDialogRef<any>, auth: AuthService) { 
-    this.projects = userStoryService.getAllProjects();
+  constructor(private taskService: TaskService,private categoryService: CategoryService,
+     public snackBar: MatSnackBar, private dialog: MatDialogRef<any>, auth: AuthService) { 
+    this.projects = taskService.getAllProjects();
     this.admin  =auth.isAdmin();
+    this.getCategories();
   }
 
   checkCategories(projectId: number){
-      this.userStoryService.getCategoriesProject(projectId).subscribe(categoriesObservable =>{
+      this.taskService.getCategoriesProject(projectId).subscribe(categoriesObservable =>{
         this.categories = categoriesObservable;
       })
   }
+  getCategories(){
+    this.categoryService.getAllCategories().subscribe(categoriesObservable =>{
+      this.categories = categoriesObservable;
+      console.log("Catgeories opgehaald: "+this.categories);
+    })
 
+}
   insertNewUserStory() {
-    this.userStoryService.insertNewUserStory(this.userStory);
+    this.taskService.insertNewUserStory(this.userStory);
     this.dialog.close();
-    this.userStoryService.loadEvent(true);
-  }
-    
+    this.taskService.loadEvent(true);
+  } 
 }

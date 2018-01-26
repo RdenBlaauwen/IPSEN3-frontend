@@ -16,7 +16,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
             <a class="dropdown-item" routerLink="/entry-management" routerLinkActive="active">Uren</a>
-            <a class="dropdown-item" routerLink="/entry-approval" routerLinkActive="active">uren goedkeuren</a>
+            <a class="dropdown-item" routerLink="/entry-approval" routerLinkActive="active" *ngIf="admin||manager">uren goedkeuren</a>
             <a class="dropdown-item" routerLink="/project-management" routerLinkActive="active">Projecten</a>
             <a class="dropdown-item" routerLink="/task-management" routerLinkActive="active">Taken</a>
             <a class="dropdown-item" routerLink="/sprint-management" routerLinkActive="active">Categorieen</a>

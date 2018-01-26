@@ -20,8 +20,6 @@ import { FormsModule } from '@angular/forms';
 import {NgForm} from '@angular/forms';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/CategoryModel';
-import { AddEntryComponent } from './add-entry/add-entry.component';
-import { EditEntryComponent } from './edit-entry/edit-entry.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogService} from '../services/DialogService';
@@ -50,8 +48,6 @@ export class EntryComponent implements OnInit {
   public createMode = true;
   public updateMode = false;
 
-  // @ViewChild(MatSort) sort: MatSort;
-
   constructor(private hoursService: EntryService, private dateHelper: DateHelper,
      private auth: AuthService, private dialogService: DialogService,public snackBar: MatSnackBar,
      private exportService: ExportService) {
@@ -65,7 +61,7 @@ export class EntryComponent implements OnInit {
    }
 
   ngOnInit() {
-    //this.updateData();  
+    this.updateData();  
   }
   private generateWeekDates():void{
       // bereken welke datum het is
@@ -90,18 +86,13 @@ export class EntryComponent implements OnInit {
 
   updateData(): void{
     this.hoursService.getAllEntries(this.currentWeek).then((data) => {
-      // this.entryData = data;
-      // this.filterEntries();
       this.weekFilter = new WeekFilter(data);
-      
       this.dataSource = new MatTableDataSource<EntryModel>(this.weekFilter.entryData);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
 
   dataToTable(): void{
     this.dataSource.data=this.weekFilter.entryData;
-  }
-  log(x){
   }
   toggleOldVersions($event) {
     this.oldVersionsChecked = !this.oldVersionsChecked;
@@ -114,7 +105,6 @@ export class EntryComponent implements OnInit {
       'entryEndTime','entryIsLocked','entryEmployeeName','entryProjectName',
       'entrySprintName','entryUserstoryName','entryUpdate','entryDelete'];
     }
-    // this.filterEntries();
   }
 
   public openEditEntry(row):void{
@@ -130,10 +120,6 @@ export class EntryComponent implements OnInit {
     this.createMode=true;
     this.updateMode=false;
   }
-  // public openEditEntry(){
-  //   this.createMode=false;
-  //   this.updateMode=true;
-  // }
 
   public deleteEntry(row){
     this.dialogService.confirm('Bevestigen', 'Weet u zeker dat u deze entry wilt verwijderen? ')
@@ -150,8 +136,33 @@ export class EntryComponent implements OnInit {
       }
     });
   }
-
   public exportData(){
-    this.exportService.getCSVInfo();
+    this.exportService.getCSVInfo().then((data)=>{
+      console.log("EXPORT RESULT!: "+data);
+      if(data){
+        this.snackBar.open('Data voor export naar .CSV tabel is aangekomen.','Ok',{duration: 2000});
+        this.JSONToCSV(data.content, "Mijn export", true);
+      }else{
+        this.snackBar.open('Er is iets mis gegaan.','Ok',{duration: 3000});
+      }
+      
+    }, (error) => console.log(error.SessionNotCreatedError));;
   }
+  private JSONToCSV(CSV, ReportTitle, ShowLabel) { 
+    
+   let fileName = "WebEdu_";
+   fileName += ReportTitle.replace(/ /g,"_");   
+   
+   let uri = 'data:text/csv;charset=utf-8,' + CSV;
+   
+   let link = document.createElement("a");    
+   link.href = uri;
+   
+   link.download = fileName + ".csv";
+ 
+   document.body.appendChild(link);
+   link.click();
+   document.body.removeChild(link);
+       
+   }
 }

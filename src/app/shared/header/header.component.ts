@@ -11,9 +11,11 @@ import { EmployeeService } from '../../services/employee.service';
 export class HeaderComponent implements OnInit {
 
   admin: boolean = false;
+  manager: boolean = false;
 
   constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) {
-    this.admin = authService.isAdmin() || authService.isManager();
+    this.admin = authService.isAdmin();
+    this.manager = authService.isManager()
    }
 
   public logoutUser() {

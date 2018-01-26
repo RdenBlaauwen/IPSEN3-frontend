@@ -1,5 +1,5 @@
   
-  <div class="example-container">
+  <div *ngIf="!currentRole=='employee'"class="example-container">
     <div class="example-header">
       <h1>Uren goedkeuren</h1>
       <div class="row">
@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <mat-table #table [dataSource]="dataSource" matSort>
+    <mat-table *ngIf="!currentRole=='employee'" #table [dataSource]="dataSource" matSort>
 
       <!-- entryDescription Column -->  
       <ng-container matColumnDef="entryDescription">
