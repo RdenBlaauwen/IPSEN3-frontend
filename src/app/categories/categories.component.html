@@ -4,7 +4,7 @@
     <mat-sidenav-content class="hoofd">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
-            <span matTooltip="Klik hier om nieuwe category toe te voegen" matTooltipShowDelay="750">
+            <span *ngIf="currentRole=='administration'" matTooltip="Klik hier om nieuwe category toe te voegen" matTooltipShowDelay="750">
               <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuw Category Aanmaken</button>
             </span>
           <mat-form-field>
@@ -43,14 +43,14 @@
             <mat-cell *matCellDef="let element"> {{element.projectName}} </mat-cell>
           </ng-container> 
           
-          <ng-container matColumnDef="categoryModify">
+          <ng-container *ngIf="currentRole=='administration'" matColumnDef="categoryModify">
             <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-            <mat-cell *matCellDef="let element"> <a *ngIf="admin"><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+            <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="categoryDelete" >
+          <ng-container *ngIf="currentRole=='administration'" matColumnDef="categoryDelete" >
               <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-              <mat-cell *matCellDef="let element"> <a *ngIf="admin"><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+              <mat-cell *matCellDef="let element"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
             </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

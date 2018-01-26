@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {MatTableDataSource, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { Category } from '../models/CategoryModel';
 import { CategoryService } from '../services/category.service';
@@ -13,23 +14,34 @@ import { TaskService } from '../services/task.service';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-
+@Injectable()
 export class TasksComponent implements OnInit {
 
   private dataSource: MatTableDataSource<Task>;
   displayedColumns = ['userStoryName', 'userStoryDescription', 'categoryName', 'projectName', 'userStoryModify', 'userStoryDelete'];
   selectedUserStory: Task = new Task();
-  admin: boolean = false;
   loggedEmployeeModel: Employee;
   categories: Category[];
+  currentRole = 'employee';
   constructor(private userStoryService: TaskService, auth: AuthService, private dialogService: DialogService) {
 //    this.projects = this.categoryService.getAllProjects();
+    this.currentRole= auth.getEmployeeModel().employeeRole;
+    if(this.currentRole=='administration'){
+      this.displayedColumns = ['userStoryName', 'userStoryDescription', 'categoryName', 'projectName', 'userStoryModify', 'userStoryDelete'];
+    } else{
+      this.displayedColumns = ['userStoryName', 'userStoryDescription', 'categoryName', 'projectName'];
+    }
     this.loggedEmployeeModel = auth.getEmployeeModel();
-    this.admin = auth.isAdmin();
-    this.loadData();
     
   }
-
+  ngOnInit() {
+    this.userStoryService.loadTrigger$.forEach(res=>{
+      if(res == true){
+        setTimeout(()=>{ this.loadData();},100);
+      }
+    });
+    this.loadData();
+  }
   //  MatTableDataSource function
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -41,6 +53,7 @@ export class TasksComponent implements OnInit {
   //  !! IMPORTANT THING TO NOTE IS WE HAVE TO WAIT UNTIL WE COMPLETE THE DATA REQUEST BEFORE SHOWING !!
   loadData() {
     this.userStoryService.getAllUserStories().subscribe(data => {
+      console.log("loadData: "+data);
       this.dataSource = new MatTableDataSource<Task>(data);
     }, (error) => console.log(error.SessionNotCreatedError));
   }
@@ -69,11 +82,5 @@ export class TasksComponent implements OnInit {
   openCreateDialog(){
     this.dialogService.createUserStory();
   }
-  ngOnInit() {
-    this.userStoryService.loadTrigger$.forEach(res=>{
-      if(res == true){
-        setTimeout(()=>{ this.loadData();},100);
-      }
-    })
-  }
+  
 }

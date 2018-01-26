@@ -10,8 +10,10 @@
           (change)="toggleOldVersions($event); weekFilter.isDeletedArg=$event.checked; weekFilter.isCurrentArg=!$event.checked; dataToTable()"
           >Laat oude en verwijderde versies zien
         </mat-checkbox>
-        <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="exportData()">Exporteren</button>
         </span>
+        <button mat-raised-button *ngIf="currentRole!='employee'" type="submit" class="btn btn-outline-primary btn-sm" (click)="exportData()">
+          <i class="fa fa-download" aria-hidden="true"></i> Overzicht exporteren naar .CSV
+        </button>
         <div class="row">
           <mat-tab-group class="col-sm-12" (selectedTabChange)="tabChange($event)">
             <mat-tab *ngFor="let week of availableWeeks" label="{{week}}">

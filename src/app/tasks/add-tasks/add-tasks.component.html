@@ -13,14 +13,6 @@
         <input matInput #userStoryDescription name="userStoryDescription" placeholder="Taakbeschrijving" required [(ngModel)]="userStory.userStoryDescription" #userStoryDescription="ngModel">
       </mat-form-field><br>
 
-      <mat-form-field>
-        <mat-select [(ngModel)]="userStory.projectId" placeholder="Kies een project" name="selectedProject" required>
-          <mat-option *ngFor="let project of projects" [value]="project.projectId" (click)="checkCategories(project.projectId)">
-            {{ project.projectName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field><br>
-
         <mat-form-field>
           <mat-select [disabled]="!categories" [(ngModel)]="userStory.categoryId" placeholder="Kies een categorie" name="selectedCategory" >
             <mat-option *ngFor="let category of categories" [value]="category.categoryId" >

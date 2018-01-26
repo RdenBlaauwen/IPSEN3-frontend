@@ -59,17 +59,6 @@ export class AddEntryComponent implements OnInit {
     let today = new Date();
     this.selectedEntry.entryDate= today.toISOString();
     this.selectedEntry.entryEndTime=this.dateHelper.getTimeString(today);
-    // this.selectedEntry.entryDate = this.dateHelper.dateToString(new Date());
-    // console.log("selectedEntry.entryEndTime="+this.selectedEntry.entryEndTime);
-
-    // let time = new SimpleTime();
-    // time.setFormat('H:m:s');
-    // time.roundTimeUnit(TimeUnit.Minutes,5,Direction.Standard);
-    // time.setByString('5:11:5');
-    // time.setFormat('HH:mm');
-    // console.log('toString output is: '+time.toString());
-
-    // console.log(' h: '+time.getHours()+' m: '+time.getMinutes()+' s: '+time.getSeconds()+' S: '+time.getMillisecond());
   }
 
   /**

@@ -7,6 +7,7 @@
     </span>
   </mat-expansion-panel-header>
   <mat-card-content>
+      <p>Gebruik alstublieft de muis. Navigeren met de tab kan problemen geven.</p>
     <form #entryForm="ngForm" (ngSubmit)="onSubmit()">
 
       <div class="row">
@@ -65,7 +66,8 @@
           <mat-select #projectSelect 
             placeholder="Project" [(ngModel)]="selectedEntry.entryProjectFk" 
             name="projectSelect">
-            <mat-option *ngFor="let project of projectList" [value]="project.projectId" (click)="loadCategoriesProject(project.projectId)" >{{project.projectName}}</mat-option>
+            <mat-option *ngFor="let project of projectList" [value]="project.projectId" 
+              (click)="loadCategoriesProject(project.projectId)" >{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>
 

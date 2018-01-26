@@ -4,7 +4,7 @@
     <mat-sidenav-content class="hoofd">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
-            <span matTooltip="Klik hier om nieuwe taak toe te voegen" matTooltipShowDelay="750">
+            <span *ngIf="currentRole=='administration'" matTooltip="Klik hier om nieuwe taak toe te voegen" matTooltipShowDelay="750">
               <button mat-raised-button type="submit" class="btn btn-outline-primary btn-sm" (click)="openCreateDialog()">Nieuwe taak toevoegen</button>
             </span>
           <mat-form-field>
@@ -33,14 +33,14 @@
               <mat-cell *matCellDef="let userStory"> {{userStory.projectName}} </mat-cell>
             </ng-container>
 
-          <ng-container matColumnDef="userStoryModify">
+          <ng-container *ngIf="currentRole=='administration'" matColumnDef="userStoryModify">
               <mat-header-cell *matHeaderCellDef> Wijzigen</mat-header-cell>
-              <mat-cell *matCellDef="let userStory"> <a *ngIf="admin"><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
+              <mat-cell *matCellDef="let userStory"> <a><mat-icon class="edit" (click)="sidenav.toggle()">edit</mat-icon></a></mat-cell>
             </ng-container>
   
-            <ng-container matColumnDef="userStoryDelete">
+            <ng-container *ngIf="currentRole=='administration'" matColumnDef="userStoryDelete">
                 <mat-header-cell *matHeaderCellDef> Verwijderen</mat-header-cell>
-                <mat-cell *matCellDef="let userStory"> <a *ngIf="admin"><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
+                <mat-cell *matCellDef="let userStory"> <a><mat-icon class="edit" (click)="openDialog()">delete</mat-icon></a></mat-cell>
               </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

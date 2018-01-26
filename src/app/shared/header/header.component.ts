@@ -13,10 +13,11 @@ import { ManualComponent } from '../../manual/manual.component';
 export class HeaderComponent implements OnInit {
 
   admin: boolean = false;
+  manager: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService, 
-    private router: Router, private dialog: MatDialog) {
-    this.admin = authService.isAdmin() || authService.isManager();
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) {
+    this.admin = authService.isAdmin();
+    this.manager = authService.isManager()
    }
 
   public logoutUser() {
