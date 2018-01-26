@@ -27,9 +27,15 @@
     color: white;
     background: #009fdf ;
   }
-  div.mat-slider-track-fill{
+  /deep/ .mat-slider{
+    padding: 0px !important;
+  }
+  /deep/ .mat-slider-track-fill{
     background-color:green !important;
   }
-  div.mat-slider-track-background{
+  /deep/ .mat-slider-track-background{
     background-color:red !important;
+  }
+  /deep/ .mat-slider-thumb{
+    background-color:grey !important;
   }
