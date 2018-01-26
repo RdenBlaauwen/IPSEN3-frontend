@@ -14,7 +14,7 @@ export class ManualComponent implements OnInit {
 
   public getUserRole(): boolean {
     if(this.authService.getEmployeeModel().employeeRole === 'administration'
-        && this.authService.getEmployeeModel().employeeRole === 'manager') {
+        || this.authService.getEmployeeModel().employeeRole === 'manager') {
       return true;
     }
     return false;
