@@ -38,9 +38,9 @@ export class HeaderComponent implements OnInit {
   }
 
   openHandleiding(){
-    const dialogRef = this.dialog.open(ManualComponent, {
+    /*const dialogRef = this.dialog.open(ManualComponent, {
       width: '650px'
-    });
+    });*/
   }
 
   public logout(){
