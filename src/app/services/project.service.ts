@@ -126,6 +126,6 @@ export class ProjectService {
             else{this.snackBar.open('Er iets fout gegaan in de server.', '', {duration:1000});}
         }, error=>{
             this.snackBar.open('Wijzigen project mislukt.', '',{duration: 1000});
-        })
+        });
   }
 }

@@ -15,6 +15,7 @@ export class EditProjectComponent implements OnInit{
   ngOnInit(): void {
     this.projectService.events$.forEach(event =>{
       this.selectedProject = event;
+      this.selectedCustomer=this.selectedProject.projectCustomerFk;
       for(let cus of this.customers){
         if(cus.customer_name == event.customerName){
           this.fillCustomer = new FormControl(cus.customer_id);
@@ -34,6 +35,7 @@ export class EditProjectComponent implements OnInit{
 
    modifyProject()
    {
+     console.log("customerid="+this.selectedCustomer);
      this.selectedProject.projectCustomerFk = this.selectedCustomer;
      this.projectService.updateProject(this.selectedProject);
      this.projectService.loadEvent(true);

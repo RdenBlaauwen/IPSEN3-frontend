@@ -15,7 +15,8 @@ export class HeaderComponent implements OnInit {
   admin: boolean = false;
   manager: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router) {
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private router: Router,
+          private dialog: MatDialog) {
     this.admin = authService.isAdmin();
     this.manager = authService.isManager()
    }
@@ -38,9 +39,9 @@ export class HeaderComponent implements OnInit {
   }
 
   openHandleiding(){
-    /*const dialogRef = this.dialog.open(ManualComponent, {
+    const dialogRef = this.dialog.open(ManualComponent, {
       width: '650px'
-    });*/
+    });
   }
 
   public logout(){
